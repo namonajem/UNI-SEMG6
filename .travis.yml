@@ -1,1 +1,10 @@
+sudo: required
+
 language: java
+
+services:
+  - docker
+
+after_success:
+  - docker build -t SEMG6
+  - docker run SEMG6
