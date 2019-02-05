@@ -1,0 +1,28 @@
+As a <role> I want <feature> so that <value>
+
+#
+1)As a member of this organisation I want <to be able to sort countries in the world, continent and region by largest population to smallest> so that <value>
+
+2)As a member of this organisation I want <to be able to find the top populated countries in the world, continent and region, while specifying the number of results> so that <value>
+
+3)As a member of this organisation I want <the ability to sort all the cities in the world, a continent, region, country or district, from largest to smallest population> so that <value>
+
+4)As a member of this organisation I want <to be able to find the top populated cities in the world, a continent, region, country or district, while specifying the number of results> so that <value>
+
+5)As a member of this organisation I want <the ability to sort all the capital cities in the world, a continent or region from largest to smallest population> so that <value>
+
+6)As a member of this organisation I want <to be able to find the top populated capital cities in the world, a continent or region, while specifying the number of results> so that <value>
+
+7)As a member of this organisation I want <to be able to find the population of people living in cities and not living in cities in each continent, region and country> so that <value>
+
+8)As a member of this organisation I want <to be able to find the population of the world, a continent, region, country, district or city> so that <value>
+
+9)As a member of this organisation I want <to be able to find the number of people total and as a percentage of the world population who speak CHinese, English, Hindi, Spanish or arabic> so that <value>
+
+10)As a member of this organisation I want <to be able to get a report for a country that includes it's code, name, continent, region, population and capital> so that <value>
+
+11)As a member of this organisation I want <to be able to get a report for a city that includes it's name, country, district and population> so that <value>
+
+12)As a member of this organisation I want <to be able to get a report for a capital city that includes it's name, country, distr and population> so that <value>
+
+13)As a member of this organisation I want <to be able to get reports for populations of continents, regions and countries that includes the name, total population, total population living in cities(also as a %) and total population not living in cities(also as a %) > so that <value>
