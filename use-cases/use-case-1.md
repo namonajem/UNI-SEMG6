@@ -39,7 +39,7 @@ A request for countries population information is sent to Data Analysis.
 1. Sociology request population information for countries in a given territory.
 2. Data Analyst captures name of the territory to get countries's within population information.
 3. Data Analyst extracts current population information of all countries of the given territory.
-4. Data Analyst manage to order the countries in result by population.
+4. Data Analyst manages to order the countries in result by population.
 5. Data Analyst provides report to Sociology.
 
 ## EXTENSIONS

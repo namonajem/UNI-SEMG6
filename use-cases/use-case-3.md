@@ -39,7 +39,7 @@ A request for cities population information is sent to Data Analysis.
 1. Sociology request population information for cities in a given territory.
 2. Data Analyst captures name of the territory to get cities's within population information.
 3. Data Analyst extracts current population information of all cities of the given territory.
-4. Data Analyst manage to order the cities in result by population.
+4. Data Analyst manages to order the cities in result by population.
 5. Data Analyst provides report to Sociology.
 
 ## EXTENSIONS
