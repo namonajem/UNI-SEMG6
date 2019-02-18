@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-As a *Data Analyst* I want *get a list of a given number of countries that are the most populated in a given territory* so that *I can make a report*.
+As a *Data Analyst* I want *to get a list of a given number of countries that are the most populated in a given territory* so that *I can make a report*.
 
 ### Scope
 
@@ -36,10 +36,10 @@ A request for top N populated countries in a territory is sent to Data Analysis.
 
 ## MAIN SUCCESS SCENARIO
 
-1. Sociology request top N populated countries in a given territory.
+1. Sociology request top N populated countries in a territory.
 2. Data Analyst captures name of the territory to get countries's within population information.
 3. Data Analyst extracts current population information of all countries of the given territory.
-4. Data Analyst manage to order the results by population.
+4. Data Analyst manage to order the countries in result by population.
 5. Data Analyst removes unrequested items of the list.
 6. Data Analyst provides report to Sociology.
 
