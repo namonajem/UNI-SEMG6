@@ -1,15 +1,7 @@
 
 # **Software Engineering Methods Coursework**
 
-## Group 6
-
-This coursework is being worked on as a Scrum Team comprised of:
-
-Name | Scrum Role
------------- | -------------
-Namo Najem | Development Team
-Pablo Ferrando | Product Owner & Development Team
-Ryan McLoughlin | Scrum Master & Development Team
+A system to allow easy access to a database which provides world population information. This coursework is being worked on as a Scrum Team by Group 6, formed by Namo Najem (Development Team), Pablo Ferrando (Product Owner and Development Team) and Ryan McLoughlin (Scrum Master and Development Team).
 
 ## Current Release
 [![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases)
