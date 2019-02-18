@@ -1,5 +1,14 @@
-1- Everyone should answer their phone atleast onece every 3 days
+# Code of Conduct
 
-2- NO purposefully jeopardizing the project
+> A code of conduct is a set of rules outlining the social norms and rules and responsibilities of, or proper practices for, an individual, party or organization.
 
-3- NO disappearing at tough times
+## Our compromise
+
+All members of group 6, for the simple reason of belonging, we commit to follow the following codes of conduct:
+
+- **Weekly meeting** - All wednesdays at 1pm @ JKCC.
+- Personal work compromise, measured in...?
+- Non-compliance consequences.
+- Code quality style guide.
+- Git branches workflow.
+- Zube kanban boards workflow.
