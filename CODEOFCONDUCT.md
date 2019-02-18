@@ -64,7 +64,9 @@ public City(int id, String name, String countryCode, String district, int popula
 
 #### Variable naming
 
-A variable name should describe the variable's purpose. Adding extra information like scope and type is generally a sign of a bad variable name. Extremely short variable names should be reserved for instances like loop indices. Avoid embedding the field type in the field name.  Also avoid embedding scope information in a variable. Hierarchy-based naming suggests that a class is too complex and should be broken apart.
+- A variable name should describe the variable's purpose.
+- Adding extra information like scope and type is generally a sign of a bad variable name.
+- Extremely short variable names should be reserved for instances like loop indices. 
 
 #### Spacing Operators
 
@@ -78,11 +80,11 @@ return (8+12)-value;
 
 #### Documentation
 
-* **Documenting a class:** A thorough class doc usually has a one sentence summary and, if necessary, a more detailed explanation.
+- **Documenting a class:** A thorough class doc usually has a one sentence summary and, if necessary, a more detailed explanation.
 
-* **Documenting a method:** A method doc should tell what the method does. Depending on the argument types, it may also be important to document input format.
+- **Documenting a method:** A method doc should tell what the method does. Depending on the argument types, it may also be important to document input format.
 
-* **Commenting a line:** A difficult to understand line should be explained with a comment.
+- **Commenting a line:** A difficult to understand line should be explained with a comment.
 
 ```java
 /**
@@ -92,11 +94,13 @@ public class City {
     // City ID number
     int id;
     
-
     /**
-     * No-args constructor
+     * ID constructor
+     * 
+     * @param id the id of the City
      */
-    public City() {
+    public City(int id) {
+        this.id = id;
     }
 }
 ```
