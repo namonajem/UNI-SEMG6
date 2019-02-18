@@ -1,4 +1,4 @@
-# USE CASE: 1 Organise Countries of a Given Territory by Population
+# USE CASE 1: Organise Countries of a Given Territory by Population
 
 ## CHARACTERISTIC INFORMATION
 
@@ -20,7 +20,7 @@ We know the territory. Database contains current countries population data.
 
 ### Success End Condition
 
-A report is available for analysts.
+A report is available for Sociology.
 
 ### Failed End Condition
 

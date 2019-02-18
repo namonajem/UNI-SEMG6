@@ -3,22 +3,21 @@
 
 ## Group 6
 
-This coursework is being worked on as a SCRUM Team comprised of:
+This coursework is being worked on as a Scrum Team comprised of:
 
-  * Ryan McLoughlin
-
-  * Namo Najem
-
-  * Pablo Ferrando Iranzo
+Name | Scrum Role
+------------ | -------------
+Namo Najem | Development Team
+Pablo Ferrando | Product Owner & Development Team
+Ryan McLoughlin | Scrum Master & Development Team
 
 ## Current Release
-- Release               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases)
+[![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases)
 
 ## Build Statuses
+Master Branch  [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?)](https://travis-ci.org/namonajem/SEMG6)
+Develop Branch  [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?branch=develop)](https://travis-ci.org/namonajem/SEMG6)
 
-- Master Build Status   &nbsp;&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?)](https://travis-ci.org/namonajem/SEMG6)
-- Develop Build Status  &nbsp;&nbsp;[![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?branch=develop)](https://travis-ci.org/namonajem/SEMG6)
 
-
-## Licenses
-- License               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![LICENSE](https://img.shields.io/github/license/namonajem/SEMG6.svg?style=flat)](https://github.com/namonajem/SEMG6/LICENSE)
+## License
+[![LICENSE](https://img.shields.io/github/license/namonajem/SEMG6.svg?style=flat)](https://github.com/namonajem/SEMG6/LICENSE)
