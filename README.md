@@ -1,24 +1,20 @@
 
-# **Software Engineering Methods Coursework**
+# **Software Engineering Methods Coursework** [![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases)
 
-## Group 6
+A system to allow easy access to a database which provides world population information. This coursework is being worked on as a Scrum Team by Group 6.
 
-This coursework is being worked on as a SCRUM Team comprised of:
+## Build Statuses
 
-  * Ryan McLoughlin
+* Master Branch    [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?)](https://travis-ci.org/namonajem/SEMG6)
 
-  * Namo Najem
+* Develop Branch    [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?branch=develop)](https://travis-ci.org/namonajem/SEMG6)
 
-  * Pablo Ferrando Iranzo
+## Authors
 
-##Current Release
-- Release               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases)
+* **Namo Najem** - *Development Team*.
+* **Pablo Ferrando** - *Product Owner and Development Team*.
+* **Ryan McLoughlin** - *Scrum Master and Development Team*.
 
-##Build Statuses
+## License [![LICENSE](https://img.shields.io/github/license/namonajem/SEMG6.svg?style=flat)](https://github.com/namonajem/SEMG6/LICENSE)
 
-- Master Build Status   &nbsp;&nbsp;&nbsp;&nbsp;[![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?)](https://travis-ci.org/namonajem/SEMG6)
-- Develop Build Status  &nbsp;&nbsp;[![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?branch=develop)](https://travis-ci.org/namonajem/SEMG6)
-
-
-##Licenses
-- License               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![LICENSE](https://img.shields.io/github/license/namonajem/SEMG6.svg?style=flat)](https://github.com/namonajem/SEMG6/LICENSE)
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
