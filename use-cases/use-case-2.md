@@ -1,10 +1,10 @@
-# USE CASE 1: Organise Countries of a Given Territory by Population
+# USE CASE 2: List Top N Populated Countries of a Given Territory
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-As a *Data Analyst* I want *to get a list of the countries in a given territory ordered by population* so that *I can make a report*.
+As a *Data Analyst* I want *get a list of a given number of countries that are the most populated in a given territory* so that *I can make a report*.
 
 ### Scope
 
@@ -32,20 +32,23 @@ Data Analyst.
 
 ### Trigger
 
-A request for population information is sent to Data Analysis.
+A request for top N populated countries in a territory is sent to Data Analysis.
 
 ## MAIN SUCCESS SCENARIO
 
-1. Sociology request population information for a given territory.
+1. Sociology request top N populated countries in a given territory.
 2. Data Analyst captures name of the territory to get countries's within population information.
 3. Data Analyst extracts current population information of all countries of the given territory.
 4. Data Analyst manage to order the results by population.
-5. Data Analyst provides report to Sociology.
+5. Data Analyst removes unrequested items of the list.
+6. Data Analyst provides report to Sociology.
 
 ## EXTENSIONS
 
 3. **Territory does not exist**:
     1. Data Analyst informs Sociology no territory exists.
+5. **Result contains less items than requested**:
+    1. Data Analyst informs Sociology less countries than requested.
 
 ## SUB-VARIATIONS
 
