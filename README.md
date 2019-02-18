@@ -16,9 +16,9 @@ Ryan McLoughlin | Scrum Master & Development Team
 
 ## Build Statuses
 
-Master Branch    [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?)](https://travis-ci.org/namonajem/SEMG6)
+    * Master Branch    [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?)](https://travis-ci.org/namonajem/SEMG6)
 
-Develop Branch    [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?branch=develop)](https://travis-ci.org/namonajem/SEMG6)
+    * Develop Branch    [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?branch=develop)](https://travis-ci.org/namonajem/SEMG6)
 
 
 ## License
