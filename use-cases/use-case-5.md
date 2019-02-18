@@ -1,4 +1,4 @@
-# USE CASE 5: Organise Capital Cities of a Given Territory by Population
+# USE CASE 5: Produce a Report on the Population of the Capital Cities of a Given Territory
 
 ## CHARACTERISTIC INFORMATION
 
@@ -32,7 +32,7 @@ Data Analyst.
 
 ### Trigger
 
-A request for capital cities population information is sent to Data Analysis.
+A request for capital cities in a territory population information is sent to Data Analysis.
 
 ## MAIN SUCCESS SCENARIO
 

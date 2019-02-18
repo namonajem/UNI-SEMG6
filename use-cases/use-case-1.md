@@ -1,4 +1,4 @@
-# USE CASE 1: Organise Countries of a Given Territory by Population
+# USE CASE 1: Produce a Report on the Population of the Countries of a Given Territory
 
 ## CHARACTERISTIC INFORMATION
 
@@ -32,7 +32,7 @@ Data Analyst.
 
 ### Trigger
 
-A request for countries population information is sent to Data Analysis.
+A request for countries in a territory population information is sent to Data Analysis.
 
 ## MAIN SUCCESS SCENARIO
 

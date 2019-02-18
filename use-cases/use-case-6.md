@@ -1,4 +1,4 @@
-# USE CASE 6: List Top N Populated Capital Cities of a Given Territory
+# USE CASE 6: Produce a List of the Top N Populated Capital Cities of a Given Territory
 
 ## CHARACTERISTIC INFORMATION
 

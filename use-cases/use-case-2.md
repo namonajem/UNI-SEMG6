@@ -1,4 +1,4 @@
-# USE CASE 2: List Top N Populated Countries of a Given Territory
+# USE CASE 2: Produce a List of the Top N Populated Countries of a Given Territory
 
 ## CHARACTERISTIC INFORMATION
 

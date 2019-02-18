@@ -1,4 +1,4 @@
-# USE CASE 3: Organise Cities of a Given Territory by Population
+# USE CASE 3: Produce a Report on the Population of the Cities of a Given Territory
 
 ## CHARACTERISTIC INFORMATION
 
@@ -32,7 +32,7 @@ Data Analyst.
 
 ### Trigger
 
-A request for cities population information is sent to Data Analysis.
+A request for cities in a territory population information is sent to Data Analysis.
 
 ## MAIN SUCCESS SCENARIO
 

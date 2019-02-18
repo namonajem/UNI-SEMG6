@@ -1,4 +1,4 @@
-# USE CASE 4: List Top N Populated Cities of a Given Territory
+# USE CASE 4: Produce a List of the Top N Populated Cities of a Given Territory
 
 ## CHARACTERISTIC INFORMATION
 
