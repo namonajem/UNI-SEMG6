@@ -6,7 +6,7 @@
 
 All members of group 6, for the simple reason of belonging, we commit to follow the following codes of conduct:
 
-- **Weekly meeting** - All wednesdays at 1pm @ JKCC.
+- **Weekly meeting** - Every wednesdays at 1pm @ JKCC.
 - Personal work compromise, measured in...?
 - Non-compliance consequences.
 - Code quality style guide.
