@@ -4,7 +4,7 @@
 
 ## Our compromise
 
-All members of group 6, for the simple reason of belonging, we commit to follow the following codes of conduct:
+All members of Group 6, for the simple reason of belonging, we commit ourselves to behave according to the following codes of conduct:
 
 - **Weekly meeting** - Every Wednesday at 1pm @ JKCC.
 - Personal work compromise, measured in...?
