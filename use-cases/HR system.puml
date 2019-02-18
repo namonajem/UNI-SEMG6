@@ -5,13 +5,47 @@ actor HR as "HR Advisor"
 rectangle Database
 
 rectangle "HR System" {
-    usecase UC4 as "GetAllCities"
+    usecase UC1 as "GetAllCities"
 
-    usecase UCa as "Print all Countries"
+    usecase UC2 as "GetAllCountries"
 
-    HR - UC4
-    UC4 ..> UCa : include
-    UC4 - Database
+    usecase UC3 as "GetCountriesByTerritory"
+
+    usecase UC4 as "Print all Countries/Cities"
+
+    usecase UC5 as "GetCitiesPopulationFromSmallest"
+
+    usecase UC6 as "GetCitiesPopulationFromLargest"
+
+    usecase UC7 as "GetCitiesInTerritory"
+
+    usecase UC8 as "GetCitiesTopCapitalsInTerritory"
+
+    usecase UC9 as "GetPopulationInTerritory"
+
+    usecase UC10 as "GetCityPopulationInTerritory"
+
+    usecase UC11 as "PeopleLanguageFromSmallest"
+
+
+    HR - UC1
+    HR - UC2
+
+
+    UC1 ..> UC4 : include
+    UC1 ..> UC5 : include
+    UC1 ..> UC6 : include
+    UC1 ..> UC7 : include
+    UC1 ..> UC8 : include
+    UC1 ..> UC10 : include
+
+    UC2 ..> UC4 : include
+    UC2 ..> UC3 : include
+    UC2 ..> UC9 : include
+    UC2 ..> UC11 : include
+
+    UC1 - Database
+    UC2 - Database
 }
 
 @enduml
