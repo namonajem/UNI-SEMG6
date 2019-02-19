@@ -5,44 +5,45 @@ actor DA as "Data Analyst"
 rectangle Database
 
 rectangle "DB System" {
-    usecase UC1 as "GetAllCities"
 
-    usecase UC2 as "GetAllCountries"
+    usecase UC1 as "GetAllCountries"
+
+    usecase UC2 as "GetAllCities"
 
     usecase UC3 as "GetCountriesByTerritory"
 
-    usecase UC4 as "Print all Countries/Cities"
+    usecase UC4 as "GetPopulationInTerritory"
 
-    usecase UC5 as "GetCitiesPopulationFromSmallest"
+    usecase UC5 as "PeopleLanguageFromSmallest"
 
-    usecase UC6 as "GetCitiesPopulationFromLargest"
+    usecase UC6 as "Print all Countries/Cities"
 
-    usecase UC7 as "GetCitiesInTerritory"
+    usecase UC7 as "GetCitiesPopulationFromSmallest"
 
-    usecase UC8 as "GetCitiesTopCapitalsInTerritory"
+    usecase UC8 as "GetCitiesPopulationFromLargest"
 
-    usecase UC9 as "GetPopulationInTerritory"
+    usecase UC9 as "GetCitiesInTerritory"
 
-    usecase UC10 as "GetCitiesPopulationInTerritory"
+    usecase UC10 as "GetCitiesTopCapitalsInTerritory"
 
-    usecase UC11 as "PeopleLanguageFromSmallest"
+    usecase UC11 as "GetCitiesPopulationInTerritory"
 
 
     DA - UC1
     DA - UC2
 
+    UC1 ..> UC3 : Extend
+    UC1 ..> UC4 : Include
+    UC1 ..> UC5 : Include
+    UC1 ..> UC6 : Include
 
-    UC1 ..> UC4 : include
-    UC1 ..> UC5 : include
-    UC1 ..> UC6 : include
-    UC1 ..> UC7 : include
-    UC1 ..> UC8 : include
-    UC1 ..> UC10 : include
+    UC2 ..> UC9 : Extend
+    UC2 ..> UC6 : Include
+    UC2 ..> UC8 : Include
+    UC2 ..> UC10 : Include
+    UC2 ..> UC11 : Include
+    UC2 ..> UC7 : Include
 
-    UC2 ..> UC4 : include
-    UC2 ..> UC3 : include
-    UC2 ..> UC9 : include
-    UC2 ..> UC11 : include
 
     UC1 - Database
     UC2 - Database
