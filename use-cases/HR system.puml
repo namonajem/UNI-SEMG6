@@ -1,10 +1,10 @@
 @startuml
 
-actor HR as "HR Advisor"
+actor HR as "Data Analyst"
 
 rectangle Database
 
-rectangle "HR System" {
+rectangle "DB System" {
     usecase UC1 as "GetAllCities"
 
     usecase UC2 as "GetAllCountries"
@@ -23,7 +23,7 @@ rectangle "HR System" {
 
     usecase UC9 as "GetPopulationInTerritory"
 
-    usecase UC10 as "GetCityPopulationInTerritory"
+    usecase UC10 as "GetCitiesPopulationInTerritory"
 
     usecase UC11 as "PeopleLanguageFromSmallest"
 
