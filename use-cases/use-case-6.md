@@ -39,7 +39,7 @@ A request for top N populated capital cities in a territory is sent to Data Anal
 1. Sociology request top N populated capital cities in a territory.
 2. Data Analyst captures name of the territory to get capital cities's within population information.
 3. Data Analyst extracts current population information of all capital cities of the given territory.
-4. Data Analyst manages to order the capital cities in result by population.
+4. Data Analyst orders the capital cities in result by population.
 5. Data Analyst removes unrequested items of the list.
 6. Data Analyst provides report to Sociology.
 

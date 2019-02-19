@@ -39,7 +39,7 @@ A request for top N populated countries in a territory is sent to Data Analysis.
 1. Sociology request top N populated countries in a territory.
 2. Data Analyst captures name of the territory to get countries's within population information.
 3. Data Analyst extracts current population information of all countries of the given territory.
-4. Data Analyst manages to order the countries in result by population.
+4. Data Analyst orders the countries in result by population.
 5. Data Analyst removes unrequested items of the list.
 6. Data Analyst provides report to Sociology.
 

@@ -39,7 +39,7 @@ A request for capital cities in a territory population information is sent to Da
 1. Sociology request population information for capital cities in a given territory.
 2. Data Analyst captures name of the territory to get capital cities's within population information.
 3. Data Analyst extracts current population information of all capital cities of the given territory.
-4. Data Analyst manages to order the capital cities in result by population.
+4. Data Analyst orders the capital cities in result by population.
 5. Data Analyst provides report to Sociology.
 
 ## EXTENSIONS
