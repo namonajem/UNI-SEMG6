@@ -2,35 +2,35 @@ package com.napier.sem;
 
 public class Country {
     // Country Code
-    String Code;
+    String code;
     // Country Name
-    String Name;
+    String name;
     // Continent that this country belongs to
-    String Continent; //is enum in DataBase check it
+    String continent; //is enum in DataBase check it
     // Region that country is in
-    String Region;
+    String region;
     // Surface Area of the country
-    Float SurfaceArea;
+    Float surfaceArea;
     // ***************** ADD
-    int IndepYear;
+    int indepYear;
     // Population of the country
-    int Population;
+    int population;
     // Life expectancy in country
-    int LifeExpectancy;
+    int lifeExpectancy;
     // Gross National Product of Country
-    Float GNP;
+    Float gnp;
     // GNP ID for country
-    Float GNPOId;
+    Float gnpoId;
     // Local name for country
-    String LocalName;
+    String localName;
     // ************** ADD
-    String GovernmentForm;
+    String governmentForm;
     // Head of state of country
-    String HeadOfState;
+    String headOfState;
     // Capital of the country
-    int Capital;
+    int capital;
     // ID of capital city
-    String Code2;
+    String code2;
 
     /**
      * No-args constructor
@@ -41,22 +41,38 @@ public class Country {
     /**
      * All-args constructor
      */
-    public Country(String Code, String Name, String Continent, String Region, Float SurfaceArea, int IndepYear, int Population, int LifeExpectency, Float GNP, Float GNPOID, String LocalName, String GovernmentForm, String HeadOfState, int Capital, String Code2) {
-        this.Code = Code;
-        this.Name = Name;
-        this.Continent = Continent;
-        this.Region = Region;
-        this.SurfaceArea = SurfaceArea;
-        this.IndepYear = IndepYear;
-        this.Population = Population;
-        this.LifeExpectancy = LifeExpectency;
-        this.GNP = GNP;
-        this.GNPOId = GNPOID;
-        this.LocalName = LocalName;
-        this.GovernmentForm = GovernmentForm;
-        this.HeadOfState = HeadOfState;
-        this.Capital = Capital;
-        this.Code2 = Code2;
+    public Country(
+            String code,
+            String name,
+            String continent,
+            String region,
+            Float surfaceArea,
+            int indepYear,
+            int population,
+            int lifeExpectency,
+            Float gnp,
+            Float gnpoId,
+            String localName,
+            String governmentForm,
+            String headOfState,
+            int capital,
+            String code2) {
+
+        this.code = code;
+        this.name = name;
+        this.continent = continent;
+        this.region = region;
+        this.surfaceArea = surfaceArea;
+        this.indepYear = indepYear;
+        this.population = population;
+        this.lifeExpectancy = lifeExpectency;
+        this.gnp = gnp;
+        this.gnpoId = gnpoId;
+        this.localName = localName;
+        this.governmentForm = governmentForm;
+        this.headOfState = headOfState;
+        this.capital = capital;
+        this.code2 = code2;
 
 
     }

@@ -103,8 +103,7 @@ public class App {
                 cities.add(myCity);
             }
             return cities;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get cities");
             return null;
