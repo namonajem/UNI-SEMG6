@@ -7,10 +7,33 @@
 All members of Group 6, for the simple reason of belonging, we commit ourselves to behave according to the following codes of conduct:
 
 - **Weekly meeting** - Every Tuesday at 1pm @ JKCC.
-- Personal work compromise, measured in...?
-- Non-compliance consequences.
-- Git branches workflow.
-- Zube kanban boards workflow.
+- **Personal work commitment** - 10 Zube pts. 
+
+## Non-compliance consequences
+
+1. **Minor non-compliance consequences** - The member should bring cookies for the rest of the team and look while the other eat them up. 
+2. **Major non-compliance consequences** - The member will be reported to the module leader and possible ejected from the team.
+
+## Git branches workflow.
+
+1. Pull up to date develop branch.
+2. Each team member works on their own individual feature branch for their assigned feature.
+3. Once feature is complete, the up-to-date develop branch is merged with the new feature.
+4. Once all features for next release are completed and merged with develop check develop still works.
+5. Create new release, merge develop into master then master into develop.
+6. Start back form 1 for a new feature.
+
+
+## Zube kanban boards workflow.
+
+1. The Product Owner will prepare a sprint per week. Sprints start on Tuesday meeting and are a week long.
+2. Each sprint will consist of at least one user story. 
+3. User stories will be broken down into tasks and assigned by the Product Owner - each member up to 10 pts.
+4. Each member of the team should look at the Zube Sprint Board at least once per week and start working on the assigned tasks.
+5. Tasks are completed when the cards have moved through all requisite fields up to "In Review" and approved by other team members.
+6. Once the sprint has ended, any uncompleted tasks should be transferred to the next sprint board, review why it did not get finished and then possibly reassign the task.
+7. Start back from 1 for a new sprint.
+
 
 ## Coding Style Guide
 
