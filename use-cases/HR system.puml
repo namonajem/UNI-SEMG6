@@ -1,6 +1,6 @@
 @startuml
 
-actor HR as "Data Analyst"
+actor DA as "Data Analyst"
 
 rectangle Database
 
@@ -28,8 +28,8 @@ rectangle "DB System" {
     usecase UC11 as "PeopleLanguageFromSmallest"
 
 
-    HR - UC1
-    HR - UC2
+    DA - UC1
+    DA - UC2
 
 
     UC1 ..> UC4 : include
