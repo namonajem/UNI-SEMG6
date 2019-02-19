@@ -12,7 +12,7 @@ All members of Group 6, for the simple reason of belonging, we commit ourselves 
 ## Non-compliance consequences
 
 1. **Minor non-compliance consequences** - The member should bring cookies for the rest of the team and look while the other eat them up. 
-2. **Major non-compliance consequences** - The member will be reported to the module leader and possible ejected from the team.
+2. **Major non-compliance consequences** - The member will be reported to the module leader and possibly ejected from the team.
 
 ## Git branches workflow.
 
@@ -24,15 +24,15 @@ All members of Group 6, for the simple reason of belonging, we commit ourselves 
 6. Start back form 1 for a new feature.
 
 
-## Zube kanban boards workflow.
+## Zube Sprint Boards workflow.
 
-1. The Product Owner will prepare a sprint per week. Sprints start on Tuesday meeting and are a week long.
-2. Each sprint will consist of at least one user story. 
-3. User stories will be broken down into tasks and assigned by the Product Owner - each member up to 10 pts.
+1. The Product Owner will prepare a Sprint Board per week. Sprints start on Tuesday meeting and are a week long.
+2. Each Sprint will consist of at least one user story. 
+3. User stories will be splitted into tasks and assigned by the Product Owner - each member up to 10 pts.
 4. Each member of the team should look at the Zube Sprint Board at least once per week and start working on the assigned tasks.
 5. Tasks are completed when the cards have moved through all requisite fields up to "In Review" and approved by other team members.
-6. Once the sprint has ended, any uncompleted tasks should be transferred to the next sprint board, review why it did not get finished and then possibly reassign the task.
-7. Start back from 1 for a new sprint.
+6. Once the Sprint has ended, any uncompleted tasks should be transferred to the next Sprint Board. Team members will review why it did not get finished and then possibly reassign the task.
+7. Start back from 1 for a new Sprint.
 
 
 ## Coding Style Guide
