@@ -5,15 +5,15 @@ package com.napier.sem;
  */
 public class City {
     // City ID number
-    int id;
+    int ID;
     // City name
-    String name;
+    String Name;
     // Code of the country which the city belongs to
-    String countryCode;
+    String CountryCode;
     // Name of the district which the city belongs to
-    String district;
+    String District;
     // Population of the city
-    int population;
+    int Population;
 
     /**
      * No-args constructor
@@ -24,11 +24,11 @@ public class City {
     /**
      * All-args constructor
      */
-    public City(int id, String name, String countryCode, String district, int population) {
-        this.id = id;
-        this.name = name;
-        this.countryCode = countryCode;
-        this.district = district;
-        this.population = population;
+    public City(int ID, String Name, String CountryCode, String District, int Population) {
+        this.ID = ID;
+        this.Name = Name;
+        this.CountryCode = CountryCode;
+        this.District = District;
+        this.Population = Population;
     }
 }
