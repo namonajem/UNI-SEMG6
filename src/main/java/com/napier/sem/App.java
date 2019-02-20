@@ -18,8 +18,9 @@ public class App {
         // Connect to database
         a.connect();
 
-        // Get all cities in database
-        ArrayList<City> cities = a.getAllCities();
+        // TEST IMPLEMENTATION
+        // Get all capital cities in database
+        ArrayList<City> cities = a.getAllCapitalCities();
         // Print results
         a.printCities(cities);
 
@@ -76,6 +77,8 @@ public class App {
         }
     }
 
+    // CITIES METHODS
+
     /**
      * Gets all the cities from the world MySQL database.
      * @return A list of all cities in database, or null if there is an error.
@@ -113,6 +116,37 @@ public class App {
     } // METHOD getAllCities()
 
     /**
+     * Gets the city from the world MySQL database which has a given id code.
+     *
+     * @param id the code of the city we want to get.
+     * @return The City.
+     */
+    public City getCityByID(int id) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Name "
+                            + "FROM city "
+                            + "WHERE ID = '" + id + "' ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a new city with the result values
+            City myCity = new City();
+            myCity.name = rset.getString("Name");
+
+            return myCity;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city by ID");
+            return null;
+        }
+    }   // METHOD getCityByID()
+
+    /**
      * Prints a list of cities.
      * @param cities The list of cities to print.
      */
@@ -122,5 +156,76 @@ public class App {
             System.out.println(String.format("%s %d", c.name, c.population));
         }
     }
+
+    // CAPITAL CITIES METHODS
+
+    /**
+     * Gets all the capital cities from the world MySQL database.
+     * @return A list of all capital cities in database, or null if there is an error.
+     */
+    public ArrayList<City> getAllCapitalCities() {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Name, Population "
+                            + "FROM city "
+                            + "ORDER BY Population DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a List for the cities
+            ArrayList<City> capitalCities = new ArrayList<>();
+            // While there are more cities in the result set
+            while (rset.next()) {
+                // Create a new city
+                City myCity = new City();
+                // Initialize with the values in the result set
+                myCity.name = rset.getString("Name");
+                myCity.population = rset.getInt("Population");
+                // Add city to the list
+                if (myCity.isCapital()) capitalCities.add(myCity);
+            }
+            return capitalCities;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities");
+            return null;
+        }
+    } // METHOD getAllCities()
+
+    // COUNTRIES METHODS
+
+    /**
+     * Gets the Country from the world MySQL database which has a given code.
+     *
+     * @param code the code of the Country we want to get.
+     * @return The Country.
+     */
+    public Country getCountryByCode(String code) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Name "
+                            + "FROM country "
+                            + "WHERE Code = '" + code + "' ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a new city with the result values
+            Country myCountry = new Country();
+            myCountry.name = rset.getString("Name");
+
+            return myCountry;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country by code");
+            return null;
+        }
+    } // METHOD getCountryByCode()
 
 } // CLASS App

@@ -73,7 +73,9 @@ public class Country {
         this.headOfState = headOfState;
         this.capital = capital;
         this.code2 = code2;
+    }
 
-
+    public int getCapital() {
+        return capital;
     }
 }
