@@ -86,8 +86,9 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Name "
-                        + "FROM city ";
+                    "SELECT Name, Population "
+                        + "FROM city "
+                        + "ORDER BY Population DESC";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -99,6 +100,7 @@ public class App {
                 City myCity = new City();
                 // Initialize with the values in the result set
                 myCity.name = rset.getString("Name");
+                myCity.population = rset.getInt("Population");
                 // Add city to the list
                 cities.add(myCity);
             }
@@ -117,7 +119,7 @@ public class App {
     private void printCities(ArrayList<City> cities) {
         // For each city in the list
         for (City c : cities) {
-            System.out.println(String.format("%s", c.name));
+            System.out.println(String.format("%s %d", c.name, c.population));
         }
     }
 
