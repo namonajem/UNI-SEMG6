@@ -19,9 +19,15 @@ public class App {
         a.connect();
 
         // Get all cities in database
-        ArrayList<City> cities = a.getAllCities();
+        //ArrayList<City> cities = a.getAllCities();
         // Print results
-        a.printCities(cities);
+        //a.printCities(cities);
+
+        ArrayList<CountryLanguage> languages = a.getLanguageOrdered();
+
+        for (CountryLanguage c : languages) {
+            System.out.println(String.format("%s, %f", c.language, c.percentage));
+        }
 
         // Disconnect from database
         a.disconnect();
@@ -111,6 +117,38 @@ public class App {
             return null;
         }
     } // METHOD getAllCities()
+
+    public ArrayList<CountryLanguage> getLanguageOrdered() {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Language, Percentage "
+                            + "FROM countrylanguage "
+                            + "ORDER BY Percentage DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a List for the languages
+            ArrayList<CountryLanguage> languages = new ArrayList<>();
+            // While there are more languages in the result set
+            while (rset.next()) {
+                // Create a new CountryLanguage
+                CountryLanguage myLanguage = new CountryLanguage();
+                // Initialize with the values in the result set
+                myLanguage.language = rset.getString("Language");
+                myLanguage.percentage = rset.getFloat("Percentage");
+                // Add language to the list
+                languages.add(myLanguage);
+            }
+            return languages;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Languages");
+            return null;
+        }
+    } // METHOD getLanguageOrdered()
 
     /**
      * Prints a list of cities.
