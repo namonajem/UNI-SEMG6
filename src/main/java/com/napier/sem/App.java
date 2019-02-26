@@ -89,7 +89,7 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Name, Population "
+                    "SELECT * "
                         + "FROM city "
                         + "ORDER BY Population DESC";
 
@@ -99,11 +99,14 @@ public class App {
             ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
-                // Create a new city
-                City myCity = new City();
-                // Initialize with the values in the result set
-                myCity.name = rset.getString("Name");
-                myCity.population = rset.getInt("Population");
+                // Create a new city with the values in the result set
+                City myCity = new City(
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+                );
                 // Add city to the list
                 cities.add(myCity);
             }
@@ -127,16 +130,22 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Name "
+                    "SELECT * "
                             + "FROM city "
-                            + "WHERE ID = '" + id + "' ";
+                            + "WHERE ID = '" + id + "'";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a new city with the result values
             City myCity = new City();
-            myCity.name = rset.getString("Name");
+            if(rset.next()) {
+                myCity.id = rset.getInt("ID");
+                myCity.name = rset.getString("Name");
+                myCity.countryCode = rset.getString("CountryCode");
+                myCity.district = rset.getString("District");
+                myCity.population = rset.getInt("Population");
+            }
 
             return myCity;
         } catch (Exception e) {
@@ -161,41 +170,77 @@ public class App {
 
     /**
      * Gets all the capital cities from the world MySQL database.
+     *
      * @return A list of all capital cities in database, or null if there is an error.
      */
     public ArrayList<City> getAllCapitalCities() {
+        try {
+            ArrayList<Country> countries = getAllCountries();
+            ArrayList<City> capitalCities = new ArrayList<>();
+
+            for(Country c : countries) {
+                capitalCities.add(
+                        getCityByID(c.getCapital())
+                );
+            }
+            return capitalCities;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get capital cities");
+            return null;
+        }
+    } // METHOD getAllCapitalCities()
+
+    // COUNTRIES METHODS
+
+    /**
+     * Gets all the countries from the world MySQL database.
+     * @return A list of all countries in database, or null if there is an error.
+     */
+    public ArrayList<Country> getAllCountries() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Name, Population "
-                            + "FROM city "
+                    "SELECT * "
+                            + "FROM country "
                             + "ORDER BY Population DESC";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Create a List for the cities
-            ArrayList<City> capitalCities = new ArrayList<>();
-            // While there are more cities in the result set
+            // Create a List for the countries
+            ArrayList<Country> countries = new ArrayList<>();
+            // While there are more countries in the result set
             while (rset.next()) {
-                // Create a new city
-                City myCity = new City();
-                // Initialize with the values in the result set
-                myCity.name = rset.getString("Name");
-                myCity.population = rset.getInt("Population");
-                // Add city to the list
-                if (myCity.isCapital()) capitalCities.add(myCity);
+                // Create a new country with the values in the result set
+                Country myCountry = new Country(
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getFloat("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getDouble("LifeExpectancy"),
+                        rset.getFloat("GNP"),
+                        rset.getFloat("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                // Add country to the list
+                countries.add(myCountry);
             }
-            return capitalCities;
+            return countries;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get cities");
+            System.out.println("Failed to get countries");
             return null;
         }
-    } // METHOD getAllCities()
-
-    // COUNTRIES METHODS
+    } // METHOD getAllCountries()
 
     /**
      * Gets the Country from the world MySQL database which has a given code.
@@ -209,16 +254,33 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Name "
+                    "SELECT * "
                             + "FROM country "
-                            + "WHERE Code = '" + code + "' ";
+                            + "WHERE Code = '" + code + "'";
 
+            // Print query
+            System.out.println(strSelect);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Create a new city with the result values
+            // Create a new country with the result values
             Country myCountry = new Country();
-            myCountry.name = rset.getString("Name");
+            if(rset.next()) {
+                myCountry.code = rset.getString("Code");
+                myCountry.name = rset.getString("Name");
+                myCountry.continent = rset.getString("Continent");
+                myCountry.region = rset.getString("Region");
+                myCountry.surfaceArea = rset.getFloat("SurfaceArea");
+                myCountry.indepYear = rset.getInt("IndepYear");
+                myCountry.population = rset.getInt("Population");
+                myCountry.lifeExpectancy = rset.getDouble("LifeExpectancy");
+                myCountry.gnp = rset.getFloat("GNP");
+                myCountry.gnpOld = rset.getFloat("GNPOld");
+                myCountry.localName = rset.getString("LocalName");
+                myCountry.governmentForm = rset.getString("GovernmentForm");
+                myCountry.headOfState = rset.getString("HeadOfState");
+                myCountry.capital = rset.getInt("Capital");
+                myCountry.code2 = rset.getString("Code2");
+            }
 
             return myCountry;
         } catch (Exception e) {

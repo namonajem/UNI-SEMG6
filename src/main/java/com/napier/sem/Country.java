@@ -1,7 +1,7 @@
 package com.napier.sem;
 
 public class Country {
-    // Country Code
+    // Country Code CHAR(3)
     String code;
     // Country Name
     String name;
@@ -16,20 +16,20 @@ public class Country {
     // Population of the country
     int population;
     // Life expectancy in country
-    int lifeExpectancy;
+    double lifeExpectancy;
     // Gross National Product of Country
     Float gnp;
     // GNP ID for country
-    Float gnpoId;
+    Float gnpOld;
     // Local name for country
     String localName;
     // ************** ADD
     String governmentForm;
     // Head of state of country
     String headOfState;
-    // Capital of the country
+    // ID of the capital city
     int capital;
-    // ID of capital city
+    // Country Code CHAR(2)
     String code2;
 
     /**
@@ -49,9 +49,9 @@ public class Country {
             Float surfaceArea,
             int indepYear,
             int population,
-            int lifeExpectency,
+            double lifeExpectency,
             Float gnp,
-            Float gnpoId,
+            Float gnpOld,
             String localName,
             String governmentForm,
             String headOfState,
@@ -67,7 +67,7 @@ public class Country {
         this.population = population;
         this.lifeExpectancy = lifeExpectency;
         this.gnp = gnp;
-        this.gnpoId = gnpoId;
+        this.gnpOld = gnpOld;
         this.localName = localName;
         this.governmentForm = governmentForm;
         this.headOfState = headOfState;

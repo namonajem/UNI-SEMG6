@@ -15,8 +15,6 @@ public class City {
     // Population of the city
     int population;
 
-    //
-    App a = new App();
 
     /**
      * No-args constructor
@@ -39,15 +37,5 @@ public class City {
         this.countryCode = countryCode;
         this.district = district;
         this.population = population;
-    }
-
-    public Boolean isCapital() {
-        if (a.getCityByID(
-                a.getCountryByCode(countryCode).capital
-                ).equals(id)) {
-
-            return true;
-        }
-        return false;
     }
 }
