@@ -71,7 +71,21 @@ public class App {
 
 
 
-
+        //Get all countries by Population
+        ArrayList<Country> countriesByPop = a.getCountriesByPop();
+        //print results for all countries organsied by population
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of all countries in the database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine);
+        a.printCountriesByPop(countriesByPop);
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
 
 
 
@@ -81,16 +95,16 @@ public class App {
         //print results for all countries organsied by Region
         System.out.println(
                 "-------------------------------------------------------------------------------"+
-                        newLine+
-                        "The following is a list of all countries in the database organised by Region "+
-                        "in ascending alphabetical order"+
-                        newLine+
-                        "-------------------------------------------------------------------------------"+
-                        newLine);
+                newLine+
+                "The following is a list of all countries in the database organised by Region "+
+                "in ascending alphabetical order"+
+                newLine+
+                "-------------------------------------------------------------------------------"+
+                newLine);
         a.printCountriesByRegion(countriesByRegion);
         System.out.println(
                 "-------------------------------------------------------------------------------"+
-                        newLine);
+                newLine);
 
 
         // Disconnect from database
@@ -251,6 +265,98 @@ public class App {
 
     } // METHOD getAllCountries()
 
+    /* Prints a list of countries.
+        /** @param countries The list of countries to print.
+        /**/
+    private void printCountries(ArrayList<Country> countries)
+    {
+        // For each country in the list
+        for (Country co : countries)
+        {
+            System.out.println(String.format("%s", co.name));
+
+        }
+    }
+
+
+    /* Gets all the countries from the world MySQL database organised by highest population to lowest.
+
+     * @return A list of all countries in database, or null if there is an error.
+
+     */
+    //method to get a list of all countries in the database from highest population to lowest
+    public ArrayList<Country> getCountriesByPop()
+    {
+        try
+        {
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT Name, Population "
+                        + "FROM country "
+                        + "ORDER BY Population DESC";
+
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the countries
+
+            ArrayList<Country> countries = new ArrayList<>();
+
+            // While there are more countries in the result set
+
+            while (rset.next())
+            {
+
+                // Create a new country
+
+                Country myCountry = new Country();
+
+                // Initialize with the values in the result set
+
+                myCountry.name = rset.getString("Name");
+                myCountry.population = rset.getInt("Population");
+
+                // Add country to the list
+
+                countries.add(myCountry);
+
+            }
+
+            return countries;
+
+        }
+
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get countries ordered by population");
+
+            return null;
+
+        }
+
+    } // METHOD countriesByPop()
+
+    /* Prints a list of countries ordered by Population.
+    /** @param countries The list of countries to print.
+    /**/
+    private void printCountriesByPop(ArrayList<Country> countries)
+    {
+        // For each country in the list
+        for (Country co : countries)
+        {
+            //%-40s
+            System.out.println(String.format("%-50s%s", co.name,co.population));
+
+        }
+    }
+
     /* Gets all the countries by continent from the world MySQL database.
 
      * @return A list of all countries in database, organised by continent, or null if there is an error.
@@ -315,41 +421,13 @@ public class App {
         }
     }
 
-    /* Prints a list of countries.
-    /** @param countries The list of countries to print.
-    /**/
-    private void printCountries(ArrayList<Country> countries)
-    {
-        // For each country in the list
-        for (Country co : countries)
-        {
-            System.out.println(String.format("%s", co.name));
 
-        }
-    }
+    /* Gets all the countries by Region from the world MySQL database.
 
+     * @return A list of all countries in database, organised by region, or null if there is an error.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+     */
+    //method to get a list of all countries and Continents in the database
     public ArrayList<Country> getCountriesByRegion()
     {
         try {
@@ -383,10 +461,10 @@ public class App {
             System.out.println(e.getMessage());
             System.out.println(
                     "-------------------------------------------------------------------------------"+
-                            newLine+
-                            "*********Failed to get countries ordered by Region*********"+
-                            newLine+
-                            "-------------------------------------------------------------------------------"
+                    newLine+
+                    "*********Failed to get countries ordered by Region*********"+
+                    newLine+
+                    "-------------------------------------------------------------------------------"
             );
             return null;
         }
