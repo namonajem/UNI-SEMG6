@@ -69,6 +69,30 @@ public class App {
                 newLine);
 
 
+
+
+
+
+
+
+
+        //Get all countries by Region
+        ArrayList<Country> countriesByRegion = a.getCountriesByRegion();
+        //print results for all countries organsied by Region
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of all countries in the database organised by Region "+
+                        "in ascending alphabetical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine);
+        a.printCountriesByRegion(countriesByRegion);
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+
+
         // Disconnect from database
         a.disconnect();
     } // METHOD main()
@@ -300,6 +324,84 @@ public class App {
         for (Country co : countries)
         {
             System.out.println(String.format("%s", co.name));
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public ArrayList<Country> getCountriesByRegion()
+    {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Name, Region  "
+                            + "FROM country "
+                            + "ORDER BY Region ASC, Name ASC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a Lists for results
+            ArrayList<Country> countries = new ArrayList<>();
+
+            // While there are more results in set
+            while (rset.next()) {
+
+                // Create a new country
+                Country myCountry = new Country();
+
+                // Initialize with the values in the result set
+                myCountry.name = rset.getString("Name");
+                myCountry.region = rset.getString("Region");
+                // Add country to the list
+                countries.add(myCountry);
+            }
+            return countries;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(
+                    "-------------------------------------------------------------------------------"+
+                            newLine+
+                            "*********Failed to get countries ordered by Region*********"+
+                            newLine+
+                            "-------------------------------------------------------------------------------"
+            );
+            return null;
+        }
+    }
+
+    /* Prints a list of countries ordered by Region.
+    /** @param countries The list of countries to print.
+    /**/
+    private void printCountriesByRegion(ArrayList<Country> countries)
+    {
+        // For each country in the list
+        for (Country co : countries)
+        {
+            //%-40s
+            System.out.println(String.format("%-50s%s", co.region,co.name));
 
         }
     }
