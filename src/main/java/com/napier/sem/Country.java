@@ -15,7 +15,7 @@ enum Continent {
         this.name = name;
     }
 
-    public String getContinentName() {
+    public String getName() {
         return this.name;
     }
 
@@ -110,7 +110,7 @@ public class Country {
     public String toString() {
         return "Code: " + this.code + "\n"
                 + "Name: " + this.name + "\n"
-                + "Continent: " + this.continent + "\n"
+                + "Continent: " + this.continent.getName() + "\n"
                 + "Region: " + this.region + "\n"
                 + "Surface Area: " + this.surfaceArea + "\n"
                 + "Independence year: " + this.indepYear + "\n"
