@@ -19,8 +19,8 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        Country myCountry = a.getCountryByCode("RUS");
-        a.printCountry(myCountry);
+        ArrayList<City> myList = a.getCapitalCitiesByContinent("europe");
+        a.printCities(myList);
 
         // Disconnect from database
         a.disconnect();
@@ -117,8 +117,7 @@ public class App {
     } // METHOD getAllCities()
 
     /**
-     * Gets the city from the world MySQL database which has a given id code.
-     *
+     * Gets the city from the world MySQL database which has a given id code.     *
      * @param id the code of the city we want to get.
      * @return The City.
      */
@@ -176,15 +175,14 @@ public class App {
     // CAPITAL CITIES METHODS ---------------------------------------------------------------------------
 
     /**
-     * Gets all the capital cities from the world MySQL database.
-     *
+     * Gets all the capital cities from the world MySQL database.     *
      * @return A list of all capital cities in database, or null if there is an error.
      */
     public ArrayList<City> getAllCapitalCities() {
         try {
-            ArrayList<Country> countries = getAllCountries();
             ArrayList<City> capitalCities = new ArrayList<>();
 
+            ArrayList<Country> countries = getAllCountries();
             for(Country c : countries) {
                 capitalCities.add(
                         getCityByID(c.getCapital())
@@ -197,6 +195,28 @@ public class App {
             return null;
         }
     } // METHOD getAllCapitalCities()
+
+    /**
+     * Gets all the capital cities from countries in a given continent.     *
+     * @return A list of all capital cities in a continent, or null if there is an error.
+     */
+    public ArrayList<City> getCapitalCitiesByContinent(String continent) {
+        try {
+            ArrayList<City> capitalCities = new ArrayList<>();
+
+            ArrayList<Country> countries = getCountriesByContinent(continent);
+            for(Country c : countries) {
+                capitalCities.add(
+                        getCityByID(c.getCapital())
+                );
+            }
+            return capitalCities;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get capital cities by continent");
+            return null;
+        }
+    } // METHOD getCapitalCitiesByContinent()
 
     // COUNTRIES METHODS -----------------------------------------------------------------------------
 
@@ -250,8 +270,60 @@ public class App {
     } // METHOD getAllCountries()
 
     /**
-     * Gets the Country from the world MySQL database which has a given code.
-     *
+     * Gets all the countries in a given continent.     *
+     * @param continent A string which contains the name of the continent
+     * @return A list of all countries in a continent, or null if there is an error.
+     */
+    public ArrayList<Country> getCountriesByContinent(String continent) {
+        try {
+            // Transform param into Continent object, it could be written different as we need
+            Continent myContinent = Continent.toContinent(continent);
+
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM country "
+                            + "WHERE Continent = '" + myContinent.getName() +  "' "
+                            + "ORDER BY Population DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a List for the countries
+            ArrayList<Country> countries = new ArrayList<>();
+            while(rset.next()) {
+                Country myCountry = new Country(
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getFloat("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getDouble("LifeExpectancy"),
+                        rset.getFloat("GNP"),
+                        rset.getFloat("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                // Add country to the list
+                countries.add(myCountry);
+            }
+
+            return countries;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get countries by continent");
+            return null;
+        }
+    } // METHOD getCountriesByContinent()
+
+    /**
+     * Gets the Country from the world MySQL database which has a given code.     *
      * @param code the code of the Country we want to get.
      * @return The Country.
      */
@@ -302,6 +374,17 @@ public class App {
     private void printCountry(Country country) {
         // For each city in the list
         System.out.println(country.toString());
+    }
+
+    /**
+     * Prints a list of countries.
+     * @param countries The list of cities to print.
+     */
+    private void printCountries(ArrayList<Country> countries) {
+        // For each city in the list
+        for (Country c : countries) {
+            System.out.println(String.format("%s %s %d", c.name, c.continent, c.population));
+        }
     }
 
 } // CLASS App

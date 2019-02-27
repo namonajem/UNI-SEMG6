@@ -84,7 +84,7 @@ public class Country {
 
         this.code = code;
         this.name = name;
-        this.continent = Continent.valueOf(continent);
+        this.continent = Continent.toContinent(continent);
         this.region = region;
         this.surfaceArea = surfaceArea;
         this.indepYear = indepYear;
