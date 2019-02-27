@@ -54,12 +54,12 @@ public class App {
 
         //Get all countries by Continent
         ArrayList<Country> countriesByContinent = a.getCountriesByContinent();
-        //print results for all countries organsied by continent
+        //print results for all countries in a continent ordered by population asc
         System.out.println(
                 "-------------------------------------------------------------------------------"+
                 newLine+
-                "The following is a list of all countries in the database organised by continent "+
-                "in ascending alphabetical order"+
+                "The following is a list of all countries in a continent ordered by population "+
+                "in ascending order"+
                 newLine+
                 "-------------------------------------------------------------------------------"+
                 newLine);
@@ -372,9 +372,9 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Name, Continent  "
+                    "SELECT Name, Continent, Population  "
                             + "FROM country "
-                            + "ORDER BY Continent ASC, Name ASC";
+                            + "ORDER BY Continent ASC, Population ASC";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -390,6 +390,7 @@ public class App {
                 // Initialize with the values in the result set
                 myCountry.name = rset.getString("Name");
                 myCountry.continent = rset.getString("Continent");
+                myCountry.population =rset.getInt("Population");
                 // Add country to the list
                 countries.add(myCountry);
             }
@@ -416,7 +417,7 @@ public class App {
         for (Country co : countries)
         {
             //%-40s
-            System.out.println(String.format("%-50s%s", co.continent,co.name));
+            System.out.println(String.format("%-100s%-50s%s", co.continent,co.name, co.population));
 
         }
     }
