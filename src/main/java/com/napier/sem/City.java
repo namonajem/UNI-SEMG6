@@ -38,4 +38,16 @@ public class City {
         this.district = district;
         this.population = population;
     }
+
+    /**
+     * @return a String representation of the city.
+     */
+    @Override
+    public String toString() {
+        return "ID: " + this.id + "\n"
+                + "Name: " + this.name + "\n"
+                + "Country code: " + this.countryCode + "\n"
+                + "District: " + this.district + "\n"
+                + "Population: " + this.population + "\n";
+    }
 }

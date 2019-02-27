@@ -1,17 +1,41 @@
 package com.napier.sem;
 
+enum Continent {
+    ASIA ("Asia"),
+    EUROPE ("Europe"),
+    NORTH_AMERICA ("North America"),
+    AFRICA ("Africa"),
+    OCEANIA ("Oceania"),
+    ANTARCTICA ("Antarctica"),
+    SOUTH_AMERICA ("South America");
+
+    private final String name;
+
+    Continent(String name) {
+        this.name = name;
+    }
+
+    public String getContinentName() {
+        return this.name;
+    }
+
+    public static Continent toContinent(String strContinent) {
+        return valueOf(strContinent.toUpperCase());
+    }
+}
+
 public class Country {
     // Country Code CHAR(3)
     String code;
     // Country Name
     String name;
     // Continent that this country belongs to
-    String continent; //is enum in DataBase check it
+    Continent continent;
     // Region that country is in
     String region;
     // Surface Area of the country
     Float surfaceArea;
-    // ***************** ADD
+    // Year in which they got their independency
     int indepYear;
     // Population of the country
     int population;
@@ -23,7 +47,7 @@ public class Country {
     Float gnpOld;
     // Local name for country
     String localName;
-    // ************** ADD
+    // Type of government the country has
     String governmentForm;
     // Head of state of country
     String headOfState;
@@ -49,7 +73,7 @@ public class Country {
             Float surfaceArea,
             int indepYear,
             int population,
-            double lifeExpectency,
+            double lifeExpectancy,
             Float gnp,
             Float gnpOld,
             String localName,
@@ -60,12 +84,12 @@ public class Country {
 
         this.code = code;
         this.name = name;
-        this.continent = continent;
+        this.continent = Continent.valueOf(continent);
         this.region = region;
         this.surfaceArea = surfaceArea;
         this.indepYear = indepYear;
         this.population = population;
-        this.lifeExpectancy = lifeExpectency;
+        this.lifeExpectancy = lifeExpectancy;
         this.gnp = gnp;
         this.gnpOld = gnpOld;
         this.localName = localName;
@@ -77,5 +101,27 @@ public class Country {
 
     public int getCapital() {
         return capital;
+    }
+
+    /**
+     * @return a String representation of the country.
+     */
+    @Override
+    public String toString() {
+        return "Code: " + this.code + "\n"
+                + "Name: " + this.name + "\n"
+                + "Continent: " + this.continent + "\n"
+                + "Region: " + this.region + "\n"
+                + "Surface Area: " + this.surfaceArea + "\n"
+                + "Independence year: " + this.indepYear + "\n"
+                + "Population: " + this.population + "\n"
+                + "Life expectancy: " + this.lifeExpectancy + "\n"
+                + "GNP: " + this.gnp + "\n"
+                + "Old GNP: " + this.gnpOld + "\n"
+                + "Local name: " + this.localName+ "\n"
+                + "Government form: " + this.governmentForm + "\n"
+                + "Head of state: " + this.headOfState + "\n"
+                + "Capital ID: " + this.capital + "\n"
+                + "Code 2: " + this.code2 + "\n";
     }
 }

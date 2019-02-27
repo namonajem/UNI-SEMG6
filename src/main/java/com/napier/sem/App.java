@@ -19,10 +19,8 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        // Get all capital cities in database
-        ArrayList<City> cities = a.getAllCapitalCities();
-        // Print results
-        a.printCities(cities);
+        Country myCountry = a.getCountryByCode("RUS");
+        a.printCountry(myCountry);
 
         // Disconnect from database
         a.disconnect();
@@ -77,7 +75,7 @@ public class App {
         }
     }
 
-    // CITIES METHODS
+    // CITIES METHODS -----------------------------------------------------------------------------------
 
     /**
      * Gets all the cities from the world MySQL database.
@@ -156,6 +154,15 @@ public class App {
     }   // METHOD getCityByID()
 
     /**
+     * Prints a all values of a single City.
+     * @param city The city to print.
+     */
+    private void printCity(City city) {
+        // For each city in the list
+        System.out.println(city.toString());
+    }
+
+    /**
      * Prints a list of cities.
      * @param cities The list of cities to print.
      */
@@ -166,7 +173,7 @@ public class App {
         }
     }
 
-    // CAPITAL CITIES METHODS
+    // CAPITAL CITIES METHODS ---------------------------------------------------------------------------
 
     /**
      * Gets all the capital cities from the world MySQL database.
@@ -191,7 +198,7 @@ public class App {
         }
     } // METHOD getAllCapitalCities()
 
-    // COUNTRIES METHODS
+    // COUNTRIES METHODS -----------------------------------------------------------------------------
 
     /**
      * Gets all the countries from the world MySQL database.
@@ -258,8 +265,6 @@ public class App {
                             + "FROM country "
                             + "WHERE Code = '" + code + "'";
 
-            // Print query
-            System.out.println(strSelect);
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a new country with the result values
@@ -267,7 +272,7 @@ public class App {
             if(rset.next()) {
                 myCountry.code = rset.getString("Code");
                 myCountry.name = rset.getString("Name");
-                myCountry.continent = rset.getString("Continent");
+                myCountry.continent = Continent.toContinent(rset.getString("Continent"));
                 myCountry.region = rset.getString("Region");
                 myCountry.surfaceArea = rset.getFloat("SurfaceArea");
                 myCountry.indepYear = rset.getInt("IndepYear");
@@ -289,5 +294,14 @@ public class App {
             return null;
         }
     } // METHOD getCountryByCode()
+
+    /**
+     * Prints a all values of a single Country.
+     * @param country The country to print.
+     */
+    private void printCountry(Country country) {
+        // For each city in the list
+        System.out.println(country.toString());
+    }
 
 } // CLASS App
