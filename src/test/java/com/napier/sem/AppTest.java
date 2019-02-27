@@ -19,8 +19,21 @@ public class AppTest
     }
 
     @Test
-    void printSalariesTestNull()
+    void printCitiesTestNull()
     {
         app.printCities(null);
+    }
+
+    @Test
+    void printCities()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        City city = new City();
+        city.name = "Yaren";
+        city.population = 559;
+        city.countryCode = "test";
+        city.district = "test";
+        city.id = 123;
+        app.printCities(cities);
     }
 }
