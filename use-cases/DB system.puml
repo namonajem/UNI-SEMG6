@@ -4,49 +4,33 @@ actor DA as "Data Analyst"
 
 rectangle Database
 
-rectangle "DB System" {
+rectangle DS as "DB System" {
 
-    usecase UC1 as "GetAllCountries"
-
-    usecase UC2 as "GetAllCities"
-
-    usecase UC3 as "GetCountriesByTerritory"
-
-    usecase UC4 as "GetPopulationInTerritory"
-
-    usecase UC5 as "PeopleLanguageFromSmallest"
-
-    usecase UC6 as "Print all Countries/Cities"
-
-    usecase UC7 as "GetCitiesPopulationFromSmallest"
-
-    usecase UC8 as "GetCitiesPopulationFromLargest"
-
-    usecase UC9 as "GetCitiesInTerritory"
-
-    usecase UC10 as "GetCitiesTopCapitalsInTerritory"
-
-    usecase UC11 as "GetCitiesPopulationInTerritory"
-
+    usecase UC1 as "Print Languages from Most Speakers"
+    usecase UC2 as "Print Population in Cities of Territory"
+    usecase UC3 as "Print Population in Territory"
+    usecase UC4 as "Print Most Populated Cities in Area"
+    usecase UC5 as "Print Capital Cities Ordered from Largest Population"
+    usecase UC6 as "Print Top Populated cities in Territory"
+    usecase UC7 as "Print Cities ordered by most Populated"
+    usecase UC8 as "Print Top Populated Countries in Territory"
+    usecase UC9 as "Print Countries Populated From Largest"
 
     DA - UC1
     DA - UC2
-
-    UC1 ..> UC3 : Extend
-    UC1 ..> UC4 : Include
-    UC1 ..> UC5 : Include
-    UC1 ..> UC6 : Include
-
-    UC2 ..> UC9 : Extend
-    UC2 ..> UC6 : Include
-    UC2 ..> UC8 : Include
-    UC2 ..> UC10 : Include
-    UC2 ..> UC11 : Include
-    UC2 ..> UC7 : Include
+    DA - UC3
+    DA - UC4
+    DA - UC5
+    DA - UC6
+    DA - UC7
+    DA - UC8
+    DA - UC9
 
 
-    UC1 - Database
-    UC2 - Database
+
+
+    DS - Database
+
 }
 
 @enduml
