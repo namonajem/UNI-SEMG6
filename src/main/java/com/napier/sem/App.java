@@ -154,8 +154,14 @@ public class App {
      * Prints a list of cities.
      * @param cities The list of cities to print.
      */
-    private void printCities(ArrayList<City> cities) {
+    public void printCities(ArrayList<City> cities) {
         // For each city in the list
+
+        if (cities == null)
+        {
+            System.out.println("No cities");
+            return;
+        }
         for (City c : cities) {
             System.out.println(String.format("%s %d", c.name, c.population));
         }
