@@ -50,6 +50,13 @@ public class App {
         a.printCountriesInRegionByPop(countriesInRegionByPop, RegionInput);
 
 
+        //Get top N countries by population
+        //ArrayList<Country> topCountriesByPop = a.getTopCountriesByPop(TopNCountries);
+
+        //print results for top n countries by population
+        //a.printTopCountriesByPop(topCountriesByPop, TopNCountries);
+
+
         //Get top N countries in a continent by population
         ArrayList<Country> topCountriesInContinentByPop = a.getTopCountriesInContinentByPop(ContinentInput, TopNCountries);
 
@@ -63,6 +70,11 @@ public class App {
         //print results for top n countries in Region organised by population
         a.printTopCountriesInRegionByPop(topCountriesInRegionByPop, RegionInput, TopNCountries);
 
+        //Get all cities by Population
+        ArrayList<City> allCitiesByPop = a.getAllCitiesByPop();
+
+        //print results for all cities organised by population
+        a.printAllCitiesByPop(allCitiesByPop);
 
         // Disconnect from database
         a.disconnect();
@@ -417,6 +429,114 @@ public class App {
 
     //-----------------------------------------------------------------------------------------------------------
 
+    /* Gets top n countries from the world MySQL database and orders by population.
+
+     * @return A list of top n countries  in the database, or null if there is an error.
+     * @param Integer for top N countries
+
+     */
+    //method to get a list of countries in a continent ordered by population
+    public ArrayList<Country> getTopCountriesByPop( Integer TopNCountries)
+    {
+        try
+        {
+            //create an sql statement
+            Statement stmt = con.createStatement();
+
+            //SQL Statement
+            String strSelect =
+                    "SELECT * "
+                            +"FROM country "
+                            +"ORDER BY Population DESC "
+                            +"LIMIT "+ TopNCountries;
+            //Execute statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the countries
+
+            ArrayList<Country> countries = new ArrayList<>();
+
+            // While there are more countries in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                Country myCountry = new Country(
+
+                        // Initialize with the values in the result set
+
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getFloat("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getInt("LifeExpectancy"),
+                        rset.getFloat("GNP"),
+                        rset.getFloat("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                // Add country to the list
+
+                countries.add(myCountry);
+            }
+
+            return countries;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get  top "+ TopNCountries +" countries  by population");
+
+            return null;
+
+        }
+
+    }
+
+
+    /* Prints a list of top n countries in world
+       /** @param countries The list of countries to print, Integer for number of top Countries.
+       /**/
+    private void printTopCountriesByPop(ArrayList<Country> countries, Integer TopNCountries)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of the top "+ TopNCountries+" countries in the database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The top "+TopNCountries+" populated countries are:"+
+                        newLine);
+
+        Integer topCount = 0;
+        // For each country in the list
+        for (Country co : countries)
+        {
+            topCount++;
+            System.out.println(String.format("%-80d %s%-60d", topCount, co.name, co.population));
+
+        }
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+
+    //-----------------------------------------------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------------------------------------------
+
 
     /* Gets top n countries from a continent in the world MySQL database and order by population.
 
@@ -638,7 +758,89 @@ public class App {
 
     //-----------------------------------------------------------------------------------------------------------
 
-
     //-----------------------------------------------------------------------------------------------------------
+    /* Gets all the cities from the world MySQL database.
+
+     * @return A list of all cities in database, or null if there is an error.
+
+     */
+    //method to get a list of all cities in the database
+    public ArrayList<City> getAllCitiesByPop()
+    {
+        try {
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT * "
+                            +"FROM city "
+                            +"ORDER BY Population DESC";
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the cities
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // While there are more cities in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                City myCity = new City(
+
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+
+                );
+                //add city to list
+                cities.add(myCity);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get cities by population");
+
+            return null;
+
+        }
+
+    } // METHOD getAllCitiesByPop()
+
+    /* Prints a list of cities.
+        /** @param cities The list of cities to print.
+        /**/
+    private void printAllCitiesByPop(ArrayList<City> cities)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of all cities in the database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine);
+
+        // For each country in the list
+        for (City ci : cities)
+        {
+            System.out.println(String.format("%-60s%d", ci.name, ci.population));
+        }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+//-----------------------------------------------------------------------------------------------------------
 
 } // CLASS App
