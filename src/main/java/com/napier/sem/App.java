@@ -76,11 +76,19 @@ public class App {
         //print results for all cities organised by population
         a.printAllCitiesByPop(allCitiesByPop);
 
+
         //Get all cities in a continent by Population
         ArrayList<City> allCitiesInContinentByPop = a.getAllCitiesInContinentByPop(ContinentInput);
 
         //print results for all cities organised by population
         a.printAllCitiesInContinentByPop(allCitiesInContinentByPop, ContinentInput);
+
+
+        //Get all cities in a continent by Population
+        ArrayList<City> allCitiesInRegionByPop = a.getAllCitiesInRegionByPop(RegionInput);
+
+        //print results for all cities organised by population
+        a.printAllCitiesInRegionByPop(allCitiesInRegionByPop, RegionInput);
 
         // Disconnect from database
         a.disconnect();
@@ -926,7 +934,99 @@ public class App {
                         newLine+
                         "-------------------------------------------------------------------------------"+
                         newLine+
-                        "These are the cities in "+continentInput+" organised from highest population to lowest"
+                        "These are the cities in "+continentInput+" organised from highest population to lowest:    "+
+                        newLine
+        );
+
+        // For each country in the list
+        for (City ci : cities)
+        {
+            System.out.println(String.format("%-60s%d", ci.name, ci.population));
+        }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+    /* Gets all the cities from a Region in the world MySQL database.
+
+     * @return A list of all cities in a Region in the database, or null if there is an error.
+
+     */
+    //method to get a list of all cities in the Region in the database
+    public ArrayList<City> getAllCitiesInRegionByPop(String regionInput)
+    {
+        try {
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT city.*, country.Region "
+                            +"FROM city "
+                            +"JOIN country ON "
+                            +"city.CountryCode=country.Code "
+                            +"WHERE country.Region = '"+regionInput+"' "
+                            +"ORDER BY city.Population DESC";
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the cities
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // While there are more cities in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                City myCity = new City(
+
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+
+                );
+                //add city to list
+                cities.add(myCity);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get cities in Region by population");
+
+            return null;
+
+        }
+
+    } // METHOD getAllCitiesInRegionByPop()
+
+    /* Prints a list of cities.
+        /** @param cities The list of cities to print.
+        /**/
+    private void printAllCitiesInRegionByPop(ArrayList<City> cities, String regionInput)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of all cities in region-"+regionInput+" from the world database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "These are the cities in region-"+regionInput+" organised from highest population to lowest:    "+
+                        newLine
         );
 
         // For each country in the list
