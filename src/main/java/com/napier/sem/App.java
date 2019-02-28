@@ -50,13 +50,18 @@ public class App {
         a.printCountriesInRegionByPop(countriesInRegionByPop, RegionInput);
 
 
-        //Get top N countries in a continent by popultion
+        //Get top N countries in a continent by population
         ArrayList<Country> topCountriesInContinentByPop = a.getTopCountriesInContinentByPop(ContinentInput, TopNCountries);
 
-        //print results for top n countries in Region organised by population
+        //print results for top n countries in Continent organised by population
         a.printTopCountriesInContinentByPop(topCountriesInContinentByPop, ContinentInput, TopNCountries);
 
 
+        //Get top N countries in a region by population
+        ArrayList<Country> topCountriesInRegionByPop = a.getTopCountriesInRegionByPop(RegionInput, TopNCountries);
+
+        //print results for top n countries in Region organised by population
+        a.printTopCountriesInRegionByPop(topCountriesInRegionByPop, RegionInput, TopNCountries);
 
 
         // Disconnect from database
@@ -413,10 +418,10 @@ public class App {
     //-----------------------------------------------------------------------------------------------------------
 
 
-    /* Gets all the countries from a continent in the world MySQL database and order by population.
+    /* Gets top n countries from a continent in the world MySQL database and order by population.
 
-     * @return A list of all countries in database, or null if there is an error.
-     * @param Continent to find countries for only selected continent
+     * @return A list of top n countries in a continent in the database, or null if there is an error.
+     * @param Continent to find top n countries for only selected continent
 
      */
     //method to get a list of countries in a continent ordered by population
@@ -520,5 +525,120 @@ public class App {
                 "-------------------------------------------------------------------------------"+
                         newLine);
     }
+
+    //-----------------------------------------------------------------------------------------------------------
+
+
+    //-----------------------------------------------------------------------------------------------------------
+
+    /* Gets top n countries from a region in the world MySQL database and order by population.
+
+     * @return A list of top n countries in a region in the database, or null if there is an error.
+     * @param Continent to find top n countries for only selected continent
+
+     */
+    //method to get a list of countries in a region ordered by population
+    public ArrayList<Country> getTopCountriesInRegionByPop(String myRegion, Integer TopNCountries)
+    {
+        try
+        {
+            //create an sql statement
+            Statement stmt = con.createStatement();
+
+            //SQL Statement
+            String strSelect =
+                    "SELECT * "
+                            +"FROM country "
+                            +"WHERE Region = '" +myRegion+ "' "
+                            +"ORDER BY Population DESC "
+                            +"LIMIT "+ TopNCountries;
+            //Execute statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the countries
+
+            ArrayList<Country> countries = new ArrayList<>();
+
+            // While there are more countries in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                Country myCountry = new Country(
+
+                        // Initialize with the values in the result set
+
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getFloat("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getInt("LifeExpectancy"),
+                        rset.getFloat("GNP"),
+                        rset.getFloat("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                // Add country to the list
+
+                countries.add(myCountry);
+            }
+
+            return countries;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get  top "+ TopNCountries +" countries in Region-"+ myRegion+ " by population");
+
+            return null;
+
+        }
+
+    }
+
+
+    /* Prints a list of countries in a region
+       /** @param countries The list of countries to print, string the Region to search.
+       /**/
+    private void printTopCountriesInRegionByPop(ArrayList<Country> countries, String RegionInput, Integer TopNCountries)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of the top "+ TopNCountries+" countries in Region-"+RegionInput+" in the database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The top "+TopNCountries+" populated countries in "+RegionInput+" are:"+
+                        newLine);
+
+        Integer topCount = 0;
+        // For each country in the list
+        for (Country co : countries)
+        {
+            topCount++;
+            System.out.println(String.format("%-80d%-60s%d", topCount, co.name, co.population));
+
+        }
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+
+    //-----------------------------------------------------------------------------------------------------------
+
+
+    //-----------------------------------------------------------------------------------------------------------
 
 } // CLASS App
