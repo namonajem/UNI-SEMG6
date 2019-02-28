@@ -22,44 +22,20 @@ public class App {
         // Connect to database
         a.connect();
 
-        String ContinentInput = "ASIA";
+        String ContinentInput = "AFRICA";
 
         //Get all countries by Population
-        ArrayList<Country> countriesByPop = a.getAllCountriesByPop();
-        //print results for all countries organsied by population
-        System.out.println(
-                "-------------------------------------------------------------------------------"+
-                        newLine+
-                        "The following is a list of all countries in the database organised by population "+
-                        "in descending numerical order"+
-                        newLine+
-                        "-------------------------------------------------------------------------------"+
-                        newLine);
-        a.printCountriesByPop(countriesByPop);
-        System.out.println(
-                "-------------------------------------------------------------------------------"+
-                        newLine);
+        //ArrayList<Country> countriesByPop = a.getAllCountriesByPop();
+
+        //print results for all countries organised by population
+        //a.printCountriesByPop(countriesByPop);
 
 
         //Get all countries in a continent by Population
         ArrayList<Country> countriesInContinentByPop = a.getCountriesInContinentByPop(ContinentInput);
+
         //print results for all countries in a continent organised by population
-        System.out.println(
-                "-------------------------------------------------------------------------------"+
-                        newLine+
-                        "The following is a list of all countries in a continent in the database organised by population "+
-                        "in descending numerical order"+
-                        newLine+
-                        "-------------------------------------------------------------------------------"+
-                        newLine+
-                        "Countries in "+ContinentInput+ ":"+
-                        newLine);
-        a.printCountriesInContinentByPop(countriesInContinentByPop);
-        System.out.println(
-                "-------------------------------------------------------------------------------"+
-                        newLine);
-
-
+        a.printCountriesInContinentByPop(countriesInContinentByPop, ContinentInput);
 
 
 
@@ -148,11 +124,15 @@ public class App {
 
             //SQL statement
             String strSelect =
-                            "SELECT * FROM country "
-                            + "ORDER BY Population DESC";
+                    "SELECT * "
+                            +"FROM country "
+                            +"WHERE Continent = *"
+                            +"ORDER BY Population DESC";
             // Execute SQL statement
 
             ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the countries
 
             ArrayList<Country> countries = new ArrayList<>();
 
@@ -166,21 +146,21 @@ public class App {
 
                         // Initialize with the values in the result set
 
-                        rset.getString("Code"),
-                        rset.getString("Name"),
-                        rset.getString("Continent"),
-                        rset.getString("Region"),
-                        rset.getFloat("SurfaceArea"),
-                        rset.getInt("IndepYear"),
-                        rset.getInt("Population"),
-                        rset.getInt("LifeExpectancy"),
-                        rset.getFloat("GNP"),
-                        rset.getFloat("GNPOld"),
-                        rset.getString("LocalName"),
-                        rset.getString("GovernmentForm"),
-                        rset.getString("HeadOfState"),
-                        rset.getInt("Capital"),
-                        rset.getString("Code2")
+                rset.getString("Code"),
+                rset.getString("Name"),
+                rset.getString("Continent"),
+                rset.getString("Region"),
+                rset.getFloat("SurfaceArea"),
+                rset.getInt("IndepYear"),
+                rset.getInt("Population"),
+                rset.getInt("LifeExpectancy"),
+                rset.getFloat("GNP"),
+                rset.getFloat("GNPOld"),
+                rset.getString("LocalName"),
+                rset.getString("GovernmentForm"),
+                rset.getString("HeadOfState"),
+                rset.getInt("Capital"),
+                rset.getString("Code2")
                 );
                 //add country to list
                 countries.add(myCountry);
@@ -205,12 +185,24 @@ public class App {
         /**/
     private void printCountriesByPop(ArrayList<Country> countries)
     {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                newLine+
+                "The following is a list of all countries in the database organised by population "+
+                "in descending numerical order"+
+                newLine+
+                "-------------------------------------------------------------------------------"+
+                newLine);
+
         // For each country in the list
         for (Country co : countries)
         {
             System.out.println(String.format("%-60s%d", co.name, co.population));
-
         }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                newLine);
     }
 //-----------------------------------------------------------------------------------------------------------
 
@@ -296,14 +288,28 @@ public class App {
     /* Prints a list of countries.
        /** @param countries The list of countries to print.
        /**/
-    private void printCountriesInContinentByPop(ArrayList<Country> countries)
+    private void printCountriesInContinentByPop(ArrayList<Country> countries, String ContinentInput)
     {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                newLine+
+                "The following is a list of all countries in a continent in the database organised by population "+
+                "in descending numerical order"+
+                newLine+
+                "-------------------------------------------------------------------------------"+
+                newLine+
+                "Countries in "+ContinentInput+ ":"+
+                newLine);
+
         // For each country in the list
         for (Country co : countries)
         {
             System.out.println(String.format("%-60s%d", co.name, co.population));
 
         }
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                newLine);
     }
 //-----------------------------------------------------------------------------------------------------------
 
