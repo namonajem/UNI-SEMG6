@@ -148,8 +148,7 @@ public class App {
 
             //SQL statement
             String strSelect =
-                    "SELECT * "
-                            + "FROM country "
+                            "SELECT * FROM country "
                             + "ORDER BY Population DESC";
             // Execute SQL statement
 
@@ -235,8 +234,8 @@ public class App {
 
             //SQL Statement
             String strSelect =
-                    "SELECT *"
-                    +"FROM country"
+                    "SELECT * "
+                    +"FROM country "
                     +"WHERE Continent = '" +myContinent.getName() + "' "
                     +"ORDER BY Population DESC";
             //Execute statement
