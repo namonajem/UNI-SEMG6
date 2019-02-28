@@ -49,7 +49,7 @@ public class Country {
             Float surfaceArea,
             int indepYear,
             int population,
-            int lifeExpectency,
+            int lifeExpectancy,
             Float gnp,
             Float gnpoId,
             String localName,
@@ -65,7 +65,7 @@ public class Country {
         this.surfaceArea = surfaceArea;
         this.indepYear = indepYear;
         this.population = population;
-        this.lifeExpectancy = lifeExpectency;
+        this.lifeExpectancy = lifeExpectancy;
         this.gnp = gnp;
         this.gnpoId = gnpoId;
         this.localName = localName;

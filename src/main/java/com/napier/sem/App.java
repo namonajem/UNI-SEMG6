@@ -22,36 +22,23 @@ public class App {
         // Connect to database
         a.connect();
 
-        // Get all cities in database
-        ArrayList<City> cities = a.getAllCities();
-        // Print results for all cities
-        System.out.println(
-                "-------------------------------------------------------------------------------"+
-                newLine+
-                "The following is a list of all cities in the database"+
-                newLine+
-                "-------------------------------------------------------------------------------"+
-                newLine);
-        a.printCities(cities);
-        System.out.println(
-                "-------------------------------------------------------------------------------"+
-                newLine);
-
-        // Get all countries in database
-        ArrayList<Country> countries = a.getAllCountries();
-        // Print results for all countries
-        System.out.println(
-                "-------------------------------------------------------------------------------"+
-                newLine+
-                "The following is a list of all countries in the database"+
-                newLine+
-                "-------------------------------------------------------------------------------"+
-                newLine);
-        a.printCountries(countries);
-        System.out.println(
-                "-------------------------------------------------------------------------------"+
-                newLine);
-
+    /*
+                Get all cities in database
+                ArrayList<City> cities = a.getAllCities();
+                // Print results for all cities
+                System.out.println(
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of all cities in the database"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine);
+                a.printCities(cities);
+                System.out.println(
+                        "-------------------------------------------------------------------------------"+
+                        newLine);
+    */
+    /*
         //Get all countries by Continent
         ArrayList<Country> countriesByContinent = a.getCountriesByContinent();
         //print results for all countries in a continent ordered by population asc
@@ -67,12 +54,12 @@ public class App {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
                 newLine);
-
+*/
 
 
 
         //Get all countries by Population
-        ArrayList<Country> countriesByPop = a.getCountriesByPop();
+        ArrayList<Country> countriesByPop = a.getAllCountriesByPop();
         //print results for all countries organsied by population
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -211,7 +198,7 @@ public class App {
 
      */
     //method to get a list of all countries in the database
-    public ArrayList<Country> getAllCountries()
+    public ArrayList<Country> getAllCountriesByPop()
     {
         try
         {
@@ -220,7 +207,9 @@ public class App {
 
             //SQL statement
             String strSelect =
-                    "SELECT Name FROM country";
+                    "SELECT * "
+                            +"FROM country "
+                            +"ORDER BY Population DESC";
             // Execute SQL statement
 
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -236,12 +225,26 @@ public class App {
 
                 // Create a new country
 
-                Country myCountry = new Country();
+                Country myCountry = new Country(
 
                 // Initialize with the values in the result set
 
-                myCountry.name = rset.getString("Name");
-
+                rset.getString("Code"),
+                rset.getString("Name"),
+                rset.getString("Continent"),
+                rset.getString("Region"),
+                rset.getFloat("SurfaceArea"),
+                rset.getInt("IndepYear"),
+                rset.getInt("Population"),
+                rset.getInt("LifeExpectancy"),
+                rset.getFloat("GNP"),
+                rset.getFloat("GNPOld"),
+                rset.getString("LocalName"),
+                rset.getString("GovernmentForm"),
+                rset.getString("HeadOfState"),
+                rset.getInt("Capital"),
+                rset.getString("Code2")
+                );
                 // Add country to the list
 
                 countries.add(myCountry);
@@ -257,23 +260,23 @@ public class App {
 
             System.out.println(e.getMessage());
 
-            System.out.println("Failed to get countries");
+            System.out.println("Failed to get countries by population");
 
             return null;
 
         }
 
-    } // METHOD getAllCountries()
+    } // METHOD getAllCountriesByPop()
 
     /* Prints a list of countries.
         /** @param countries The list of countries to print.
         /**/
-    private void printCountries(ArrayList<Country> countries)
+    private void printCountriesByPop(ArrayList<Country> countries)
     {
         // For each country in the list
         for (Country co : countries)
         {
-            System.out.println(String.format("%s", co.name));
+            System.out.println(String.format("%-60s%d", co.name, co.population));
 
         }
     }
@@ -284,78 +287,6 @@ public class App {
      * @return A list of all countries in database, or null if there is an error.
 
      */
-    //method to get a list of all countries in the database from highest population to lowest
-    public ArrayList<Country> getCountriesByPop()
-    {
-        try
-        {
-            //Create an SQL Statement
-            Statement stmt = con.createStatement();
-
-            //SQL statement
-            String strSelect =
-                    "SELECT Name, Population "
-                        + "FROM country "
-                        + "ORDER BY Population DESC";
-
-            // Execute SQL statement
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Create a List for the countries
-
-            ArrayList<Country> countries = new ArrayList<>();
-
-            // While there are more countries in the result set
-
-            while (rset.next())
-            {
-
-                // Create a new country
-
-                Country myCountry = new Country();
-
-                // Initialize with the values in the result set
-
-                myCountry.name = rset.getString("Name");
-                myCountry.population = rset.getInt("Population");
-
-                // Add country to the list
-
-                countries.add(myCountry);
-
-            }
-
-            return countries;
-
-        }
-
-        catch (Exception e)
-        {
-
-            System.out.println(e.getMessage());
-
-            System.out.println("Failed to get countries ordered by population");
-
-            return null;
-
-        }
-
-    } // METHOD countriesByPop()
-
-    /* Prints a list of countries ordered by Population.
-    /** @param countries The list of countries to print.
-    /**/
-    private void printCountriesByPop(ArrayList<Country> countries)
-    {
-        // For each country in the list
-        for (Country co : countries)
-        {
-            //%-40s
-            System.out.println(String.format("%-50s%s", co.name,co.population));
-
-        }
-    }
 
     /* Gets all the countries by continent from the world MySQL database.
 
@@ -365,6 +296,7 @@ public class App {
     //method to get a list of all countries and Continents in the database
 
 
+    /*
     public ArrayList<Country> getCountriesByContinent()
     {
         try {
@@ -407,6 +339,7 @@ public class App {
             return null;
         }
     }
+*/
 
     /* Prints a list of countries ordered by Continent.
     /** @param countries The list of countries to print.
