@@ -27,7 +27,9 @@ public class App {
         String ContinentInput = "AFRICA";
         String RegionInput = "Central Africa";
         Integer TopNCountries = 5;
+        Integer TopNCitites = 10;
         String CountryInput = "Germany";
+        String DistrictInput = "Buenos Aires";
 
         //Get all countries by Population
         //ArrayList<Country> countriesByPop = a.getAllCountriesByPop();
@@ -96,6 +98,46 @@ public class App {
 
         //print results for all cities in a country organised by population
         a.printAllCitiesInCountryByPop(allCitiesInCountryByPop, CountryInput);
+
+
+        //Get all cities in a District by Population
+        ArrayList<City> allCitiesInDistrictByPop = a.getAllCitiesInDistrictByPop(DistrictInput);
+
+        //print results for all cities in a country organised by population
+        a.printAllCitiesInDistrictByPop(allCitiesInDistrictByPop, DistrictInput);
+
+        //Get top n cities by Population
+        ArrayList<City> topCitiesByPop = a.getTopCitiesByPop(TopNCitites);
+
+        //print results for top n cities organised by population
+        a.printTopCitiesByPop(topCitiesByPop, TopNCitites);
+
+
+        //Get top n cities in a continent by Population
+        ArrayList<City> topCitiesInContinentByPop = a.getTopCitiesInContinentByPop(ContinentInput, TopNCitites);
+
+        //print results for top n cities organised by population
+        a.printTopCitiesInContinentByPop(topCitiesInContinentByPop, ContinentInput, TopNCitites);
+
+
+        //Get top n cities in a continent by Population
+        ArrayList<City> topCitiesInRegionByPop = a.getTopCitiesInRegionByPop(RegionInput, TopNCitites);
+
+        //print results for top n cities organised by population
+        a.printTopCitiesInRegionByPop(topCitiesInRegionByPop, RegionInput, TopNCitites);
+
+        //Get top n cities in a country by Population
+        ArrayList<City> topCitiesInCountryByPop = a.getTopCitiesInCountryByPop(CountryInput, TopNCitites);
+
+        //print results for top n cities in a country organised by population
+        a.printTopCitiesInCountryByPop(topCitiesInCountryByPop, CountryInput, TopNCitites);
+
+
+        //Get top n cities in a District by Population
+        ArrayList<City> topCitiesInDistrictByPop = a.getTopCitiesInDistrictByPop(DistrictInput, TopNCitites);
+
+        //print results for top n cities in a country organised by population
+        a.printTopCitiesInDistrictByPop(topCitiesInDistrictByPop, DistrictInput, TopNCitites);
 
         // Disconnect from database
         a.disconnect();
@@ -546,7 +588,7 @@ public class App {
         for (Country co : countries)
         {
             topCount++;
-            System.out.println(String.format("%-80d %s%-60d", topCount, co.name, co.population));
+            System.out.println(String.format("%d %-80s%-60d", topCount, co.name, co.population));
 
         }
         System.out.println(
@@ -659,7 +701,7 @@ public class App {
         for (Country co : countries)
         {
             topCount++;
-            System.out.println(String.format("%-80d%-60s%d", topCount, co.name, co.population));
+            System.out.println(String.format("%d %-60s%d", topCount, co.name, co.population));
 
         }
         System.out.println(
@@ -769,7 +811,7 @@ public class App {
         for (Country co : countries)
         {
             topCount++;
-            System.out.println(String.format("%-80d%-60s%d", topCount, co.name, co.population));
+            System.out.println(String.format("%d %-60s%d", topCount, co.name, co.population));
 
         }
         System.out.println(
@@ -865,12 +907,12 @@ public class App {
 //-----------------------------------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------------------------------
-    /* Gets all the cities from the world MySQL database.
+    /* Gets all the cities in a continent from the world MySQL database.
 
      * @return A list of all cities in database, or null if there is an error.
 
      */
-    //method to get a list of all cities in the database
+    //method to get a list of all cities in a continent in the database
     public ArrayList<City> getAllCitiesInContinentByPop(String continentInput)
     {
         try {
@@ -1131,6 +1173,559 @@ public class App {
         for (City ci : cities)
         {
             System.out.println(String.format("%-60s%d", ci.name, ci.population));
+        }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+    /* Gets all the cities in a district from the world MySQL database.
+
+     * @return A list of all cities in a district in database, or null if there is an error.
+
+     */
+    //method to get a list of all cities in the database
+    public ArrayList<City> getAllCitiesInDistrictByPop(String districtInput)
+    {
+        try {
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT * "
+                            +"FROM city "
+                            +"WHERE District = '"+districtInput+"' "
+                            +"ORDER BY Population DESC";
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the cities
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // While there are more cities in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                City myCity = new City(
+
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+
+                );
+                //add city to list
+                cities.add(myCity);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get cities in district - "+districtInput+" by population");
+
+            return null;
+
+        }
+
+    } // METHOD getAllCitiesInDistrictByPop()
+
+    /* Prints a list of cities.
+        /** @param cities The list of cities to print.
+        /**/
+    private void printAllCitiesInDistrictByPop(ArrayList<City> cities, String districtInput)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of all cities in a district in the database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "These are the cities in district - "+districtInput+" organised from highest population to lowest:    "
+        );
+
+        // For each country in the list
+        for (City ci : cities)
+        {
+            System.out.println(String.format("%-60s%d", ci.name, ci.population));
+        }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+    /* Gets the top n cities from the world MySQL database.
+
+     * @return A list of the top n cities in database, or null if there is an error.
+
+     */
+    //method to get a list of the top cities in the database
+    public ArrayList<City> getTopCitiesByPop(Integer numResults)
+    {
+        try {
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT * "
+                            +"FROM city "
+                            +"ORDER BY Population DESC "
+                            +"LIMIT "+ numResults;
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the cities
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // While there are more cities in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                City myCity = new City(
+
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+
+                );
+                //add city to list
+                cities.add(myCity);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get top "+numResults+" cities in the world by population");
+
+            return null;
+
+        }
+
+    } // METHOD getTopCitiesByPop()
+
+    /* Prints a list of cities.
+        /** @param cities The list of cities to print.
+        /**/
+    private void printTopCitiesByPop(ArrayList<City> cities,Integer numResults)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of the top "+numResults+" cities in the database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "Top "+numResults+" cities in the world: "
+        );
+
+        Integer topCount = 0;
+        // For each country in the list
+        for (City ci : cities)
+        {
+            topCount++;
+            System.out.println(String.format("%d %-60s%d",topCount, ci.name, ci.population));
+        }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+    /* Gets the top n the cities in a continent from the world MySQL database.
+
+     * @return A list of the top n cities in database, or null if there is an error.
+
+     */
+    //method to get a list of the top n cities in a continent in the database
+    public ArrayList<City> getTopCitiesInContinentByPop(String continentInput,Integer numResults)
+    {
+        try {
+            //Transform parameter into Continent object
+            Continent myContinent = Continent.toContinent(continentInput);
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT city.*, country.Continent "
+                            +"FROM city "
+                            +"JOIN country ON "
+                            +"city.CountryCode=country.Code "
+                            +"WHERE country.Continent = '"+myContinent+"' "
+                            +"ORDER BY city.Population DESC "
+                            +"LIMIT "+ numResults;
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the cities
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // While there are more cities in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                City myCity = new City(
+
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+
+                );
+                //add city to list
+                cities.add(myCity);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get top N cities in continent by population");
+
+            return null;
+
+        }
+
+    } // METHOD getTopCitiesInContinentByPop()
+
+    /* Prints a list of cities.
+        /** @param cities The list of cities to print.
+        /**/
+    private void printTopCitiesInContinentByPop(ArrayList<City> cities, String continentInput, Integer numResults)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of the top "+numResults+" cities in "+continentInput+" from the world database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "These are the top "+numResults+" cities in "+continentInput+" organised from highest population to lowest:    "+
+                        newLine
+        );
+
+        Integer topCount = 0;
+        // For each country in the list
+        for (City ci : cities)
+        {
+            topCount++;
+            System.out.println(String.format("%d %-60s%d",topCount, ci.name, ci.population));
+        }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+    /* Gets the top n the cities from a Region in the world MySQL database.
+
+     * @return A list of the top n cities in a Region in the database, or null if there is an error.
+
+     */
+    //method to get a list of the top n cities in the Region in the database
+    public ArrayList<City> getTopCitiesInRegionByPop(String regionInput,Integer numResults)
+    {
+        try {
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT city.*, country.Region "
+                            +"FROM city "
+                            +"JOIN country ON "
+                            +"city.CountryCode=country.Code "
+                            +"WHERE country.Region = '"+regionInput+"' "
+                            +"ORDER BY city.Population DESC "
+                            +"LIMIT "+numResults;
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the cities
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // While there are more cities in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                City myCity = new City(
+
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+
+                );
+                //add city to list
+                cities.add(myCity);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get top "+numResults+" cities in Region by population");
+
+            return null;
+
+        }
+
+    } // METHOD getTopCitiesInRegionByPop()
+
+    /* Prints a list of cities.
+        /** @param cities The list of cities to print.
+        /**/
+    private void printTopCitiesInRegionByPop(ArrayList<City> cities, String regionInput, Integer numResults)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of the top "+numResults+" cities in region-"+regionInput+" from the world database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "These are the top "+numResults+" cities in region-"+regionInput+" organised from highest population to lowest:    "+
+                        newLine
+        );
+
+        Integer topCount = 0;
+        // For each country in the list
+        for (City ci : cities)
+        {
+            topCount++;
+            System.out.println(String.format("%d %-60s%d",topCount, ci.name, ci.population));
+        }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+    /* Gets the top n the cities from a country in the world MySQL database.
+
+     * @return A list of the top n cities in a country in the database, or null if there is an error.
+
+     */
+    //method to get a list of the top n cities in the country in the database
+    public ArrayList<City> getTopCitiesInCountryByPop(String countryInput,Integer numResults)
+    {
+        try {
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT city.*, country.Name "
+                            +"FROM city "
+                            +"JOIN country ON "
+                            +"city.CountryCode=country.Code "
+                            +"WHERE country.Name = '"+countryInput+"' "
+                            +"ORDER BY city.Population DESC "
+                            +"LIMIT "+numResults;
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the cities
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // While there are more cities in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                City myCity = new City(
+
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+
+                );
+                //add city to list
+                cities.add(myCity);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get top " +numResults+ " cities in country "+countryInput+" by population");
+
+            return null;
+
+        }
+
+    } // METHOD getTopCitiesInCountryByPop()
+
+    /* Prints a list of cities.
+        /** @param cities The list of cities to print.
+        /**/
+    private void printTopCitiesInCountryByPop(ArrayList<City> cities, String countryInput, Integer numResults)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of top "+numResults+" cities in country-"+countryInput+" from the world database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "These are the top "+numResults+" cities in country-"+countryInput+" organised from highest population to lowest:    "+
+                        newLine
+        );
+
+        Integer topCount = 0;
+        // For each country in the list
+        for (City ci : cities)
+        {
+            topCount++;
+            System.out.println(String.format("%d %-60s%d", topCount,ci.name, ci.population));
+        }
+
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine);
+    }
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+    /* Gets the top n the cities in a district from the world MySQL database.
+
+     * @return A list of the top n cities in a district in database, or null if there is an error.
+
+     */
+//method to get a list of the top n cities in the database
+    public ArrayList<City> getTopCitiesInDistrictByPop(String districtInput,Integer numResults)
+    {
+        try {
+            //Create an SQL Statement
+            Statement stmt = con.createStatement();
+
+            //SQL statement
+            String strSelect =
+                    "SELECT * "
+                            +"FROM city "
+                            +"WHERE District = '"+districtInput+"' "
+                            +"ORDER BY Population DESC "
+                            +"LIMIT "+numResults;
+            // Execute SQL statement
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a List for the cities
+
+            ArrayList<City> cities = new ArrayList<>();
+
+            // While there are more cities in the result set
+
+            while (rset.next()) {
+
+                // Create a new country
+
+                City myCity = new City(
+
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+
+                );
+                //add city to list
+                cities.add(myCity);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(e.getMessage());
+
+            System.out.println("Failed to get top "+numResults+" cities in district - "+districtInput+" by population");
+
+            return null;
+
+        }
+
+    } // METHOD getTopCitiesInDistrictByPop()
+
+    /* Prints a list of cities.
+        /** @param cities The list of cities to print.
+        /**/
+    private void printTopCitiesInDistrictByPop(ArrayList<City> cities, String districtInput,Integer numResults)
+    {
+        System.out.println(
+                "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "The following is a list of top "+numResults+" cities in a district in the database organised by population "+
+                        "in descending numerical order"+
+                        newLine+
+                        "-------------------------------------------------------------------------------"+
+                        newLine+
+                        "These are the top "+numResults+" cities in district - "+districtInput+" organised from highest population to lowest:    "
+        );
+
+        Integer topCount = 0;
+        // For each country in the list
+        for (City ci : cities)
+        {
+            topCount++;
+            System.out.println(String.format("%d %-60s%d", topCount, ci.name, ci.population));
         }
 
         System.out.println(
