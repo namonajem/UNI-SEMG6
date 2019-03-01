@@ -19,7 +19,7 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        ArrayList<City> myList = a.getCapitalCitiesByRegion("caribbean");
+        ArrayList<City> myList = a.getCapitalCityByCountry("united states");
         a.printCities(myList);
 
         // Disconnect from database
@@ -277,11 +277,8 @@ public class App {
      * Gets all the capital cities from countries in a given continent.     *
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCitiesByRegion(String region) {
+    public ArrayList<City> getCapitalCitiesByRegion(String myRegion) {
         try {
-            // Transform param into title case string, it could be written different as we need
-            String myRegion = toTitleCase(region);
-
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
@@ -315,6 +312,46 @@ public class App {
             return null;
         }
     } // METHOD getCapitalCitiesByRegion()
+
+    /**
+     * Gets all the capital cities from countries in a given continent.     *
+     * @return A list of all capital cities in a continent, or null if there is an error.
+     */
+    public ArrayList<City> getCapitalCityByCountry(String myCountry) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM city, country "
+                            + "WHERE city.CountryCode = '" + getCountryCodeByName(myCountry) +  "' "
+                            + "AND city.ID = country.Capital "
+                            + "ORDER BY city.Population DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create list for capital cities
+            ArrayList<City> capitalCities = new ArrayList<>();
+            while(rset.next()) {
+                City myCity = new City(
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+                );
+                capitalCities.add(myCity);
+            }
+            return capitalCities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get capital cities by country");
+            return null;
+        }
+    } // METHOD getCapitalCityByCountry()
 
     // COUNTRIES METHODS -----------------------------------------------------------------------------
 
@@ -465,6 +502,37 @@ public class App {
             return null;
         }
     } // METHOD getCountryByCode()
+
+    /**
+     * Gets the Country Code from the world MySQL database which has a given Name.     *
+     * @param name the name of the Country we want to get the code of.
+     * @return The code.
+     */
+    public String getCountryCodeByName(String name) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Code "
+                            + "FROM country "
+                            + "WHERE Name = '" + name + "'";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create the result var
+            String code = null;
+            if(rset.next()) {
+                code = rset.getString("Code");
+            }
+            return code;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country code by name");
+            return null;
+        }
+    } // METHOD getCountryCodeByName()
 
     /**
      * Prints a all values of a single Country.
