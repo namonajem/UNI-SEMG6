@@ -20,7 +20,7 @@ public class App {
 
         // TEST IMPLEMENTATION
         ArrayList<City> myList = a.getTopNCapitalCities(10);
-        a.printCities(myList);
+        a.printCitiesReport(myList, "TOP N CAPITAL CITIES");
 
         // Disconnect from database
         a.disconnect();
@@ -182,10 +182,18 @@ public class App {
      * Prints a list of cities.
      * @param cities The list of cities to print.
      */
-    private void printCities(ArrayList<City> cities) {
-        // For each city in the list
+    private void printCitiesReport(ArrayList<City> cities, String reportTitle) {
+        // Print report header
+        String s = "LIST OF " + reportTitle + "\n";
+        System.out.println(s + "\n"
+                + " nº    ID    Name   Country code    District    Population\n"
+                + "----------------------------------------------------------------------------------"
+        );
+        int i = 1;
+        // Print each city in the list
         for (City c : cities) {
-            System.out.println(String.format("%s %d", c.name, c.population));
+            System.out.println(String.format("%d. - %d %s %s %s %d", i, c.id, c.name, c.countryCode, c.district, c.population));
+            i++;
         }
     }
 
