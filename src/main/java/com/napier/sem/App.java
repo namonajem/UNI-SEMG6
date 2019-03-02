@@ -19,8 +19,8 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        ArrayList<City> myList = a.getAllCapitalCities();
-        a.printCitiesReport(myList, "WORLD CAPITAL CITIES");
+        ArrayList<City> myList = a.getTopNCapitalCitiesByContinent(25,"north america");
+        a.printCitiesReport(myList, "TOP 25 CAPITAL CITIES OF NORTH AMERICA");
 
         // Disconnect from database
         a.disconnect();
@@ -323,8 +323,8 @@ public class App {
     } // METHOD getCapitalCitiesByRegion()
 
     /**
-     * Gets all the capital cities from the world MySQL database.
-     * @return A list of all capital cities in database, or null if there is an error.
+     * Gets the top N populated capital cities from the world MySQL database.
+     * @return A list of the top N populated in database, or null if there is an error.
      */
     public ArrayList<City> getTopNCapitalCities(int n) {
         try {
@@ -361,6 +361,47 @@ public class App {
             return null;
         }
     } // METHOD getTopNCapitalCities()
+
+    /**
+     * Gets the top N populated in a given continent.
+     * @return A list of the top N populated in a given continent, or null if there is an error.
+     */
+    public ArrayList<City> getTopNCapitalCitiesByContinent(int n, String continent) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM city, country "
+                            + "WHERE country.Continent = '" + continent +  "' "
+                            + "AND city.ID = country.Capital "
+                            + "ORDER BY city.Population DESC "
+                            + "LIMIT " + n;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create list for capital cities
+            ArrayList<City> capitalCities = new ArrayList<>();
+            while(rset.next()) {
+                City myCity = new City(
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+                );
+                capitalCities.add(myCity);
+            }
+            return capitalCities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top N capital cities by continent");
+            return null;
+        }
+    } // METHOD getTopNCapitalCitiesByContinent()
 
     // COUNTRIES METHODS -----------------------------------------------------------------------------
 
