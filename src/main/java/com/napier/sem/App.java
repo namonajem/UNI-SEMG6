@@ -234,7 +234,7 @@ public class App {
      * Gets all the capital cities from countries in a given continent.     *
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCitiesByContinent(String myContinent) {
+    public ArrayList<City> getCapitalCitiesByContinent(String continent) {
         try {
 
             // Create an SQL statement
@@ -243,7 +243,7 @@ public class App {
             String strSelect =
                     "SELECT * "
                             + "FROM city, country "
-                            + "WHERE country.Continent = '" + myContinent +  "' "
+                            + "WHERE country.Continent = '" + continent +  "' "
                             + "AND city.ID = country.Capital "
                             + "ORDER BY city.Population DESC";
 
@@ -275,7 +275,7 @@ public class App {
      * Gets all the capital cities from countries in a given continent.     *
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCitiesByRegion(String myRegion) {
+    public ArrayList<City> getCapitalCitiesByRegion(String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -283,7 +283,7 @@ public class App {
             String strSelect =
                     "SELECT * "
                             + "FROM city, country "
-                            + "WHERE country.Region = '" + myRegion +  "' "
+                            + "WHERE country.Region = '" + region +  "' "
                             + "AND city.ID = country.Capital "
                             + "ORDER BY city.Population DESC";
 
@@ -315,7 +315,7 @@ public class App {
      * Gets all the capital cities from countries in a given continent.     *
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCityByCountry(String myCountry) {
+    public ArrayList<City> getCapitalCityByCountry(String country) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -323,7 +323,7 @@ public class App {
             String strSelect =
                     "SELECT * "
                             + "FROM city, country "
-                            + "WHERE city.CountryCode = '" + getCountryCodeByName(myCountry) +  "' "
+                            + "WHERE city.CountryCode = '" + getCountryCodeByName(country) +  "' "
                             + "AND city.ID = country.Capital "
                             + "ORDER BY city.Population DESC";
 
@@ -410,16 +410,13 @@ public class App {
      */
     public ArrayList<Country> getCountriesByContinent(String continent) {
         try {
-            // Transform param into Continent object, it could be written different as we need
-            Continent myContinent = Continent.toContinent(continent);
-
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
                     "SELECT * "
                             + "FROM country "
-                            + "WHERE Continent = '" + myContinent.getName() +  "' "
+                            + "WHERE Continent = '" + continent +  "' "
                             + "ORDER BY Population DESC";
 
             // Execute SQL statement
