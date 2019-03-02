@@ -311,48 +311,6 @@ public class App {
         }
     } // METHOD getCapitalCitiesByRegion()
 
-    /**
-     * Gets all the capital cities from countries in a given country.
-     * @return A list of all capital cities in a country, or null if there is an error.
-     */
-    public ArrayList<City> getCapitalCityByCountry(String country) {
-        try {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT * "
-                            + "FROM city, country "
-                            + "WHERE city.CountryCode = '" + getCountryCodeByName(country) +  "' "
-                            + "AND city.ID = country.Capital "
-                            + "ORDER BY city.Population DESC";
-
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
-            while(rset.next()) {
-                City myCity = new City(
-                        rset.getInt("ID"),
-                        rset.getString("Name"),
-                        rset.getString("CountryCode"),
-                        rset.getString("District"),
-                        rset.getInt("Population")
-                );
-                capitalCities.add(myCity);
-            }
-            return capitalCities;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get capital cities by country");
-            return null;
-        }
-    } // METHOD getCapitalCityByCountry()
-
-
-
     // COUNTRIES METHODS -----------------------------------------------------------------------------
 
     /**
@@ -501,7 +459,7 @@ public class App {
     } // METHOD getCountryByCode()
 
     /**
-     * Gets the Country Code from the world MySQL database which has a given Name.     
+     * Gets the Country Code from the world MySQL database which has a given Name.
      * @param name the name of the Country we want to get the code of.
      * @return The code.
      */
