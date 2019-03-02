@@ -19,7 +19,7 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        ArrayList<City> myList = a.getTopNCapitalCitiesByRegion(25,"caribbean");
+        ArrayList<City> myList = a.getTopNCapitalCitiesByRegion(25,"california");
         a.printCitiesReport(myList, "TOP 25 CAPITAL CITIES OF CARIBBEAN");
 
         // Disconnect from database
@@ -183,20 +183,24 @@ public class App {
      * @param cities The list of cities to print.
      */
     private void printCitiesReport(ArrayList<City> cities, String reportTitle) {
-        // Print report header
-        System.out.println("LIST OF " + reportTitle);
-        System.out.printf("%-5s %-11s %-35s %-8s %-20s %-11s\n",
-                "n", "ID", "Name", "CC", "District", "Population");
-        System.out.println(
-                "-----------------------------------------------------------------------------------------------"
-        );
-        int i = 1;
-        // Print each city in the list
-        for (City c : cities) {
-            System.out.printf("%-5s %-11d %-35s %-8s %-20s %-11d\n",
-                    i + ".", c.id, c.name, c.countryCode, c.district, c.population
+        if(cities.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle +" report: city list is empty.");
+        } else {
+            // Print report header
+            System.out.println("LIST OF " + reportTitle);
+            System.out.printf("%-5s %-11s %-35s %-8s %-20s %-11s\n",
+                    "n", "ID", "Name", "CC", "District", "Population");
+            System.out.println(
+                    "-----------------------------------------------------------------------------------------------"
             );
-            i++;
+            int i = 1;
+            // Print each city in the list
+            for (City c : cities) {
+                System.out.printf("%-5s %-11d %-35s %-8s %-20s %-11d\n",
+                        i + ".", c.id, c.name, c.countryCode, c.district, c.population
+                );
+                i++;
+            }
         }
     }
 
