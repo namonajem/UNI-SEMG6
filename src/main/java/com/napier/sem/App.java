@@ -19,8 +19,8 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        ArrayList<City> myList = a.getTopNCapitalCities(10);
-        a.printCitiesReport(myList, "TOP N CAPITAL CITIES");
+        ArrayList<City> myList = a.getAllCapitalCities();
+        a.printCitiesReport(myList, "WORLD CAPITAL CITIES");
 
         // Disconnect from database
         a.disconnect();
@@ -184,15 +184,18 @@ public class App {
      */
     private void printCitiesReport(ArrayList<City> cities, String reportTitle) {
         // Print report header
-        String s = "LIST OF " + reportTitle + "\n";
-        System.out.println(s + "\n"
-                + " nº    ID    Name   Country code    District    Population\n"
-                + "----------------------------------------------------------------------------------"
+        System.out.println("LIST OF " + reportTitle);
+        System.out.printf("%-5s %-11s %-35s %-8s %-20s %-11s\n",
+                "n", "ID", "Name", "CC", "District", "Population");
+        System.out.println(
+                "-----------------------------------------------------------------------------------------------"
         );
         int i = 1;
         // Print each city in the list
         for (City c : cities) {
-            System.out.println(String.format("%d. - %d %s %s %s %d", i, c.id, c.name, c.countryCode, c.district, c.population));
+            System.out.printf("%-5s %-11d %-35s %-8s %-20s %-11d\n",
+                    i + ".", c.id, c.name, c.countryCode, c.district, c.population
+            );
             i++;
         }
     }
