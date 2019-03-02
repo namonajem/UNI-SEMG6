@@ -134,7 +134,7 @@ public class App {
     } // METHOD getAllCities()
 
     /**
-     * Gets the city from the world MySQL database which has a given id code.     *
+     * Gets the city from the world MySQL database which has a given id code.
      * @param id the code of the city we want to get.
      * @return The City.
      */
@@ -192,7 +192,7 @@ public class App {
     // CAPITAL CITIES METHODS ---------------------------------------------------------------------------
 
     /**
-     * Gets all the capital cities from the world MySQL database.     *
+     * Gets all the capital cities from the world MySQL database.
      * @return A list of all capital cities in database, or null if there is an error.
      */
     public ArrayList<City> getAllCapitalCities() {
@@ -231,7 +231,7 @@ public class App {
     } // METHOD getAllCapitalCities()
 
     /**
-     * Gets all the capital cities from countries in a given continent.     *
+     * Gets all the capital cities from countries in a given continent.
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
     public ArrayList<City> getCapitalCitiesByContinent(String continent) {
@@ -272,8 +272,8 @@ public class App {
     } // METHOD getCapitalCitiesByContinent()
 
     /**
-     * Gets all the capital cities from countries in a given continent.     *
-     * @return A list of all capital cities in a continent, or null if there is an error.
+     * Gets all the capital cities from countries in a given region.
+     * @return A list of all capital cities in a region, or null if there is an error.
      */
     public ArrayList<City> getCapitalCitiesByRegion(String region) {
         try {
@@ -312,8 +312,8 @@ public class App {
     } // METHOD getCapitalCitiesByRegion()
 
     /**
-     * Gets all the capital cities from countries in a given continent.     *
-     * @return A list of all capital cities in a continent, or null if there is an error.
+     * Gets all the capital cities from countries in a given country.
+     * @return A list of all capital cities in a country, or null if there is an error.
      */
     public ArrayList<City> getCapitalCityByCountry(String country) {
         try {
@@ -350,6 +350,8 @@ public class App {
             return null;
         }
     } // METHOD getCapitalCityByCountry()
+
+
 
     // COUNTRIES METHODS -----------------------------------------------------------------------------
 
@@ -404,8 +406,8 @@ public class App {
     } // METHOD getAllCountries()
 
     /**
-     * Gets all the countries in a given continent.     *
-     * @param continent A string which contains the name of the continent
+     * Gets all the countries in a given continent.
+     * @param continent A string which contains the name of the continent.
      * @return A list of all countries in a continent, or null if there is an error.
      */
     public ArrayList<Country> getCountriesByContinent(String continent) {
@@ -454,7 +456,7 @@ public class App {
     } // METHOD getCountriesByContinent()
 
     /**
-     * Gets the Country from the world MySQL database which has a given code.     *
+     * Gets the Country from the world MySQL database which has a given code.
      * @param code the code of the Country we want to get.
      * @return The Country.
      */
@@ -499,7 +501,7 @@ public class App {
     } // METHOD getCountryByCode()
 
     /**
-     * Gets the Country Code from the world MySQL database which has a given Name.     *
+     * Gets the Country Code from the world MySQL database which has a given Name.     
      * @param name the name of the Country we want to get the code of.
      * @return The code.
      */
