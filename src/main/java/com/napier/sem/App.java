@@ -19,8 +19,8 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        ArrayList<City> myList = a.getTopNCapitalCitiesByContinent(25,"north america");
-        a.printCitiesReport(myList, "TOP 25 CAPITAL CITIES OF NORTH AMERICA");
+        ArrayList<City> myList = a.getTopNCapitalCitiesByRegion(25,"caribbean");
+        a.printCitiesReport(myList, "TOP 25 CAPITAL CITIES OF CARIBBEAN");
 
         // Disconnect from database
         a.disconnect();
@@ -402,6 +402,47 @@ public class App {
             return null;
         }
     } // METHOD getTopNCapitalCitiesByContinent()
+
+    /**
+     * Gets the top N populated in a given region.
+     * @return A list of the top N populated in a given region, or null if there is an error.
+     */
+    public ArrayList<City> getTopNCapitalCitiesByRegion(int n, String region) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM city, country "
+                            + "WHERE country.Region = '" + region +  "' "
+                            + "AND city.ID = country.Capital "
+                            + "ORDER BY city.Population DESC "
+                            + "LIMIT " + n;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create list for capital cities
+            ArrayList<City> capitalCities = new ArrayList<>();
+            while(rset.next()) {
+                City myCity = new City(
+                        rset.getInt("ID"),
+                        rset.getString("Name"),
+                        rset.getString("CountryCode"),
+                        rset.getString("District"),
+                        rset.getInt("Population")
+                );
+                capitalCities.add(myCity);
+            }
+            return capitalCities;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top N capital cities by region");
+            return null;
+        }
+    } // METHOD getTopNCapitalCitiesByRegion()
 
     // COUNTRIES METHODS -----------------------------------------------------------------------------
 
