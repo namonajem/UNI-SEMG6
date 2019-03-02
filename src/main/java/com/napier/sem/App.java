@@ -19,7 +19,7 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        ArrayList<City> myList = a.getCapitalCityByCountry("united states");
+        ArrayList<City> myList = a.getCapitalCitiesByContinent("europe");
         a.printCities(myList);
 
         // Disconnect from database
@@ -234,10 +234,8 @@ public class App {
      * Gets all the capital cities from countries in a given continent.     *
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCitiesByContinent(String continent) {
+    public ArrayList<City> getCapitalCitiesByContinent(String myContinent) {
         try {
-            // Transform param into Continent object, it could be written different as we need
-            Continent myContinent = Continent.toContinent(continent);
 
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -245,7 +243,7 @@ public class App {
             String strSelect =
                     "SELECT * "
                             + "FROM city, country "
-                            + "WHERE country.Continent = '" + myContinent.getName() +  "' "
+                            + "WHERE country.Continent = '" + myContinent +  "' "
                             + "AND city.ID = country.Capital "
                             + "ORDER BY city.Population DESC";
 
