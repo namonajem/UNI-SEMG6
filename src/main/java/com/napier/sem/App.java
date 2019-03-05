@@ -26,7 +26,7 @@ public class App {
         ArrayList<CountryLanguage> languages = a.getLanguageOrdered();
 
         for (CountryLanguage c : languages) {
-            System.out.println(String.format("%s, %f", c.language, c.percentage));
+            System.out.println(String.format("%s, %f Speakers", c.language, c.percentage));
         }
 
         // Disconnect from database
@@ -124,9 +124,9 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Language, Percentage "
-                            + "FROM countrylanguage "
-                            + "ORDER BY Percentage DESC";
+                    "SELECT Language, Percentage*Population AS 'Speakers' "
+                            + "FROM world.countrylanguage JOIN world.country ON Code=world.countrylanguage.CountryCode "
+                            + "GROUP BY Language, Speakers";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -138,7 +138,7 @@ public class App {
                 CountryLanguage myLanguage = new CountryLanguage();
                 // Initialize with the values in the result set
                 myLanguage.language = rset.getString("Language");
-                myLanguage.percentage = rset.getFloat("Percentage");
+                myLanguage.percentage = rset.getFloat("Speakers");
                 // Add language to the list
                 languages.add(myLanguage);
             }
@@ -149,6 +149,7 @@ public class App {
             return null;
         }
     } // METHOD getLanguageOrdered()
+
 
     /**
      * Prints a list of cities.
