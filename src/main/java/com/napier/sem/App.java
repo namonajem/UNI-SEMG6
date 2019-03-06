@@ -19,10 +19,8 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        //ArrayList<City> myList = a.getTopNCapitalCitiesByRegion(25,"california");
-        //a.printCitiesReport(myList, "TOP 25 CAPITAL CITIES OF CARIBBEAN");
-        Country unitedStates = a.getCountryByCode("USA");
-        System.out.println(unitedStates.toString());
+        ArrayList<Country> myList = a.getCountriesByContinent("north america");
+        a.printCountriesReport(myList, "COUNTRIES OF NORTH AMERICA");
 
         // Disconnect from database
         a.disconnect();
@@ -181,25 +179,25 @@ public class App {
     }
 
     /**
-     * Prints a list of cities.
+     * Prints a report of cities.
      * @param cities The list of cities to print.
      */
     private void printCitiesReport(ArrayList<City> cities, String reportTitle) {
         if(cities.isEmpty()) {
-            System.out.println("Failed to print " + reportTitle +" report: city list is empty.");
+            System.out.println("Failed to print " + reportTitle +" report: cities list is empty.");
         } else {
             // Print report header
             System.out.println("LIST OF " + reportTitle);
-            System.out.printf("%-5s %-35s %-52s %-11s\n",
-                    "No", "Name", "Country","Population");
+            System.out.printf("%-5s %-35s %-52s %-20s %-11s\n",
+                    "No", "Name", "Country", "District", "Population");
             System.out.println(
-                    "-----------------------------------------------------------------------------------------------"
+                    "----------------------------------------------------------------------------------------------------------------------------"
             );
             int i = 1;
             // Print each city in the list
             for (City c : cities) {
-                System.out.printf("%-5s %-35s %-52s %-11d\n",
-                        i + ".", c.name, getCountryByCode(c.countryCode).name, c.population
+                System.out.printf("%-5s %-35s %-52s %-20s %-11d\n",
+                        i + ".", c.name, getCountryByCode(c.countryCode).name, c.district, c.population
                 );
                 i++;
             }
@@ -450,6 +448,32 @@ public class App {
         }
     } // METHOD getTopNCapitalCitiesByRegion()
 
+    /**
+     * Prints a report of capital cities.
+     * @param capitalCities The list of capital cities to print.
+     */
+    private void printCapitalCitiesReport(ArrayList<City> capitalCities, String reportTitle) {
+        if(capitalCities.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle +" report: capital cities list is empty.");
+        } else {
+            // Print report header
+            System.out.println("LIST OF " + reportTitle);
+            System.out.printf("%-5s %-35s %-52s %-11s\n",
+                    "No", "Name", "Country", "Population");
+            System.out.println(
+                    "---------------------------------------------------------------------------------------------------------"
+            );
+            int i = 1;
+            // Print each city in the list
+            for (City c : capitalCities) {
+                System.out.printf("%-5s %-35s %-52s %-11d\n",
+                        i + ".", c.name, getCountryByCode(c.countryCode).name, c.population
+                );
+                i++;
+            }
+        }
+    }
+
     // COUNTRIES METHODS -----------------------------------------------------------------------------
 
     /**
@@ -638,13 +662,28 @@ public class App {
     }
 
     /**
-     * Prints a list of countries.
+     * Prints a report of countries.
      * @param countries The list of cities to print.
      */
-    private void printCountries(ArrayList<Country> countries) {
-        // For each city in the list
-        for (Country c : countries) {
-            System.out.println(String.format("%s %s %d", c.name, c.continent, c.population));
+    private void printCountriesReport(ArrayList<Country> countries, String reportTitle) {
+        if(countries.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle +" report: countries list is empty.");
+        } else {
+            // Print report header
+            System.out.println("LIST OF " + reportTitle);
+            System.out.printf("%-5s %-5s %-52s %-15s %-26s %-11s %-11s\n",
+                    "No", "Code", "Name", "Continent", "Region", "Population", "Capital");
+            System.out.println(
+                    "------------------------------------------------------------------------------------------------------------------------------------------------------"
+            );
+            int i = 1;
+            // Print each city in the list
+            for (Country c : countries) {
+                System.out.printf("%-5s %-5s %-52s %-15s %-26s %-11s %-11s\n",
+                        i + ".", c.code, c.name, c.continent.getName(), c.region, c.population, getCityByID(c.capital).name
+                );
+                i++;
+            }
         }
     }
 
