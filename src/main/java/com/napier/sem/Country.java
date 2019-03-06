@@ -20,7 +20,7 @@ enum Continent {
     }
 
     public static Continent toContinent(String strContinent) {
-        return valueOf(strContinent.toUpperCase());
+        return valueOf(strContinent.replaceAll("\\s", "_").toUpperCase());
     }
 }
 
@@ -99,62 +99,107 @@ public class Country {
         this.code2 = code2;
     }
 
+    /**
+     * @return Country's code
+     */
     public String getCode() {
         return this.code;
     }
 
+    /**
+     * @return Country's name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * @return Continent where the Country is
+     */
     public Continent getContinent() {
         return this.continent;
     }
 
+    /**
+     * @return Region where the Country is
+     */
     public String getRegion() {
         return this.region;
     }
 
+    /**
+     * @return Country's surface in km2
+     */
     public float getSurfaceArea() {
         return this.surfaceArea;
     }
 
+    /**
+     * @return Country's independence year
+     */
     public int getIndepYear() {
         return this.indepYear;
     }
 
+    /**
+     * @return Country's population
+     */
     public int getPopulation() {
         return this.population;
     }
 
+    /**
+     * @return Country's life expectancy in years (avg)
+     */
     public double getLifeExpectancy() {
         return this.lifeExpectancy;
     }
 
+    /**
+     * @return Country's Gross National Product in million Euro
+     */
     public float getGNP() {
         return this.gnp;
     }
 
+    /**
+     * @return Country's old Gross National Product in million Euro
+     */
     public float getGNPOld() {
         return this.gnpOld;
     }
 
+    /**
+     * @return Country's local name
+     */
     public String getLocalName() {
         return this.localName;
     }
 
+    /**
+     * @return Country's government form
+     */
     public String getGovernmentForm() {
         return this.governmentForm;
     }
 
+    /**
+     * @return Country's head of state
+     */
     public String getHeadOfState() {
         return this.headOfState;
     }
 
+    /**
+     * @return Country's capital ID
+     */
     public int getCapital() {
         return this.capital;
     }
 
+    /**
+     * @return Country's code 2
+     */
     public String getCode2() {
         return this.code2;
     }

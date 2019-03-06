@@ -19,8 +19,10 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        ArrayList<City> myList = a.getTopNCapitalCitiesByRegion(25,"california");
-        a.printCitiesReport(myList, "TOP 25 CAPITAL CITIES OF CARIBBEAN");
+        //ArrayList<City> myList = a.getTopNCapitalCitiesByRegion(25,"california");
+        //a.printCitiesReport(myList, "TOP 25 CAPITAL CITIES OF CARIBBEAN");
+        Country unitedStates = a.getCountryByCode("USA");
+        System.out.println(unitedStates.toString());
 
         // Disconnect from database
         a.disconnect();
