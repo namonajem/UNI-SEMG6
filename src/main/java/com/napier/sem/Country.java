@@ -25,35 +25,35 @@ enum Continent {
 }
 
 public class Country {
-    // Country Code CHAR(3)
+    // Country's Code CHAR(3)
     String code;
-    // Country Name
+    // Country's Name
     String name;
-    // Continent that this country belongs to
+    // Continent where the Country is
     Continent continent;
-    // Region that country is in
+    // Region where the Country is
     String region;
-    // Surface Area of the country
+    // Surface Area of the country in km2
     Float surfaceArea;
-    // Year in which they got their independency
+    // Year in which they got their independence
     int indepYear;
     // Population of the country
     int population;
-    // Life expectancy in country
+    // Country's inhabitants life expectancy in country in years
     double lifeExpectancy;
-    // Gross National Product of Country
+    // Country's Gross National Product in million Euros
     Float gnp;
-    // GNP ID for country
+    // Country's previous Gross National Product in million Euros
     Float gnpOld;
-    // Local name for country
+    // Country's local name
     String localName;
-    // Type of government the country has
+    // Country's type of government
     String governmentForm;
-    // Head of state of country
+    // Country's head of state
     String headOfState;
-    // ID of the capital city
+    // Country's capital city ID
     int capital;
-    // Country Code CHAR(2)
+    // Country's Code CHAR(2)
     String code2;
 
     /**
@@ -97,111 +97,6 @@ public class Country {
         this.headOfState = headOfState;
         this.capital = capital;
         this.code2 = code2;
-    }
-
-    /**
-     * @return Country's code
-     */
-    public String getCode() {
-        return this.code;
-    }
-
-    /**
-     * @return Country's name
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * @return Continent where the Country is
-     */
-    public Continent getContinent() {
-        return this.continent;
-    }
-
-    /**
-     * @return Region where the Country is
-     */
-    public String getRegion() {
-        return this.region;
-    }
-
-    /**
-     * @return Country's surface in km2
-     */
-    public float getSurfaceArea() {
-        return this.surfaceArea;
-    }
-
-    /**
-     * @return Country's independence year
-     */
-    public int getIndepYear() {
-        return this.indepYear;
-    }
-
-    /**
-     * @return Country's population
-     */
-    public int getPopulation() {
-        return this.population;
-    }
-
-    /**
-     * @return Country's life expectancy in years (avg)
-     */
-    public double getLifeExpectancy() {
-        return this.lifeExpectancy;
-    }
-
-    /**
-     * @return Country's Gross National Product in million Euro
-     */
-    public float getGNP() {
-        return this.gnp;
-    }
-
-    /**
-     * @return Country's old Gross National Product in million Euro
-     */
-    public float getGNPOld() {
-        return this.gnpOld;
-    }
-
-    /**
-     * @return Country's local name
-     */
-    public String getLocalName() {
-        return this.localName;
-    }
-
-    /**
-     * @return Country's government form
-     */
-    public String getGovernmentForm() {
-        return this.governmentForm;
-    }
-
-    /**
-     * @return Country's head of state
-     */
-    public String getHeadOfState() {
-        return this.headOfState;
-    }
-
-    /**
-     * @return Country's capital ID
-     */
-    public int getCapital() {
-        return this.capital;
-    }
-
-    /**
-     * @return Country's code 2
-     */
-    public String getCode2() {
-        return this.code2;
     }
 
     /**
