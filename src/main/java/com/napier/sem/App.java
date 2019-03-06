@@ -188,16 +188,16 @@ public class App {
         } else {
             // Print report header
             System.out.println("LIST OF " + reportTitle);
-            System.out.printf("%-5s %-11s %-35s %-8s %-20s %-11s\n",
-                    "n", "ID", "Name", "CC", "District", "Population");
+            System.out.printf("%-5s %-35s %-52s %-11s\n",
+                    "No", "Name", "Country","Population");
             System.out.println(
                     "-----------------------------------------------------------------------------------------------"
             );
             int i = 1;
             // Print each city in the list
             for (City c : cities) {
-                System.out.printf("%-5s %-11d %-35s %-8s %-20s %-11d\n",
-                        i + ".", c.id, c.name, c.countryCode, c.district, c.population
+                System.out.printf("%-5s %-35s %-52s %-11d\n",
+                        i + ".", c.name, getCountryByCode(c.countryCode).name, c.population
                 );
                 i++;
             }

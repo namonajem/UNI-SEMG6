@@ -99,8 +99,64 @@ public class Country {
         this.code2 = code2;
     }
 
+    public String getCode() {
+        return this.code;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Continent getContinent() {
+        return this.continent;
+    }
+
+    public String getRegion() {
+        return this.region;
+    }
+
+    public float getSurfaceArea() {
+        return this.surfaceArea;
+    }
+
+    public int getIndepYear() {
+        return this.indepYear;
+    }
+
+    public int getPopulation() {
+        return this.population;
+    }
+
+    public double getLifeExpectancy() {
+        return this.lifeExpectancy;
+    }
+
+    public float getGNP() {
+        return this.gnp;
+    }
+
+    public float getGNPOld() {
+        return this.gnpOld;
+    }
+
+    public String getLocalName() {
+        return this.localName;
+    }
+
+    public String getGovernmentForm() {
+        return this.governmentForm;
+    }
+
+    public String getHeadOfState() {
+        return this.headOfState;
+    }
+
     public int getCapital() {
-        return capital;
+        return this.capital;
+    }
+
+    public String getCode2() {
+        return this.code2;
     }
 
     /**
