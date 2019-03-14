@@ -173,7 +173,7 @@ public class App {
      * Prints a all values of a single City.
      * @param city The city to print.
      */
-    private void displayCity(City city) {
+    public void displayCity(City city) {
         // For each city in the list
         System.out.println(city.toString());
     }
@@ -182,7 +182,7 @@ public class App {
      * Prints a report of cities.
      * @param cities The list of cities to print.
      */
-    private void printCitiesReport(ArrayList<City> cities, String reportTitle) {
+    public void printCitiesReport(ArrayList<City> cities, String reportTitle) {
         if(cities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: cities list is empty.");
         } else {
@@ -452,7 +452,7 @@ public class App {
      * Prints a report of capital cities.
      * @param capitalCities The list of capital cities to print.
      */
-    private void printCapitalCitiesReport(ArrayList<City> capitalCities, String reportTitle) {
+    public void printCapitalCitiesReport(ArrayList<City> capitalCities, String reportTitle) {
         if(capitalCities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: capital cities list is empty.");
         } else {
@@ -656,7 +656,7 @@ public class App {
      * Prints a all values of a single Country.
      * @param country The country to print.
      */
-    private void displayCountry(Country country) {
+    public void displayCountry(Country country) {
         // For each city in the list
         System.out.println(country.toString());
     }
@@ -665,9 +665,11 @@ public class App {
      * Prints a report of countries.
      * @param countries The list of cities to print.
      */
-    private void printCountriesReport(ArrayList<Country> countries, String reportTitle) {
-        if(countries.isEmpty()) {
-            System.out.println("Failed to print " + reportTitle +" report: countries list is empty.");
+    public void printCountriesReport(ArrayList<Country> countries, String reportTitle) {
+        // Check list not empty nor null
+        if(countries == null || countries.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle +" report.");
+            return;
         } else {
             // Print report header
             System.out.println("LIST OF " + reportTitle);
@@ -679,6 +681,7 @@ public class App {
             int i = 1;
             // Print each city in the list
             for (Country c : countries) {
+                if(c == null) continue;
                 System.out.printf("%-5s %-5s %-52s %-15s %-26s %-11s %-11s\n",
                         i + ".", c.code, c.name, c.continent.getName(), c.region, c.population, getCityByID(c.capital).name
                 );
