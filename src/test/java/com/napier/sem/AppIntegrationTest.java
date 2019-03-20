@@ -25,7 +25,7 @@ public class AppIntegrationTest {
     @Test
     void testGetAllCountriesByPop()
     {
-        ArrayList<Country> countries = new ArrayList<>();
+        ArrayList<Country> countries;
         countries = app.getAllCountriesByPop();
 
         assertEquals(countries.size(), 238); /* check arraylist size against actual*/
@@ -38,4 +38,79 @@ public class AppIntegrationTest {
         assertEquals(((countries.get((countries.size())-1)).population),42);
     }
 
+    @Test
+    void testGetCountriesInContinentByPop(){
+        ArrayList<Country> countries;
+        countries = app.getCountriesInContinentByPop("Africa");
+
+        assertEquals(countries.size(), 58); /* check arraylist size against actual*/
+
+        //check first entry matches DB
+        assertEquals((countries.get(0)).name,"Nigeria");
+        assertEquals((countries.get(0)).population,111506000);
+        //check last entry matches DB
+        assertEquals(((countries.get((countries.size())-1)).name),"British Indian Ocean Territory");
+        assertEquals(((countries.get((countries.size())-1)).population),0);
+    }
+
+    @Test
+    void testGetCountriesInRegionByPop(){
+    ArrayList<Country> countries;
+    countries = app.getCountriesInRegionByPop("Central Africa");
+
+    assertEquals(countries.size(), 9); /* check arraylist size against actual*/
+
+    //check first entry matches DB
+    assertEquals((countries.get(0)).name,"Congo, The Democratic Republic of the");
+    assertEquals((countries.get(0)).population,51654000);
+    //check last entry matches DB
+    assertEquals(((countries.get((countries.size())-1)).name),"Sao Tome and Principe");
+    assertEquals(((countries.get((countries.size())-1)).population),147000);
+    }
+/*
+
+    @Test
+    void TestGetTopCountriesByPop(){
+        ArrayList<Country> countries;
+        countries = app.getTopCountriesByPop(5);
+
+        assertEquals(countries.size(), 5); /* check arraylist size against actual*/
+
+        //check first entry matches DB
+        //assertEquals((countries.get(0)).name,"Congo, The Democratic Republic of the");
+        //assertEquals((countries.get(0)).population,51654000);
+        //check last entry matches DB
+        //assertEquals(((countries.get((countries.size())-1)).name),"Central African Republic");
+        //assertEquals(((countries.get((countries.size())-1)).population),3615000);
+    //}
+
+    @Test
+void TestgetTopCountriesInContinentByPop(){
+    ArrayList<Country> countries;
+    countries = app.getTopCountriesInContinentByPop("Africa", 5);
+
+    assertEquals(countries.size(), 5); /* check arraylist size against actual*/
+
+    //check first entry matches DB
+    assertEquals((countries.get(0)).name,"Nigeria");
+    assertEquals((countries.get(0)).population,111506000);
+    //check last entry matches DB
+    assertEquals(((countries.get((countries.size())-1)).name),"South Africa");
+    assertEquals(((countries.get((countries.size())-1)).population),40377000);
+}
+
+    @Test
+    void TestgetTopCountriesInRegionByPop(){
+        ArrayList<Country> countries;
+        countries = app.getTopCountriesInRegionByPop("Central Africa", 5);
+
+        assertEquals(countries.size(), 5); /* check arraylist size against actual*/
+
+        //check first entry matches DB
+        assertEquals((countries.get(0)).name,"Nigeria");
+        assertEquals((countries.get(0)).population,111506000);
+        //check last entry matches DB
+        assertEquals(((countries.get((countries.size())-1)).name),"South Africa");
+        assertEquals(((countries.get((countries.size())-1)).population),40377000);
+    }
 }
