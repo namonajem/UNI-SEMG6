@@ -1557,7 +1557,7 @@ public class App {
 
      */
     //method to get a list of the top n cities in the country in the database
-    public ArrayList<City> getTopCitiesInCountryByPop(String countryInput,Integer numResults)
+    ArrayList<City> getTopCitiesInCountryByPop(String countryInput,Integer numResults)
     {
         try {
             //Create an SQL Statement

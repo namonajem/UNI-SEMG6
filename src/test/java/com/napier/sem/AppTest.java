@@ -377,6 +377,28 @@ public class AppTest
         app.printTopCitiesInRegionByPop(cities, "British Islands", 5);
     }
 
+    //top pop cities in given country tests
+    @Test
+    void printTopCitiesInCountryByPopTest(){
+        ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printTopCitiesInCountryByPop(cities, "GBR", 5);
+    }
+    @Test
+    void printTopCitiesInCountryByPopTestEmpty(){
+        ArrayList<City> cities = new ArrayList<>();
+        app.printTopCitiesInCountryByPop(cities, "GBR", 5);
+    }
+    @Test
+    void printTopCitiesInCountryByPopTestContainsNull(){
+        ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printTopCitiesInCountryByPop(cities, "GBR", 5);
+    }
+
 
     //top cities in district by pop tests
     @Test
