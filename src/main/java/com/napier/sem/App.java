@@ -266,7 +266,7 @@ public class App {
     /* Prints a list of countries.
         /** @param countries The list of countries to print.
         /**/
-    public void printCountriesByPop(ArrayList<Country> countries)
+    void printCountriesByPop(ArrayList<Country> countries)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -371,7 +371,7 @@ public class App {
     /* Prints a list of countries in a continent
        /** @param countries The list of countries to print, string the Continent to search.
        /**/
-   public void printCountriesInContinentByPop(ArrayList<Country> countries, String ContinentInput)
+    void printCountriesInContinentByPop(ArrayList<Country> countries, String ContinentInput)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -464,7 +464,7 @@ public class App {
         }
     }
 
-    public void printCountriesInRegionByPop(ArrayList<Country> countries, String RegionInput)
+    void printCountriesInRegionByPop(ArrayList<Country> countries, String RegionInput)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -570,7 +570,7 @@ public class App {
     /* Prints a list of top n countries in world
        /** @param countries The list of countries to print, Integer for number of top Countries.
        /**/
-    public void printTopCountriesByPop(ArrayList<Country> countries, Integer TopNCountries)
+    void printTopCountriesByPop(ArrayList<Country> countries, Integer TopNCountries)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -683,7 +683,7 @@ public class App {
     /* Prints a list of countries in a continent
        /** @param countries The list of countries to print, string the Continent to search.
        /**/
-    public void printTopCountriesInContinentByPop(ArrayList<Country> countries, String ContinentInput, Integer TopNCountries)
+    void printTopCountriesInContinentByPop(ArrayList<Country> countries, String ContinentInput, Integer TopNCountries)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -794,7 +794,7 @@ public class App {
     /* Prints a list of countries in a region
        /** @param countries The list of countries to print, string the Region to search.
        /**/
-    public void printTopCountriesInRegionByPop(ArrayList<Country> countries, String RegionInput, Integer TopNCountries)
+    void printTopCountriesInRegionByPop(ArrayList<Country> countries, String RegionInput, Integer TopNCountries)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -884,7 +884,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printAllCitiesByPop(ArrayList<City> cities)
+    void printAllCitiesByPop(ArrayList<City> cities)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -974,7 +974,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printAllCitiesInContinentByPop(ArrayList<City> cities, String continentInput)
+    void printAllCitiesInContinentByPop(ArrayList<City> cities, String continentInput)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -1065,7 +1065,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printAllCitiesInRegionByPop(ArrayList<City> cities, String regionInput)
+    void printAllCitiesInRegionByPop(ArrayList<City> cities, String regionInput)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -1156,7 +1156,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printAllCitiesInCountryByPop(ArrayList<City> cities, String countryInput)
+    void printAllCitiesInCountryByPop(ArrayList<City> cities, String countryInput)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -1245,7 +1245,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printAllCitiesInDistrictByPop(ArrayList<City> cities, String districtInput)
+    void printAllCitiesInDistrictByPop(ArrayList<City> cities, String districtInput)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -1333,7 +1333,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printTopCitiesByPop(ArrayList<City> cities,Integer numResults)
+    void printTopCitiesByPop(ArrayList<City> cities,Integer numResults)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -1428,7 +1428,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printTopCitiesInContinentByPop(ArrayList<City> cities, String continentInput, Integer numResults)
+    void printTopCitiesInContinentByPop(ArrayList<City> cities, String continentInput, Integer numResults)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -1522,7 +1522,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printTopCitiesInRegionByPop(ArrayList<City> cities, String regionInput, Integer numResults)
+    void printTopCitiesInRegionByPop(ArrayList<City> cities, String regionInput, Integer numResults)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -1616,7 +1616,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printTopCitiesInCountryByPop(ArrayList<City> cities, String countryInput, Integer numResults)
+    void printTopCitiesInCountryByPop(ArrayList<City> cities, String countryInput, Integer numResults)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
@@ -1708,7 +1708,7 @@ public class App {
     /* Prints a list of cities.
         /** @param cities The list of cities to print.
         /**/
-    public void printTopCitiesInDistrictByPop(ArrayList<City> cities, String districtInput,Integer numResults)
+    void printTopCitiesInDistrictByPop(ArrayList<City> cities, String districtInput,Integer numResults)
     {
         System.out.println(
                 "-------------------------------------------------------------------------------"+
