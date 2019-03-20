@@ -22,7 +22,7 @@ public class App {
         App a = new App();
 
         // Connect to database
-        a.connect("localhost:33060");
+        a.connect("33060");
 
         String ContinentInput = "AFRICA";
         String RegionInput = "Central Africa";
@@ -151,7 +151,7 @@ public class App {
         try
         {
             // Load Database driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
         }
         catch (ClassNotFoundException e)
         {
