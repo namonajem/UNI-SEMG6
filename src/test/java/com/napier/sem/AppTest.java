@@ -18,6 +18,11 @@ public class AppTest
         app = new App();
     }
 
+    /*
+    //More robust testing is needed
+    //consider adding tests for methods with more values being passed
+    */
+
     //countries by pop tests
     @Test
     void printCountriesByPopTest(){
