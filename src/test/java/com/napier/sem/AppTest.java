@@ -187,66 +187,102 @@ public class AppTest
     }
 
 
-    //top cities by pop tests
+    //all cities by pop tests
     @Test
     void printAllCitiesByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
 
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
 
+        cities.add(city);
+        app.printAllCitiesByPop(cities);
     }
 
     @Test
     void printAllCitiesByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+        app.printAllCitiesByPop(cities);
     }
 
     @Test
     void printAllCitiesByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
 
+        cities.add(null);
+
+        app.printAllCitiesByPop(cities);
+
     }
 
 
-    //top cities in continent by pop tests
+    //all cities in continent by pop tests
     @Test
     void printAllCitiesInContinentByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printAllCitiesInContinentByPop(cities, "Europe");
     }
     @Test
     void printAllCitiesInContinentByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+
+        app.printAllCitiesInContinentByPop(cities, "Europe");
     }
     @Test
     void printAllCitiesInContinentByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+
+        app.printAllCitiesInContinentByPop(cities, "Europe");
+
     }
 
     //top cities in region by pop tests
     @Test
     void printAllCitiesInRegionByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printAllCitiesInRegionByPop(cities,"British Islands");
     }
     @Test
     void printAllCitiesInRegionByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+
+        app.printAllCitiesInRegionByPop(cities,"British Islands");
     }
     @Test
     void printAllCitiesInRegionByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printAllCitiesInRegionByPop(cities,"British Islands");
     }
 
     //all cities in a given country by pop tests
     @Test
     void printAllCitiesInCountryByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printAllCitiesInCountryByPop(cities, "GBR");
     }
     @Test
     void printAllCitiesInCountryByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+        app.printAllCitiesInCountryByPop(cities, "GBR");
     }
     @Test
     void printAllCitiesInCountryByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printAllCitiesInCountryByPop(cities, "GBR");
     }
 
 
@@ -254,14 +290,22 @@ public class AppTest
     @Test
     void printAllCitiesInDistrictByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printAllCitiesInDistrictByPop(cities, "Scotland");
     }
     @Test
     void printAllCitiesInDistrictByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+        app.printAllCitiesInDistrictByPop(cities, "Scotland");
     }
     @Test
     void printAllCitiesInDistrictByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printAllCitiesInDistrictByPop(cities, "Scotland");
     }
 
 
@@ -269,14 +313,22 @@ public class AppTest
     @Test
     void printTopCitiesByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printTopCitiesByPop(cities, 5);
     }
     @Test
     void printTopCitiesByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+        app.printTopCitiesByPop(cities, 5);
     }
     @Test
     void printTopCitiesByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printTopCitiesByPop(cities, 5);
     }
 
 
@@ -284,14 +336,22 @@ public class AppTest
     @Test
     void printTopCitiesInContinentByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printTopCitiesInContinentByPop(cities, "Europe", 5);
     }
     @Test
     void printTopCitiesInContinentByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+        app.printTopCitiesInContinentByPop(cities, "Europe", 5);
     }
     @Test
     void printTopCitiesInContinentByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printTopCitiesInContinentByPop(cities, "Europe", 5);
     }
 
 
@@ -299,14 +359,22 @@ public class AppTest
     @Test
     void printTopCitiesInRegionByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printTopCitiesInRegionByPop(cities, "British Islands", 5);
     }
     @Test
     void printTopCitiesInRegionByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+        app.printTopCitiesInRegionByPop(cities, "British Islands", 5);
     }
     @Test
     void printTopCitiesInRegionByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printTopCitiesInRegionByPop(cities, "British Islands", 5);
     }
 
 
@@ -314,14 +382,22 @@ public class AppTest
     @Test
     void printTopCitiesInDistrictByPopTest(){
         ArrayList<City> cities = new ArrayList<>();
+
+        City city = new City(460,"Edinburgh","GBR","Scotland",450180);
+
+        cities.add(city);
+        app.printTopCitiesInDistrictByPop(cities, "Scotland", 5);
     }
     @Test
     void printTopCitiesInDistrictByPopTestEmpty(){
         ArrayList<City> cities = new ArrayList<>();
+        app.printTopCitiesInDistrictByPop(cities, "Scotland", 5);
     }
     @Test
     void printTopCitiesInDistrictByPopTestContainsNull(){
         ArrayList<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printTopCitiesInDistrictByPop(cities, "Scotland", 5);
     }
 
 }
