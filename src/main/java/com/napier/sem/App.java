@@ -124,9 +124,10 @@ public class App {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT Language, Percentage*Population AS 'Speakers' "
-                            + "FROM world.countrylanguage JOIN world.country ON Code=world.countrylanguage.CountryCode "
-                            + "GROUP BY Language, Speakers";
+                    "SELECT Language, SUM(world.countrylanguage.Percentage*world.country.Population) AS 'Speakers' "
+                            + "FROM world.country LEFT JOIN world.countrylanguage ON Code=countrylanguage.CountryCode "
+                            + "GROUP BY Language "
+                            + "ORDER BY Speakers";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -143,6 +144,7 @@ public class App {
                 languages.add(myLanguage);
             }
             return languages;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Failed to get Languages");
