@@ -17,7 +17,7 @@ public class AppTest {
     }
 
     @Test
-    void printprintCountriesReportTestNull() {
+    void printCountriesReportTestNull() {
         app.printCountriesReport(null, "Test report");
     }
 
