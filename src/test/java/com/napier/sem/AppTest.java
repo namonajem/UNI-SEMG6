@@ -170,9 +170,12 @@ public class AppTest
     void printTopCountriesInRegionByPopTest(){
         ArrayList<Country> countries = new ArrayList<>();
 
-        Country cntry = new Country();
+        Country cntry = new Country("CHL","Chile", "South America", "South America",756626.00f, 1810, 15211000, 75.7, 72949.00f, 75780.00f, "Chile", "Republic","Ricardo Lagos Escobar", 554, "CL" );
 
-        cntry.code ="CHL";cntry.name ="Chile";/*cntry.continent = Continent.toContinent("South America");*/cntry.region ="South America";cntry.surfaceArea = 756626.00f;cntry.indepYear =1810;cntry.population =15211000;cntry.lifeExpectancy =75.7;cntry.gnp =72949.00f;cntry.gnpOld =75780.00f;cntry.localName ="Chile";cntry.governmentForm ="Republic";cntry.headOfState ="Ricardo Lagos Escobar";cntry.capital =554;cntry.code2 ="CL";
+        /*
+        cntry.code ="CHL";cntry.name ="Chile";cntry.continent = Continent.toContinent("South America");cntry.region ="South America";cntry.surfaceArea = 756626.00f;cntry.indepYear =1810;cntry.population =15211000;cntry.lifeExpectancy =75.7;cntry.gnp =72949.00f;cntry.gnpOld =75780.00f;cntry.localName ="Chile";cntry.governmentForm ="Republic";cntry.headOfState ="Ricardo Lagos Escobar";cntry.capital =554;cntry.code2 ="CL";
+*/
+
         countries.add(cntry);
 
         app.printTopCountriesInRegionByPop(countries,"Carribean", 5);
