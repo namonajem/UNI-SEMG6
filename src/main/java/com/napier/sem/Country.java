@@ -20,40 +20,40 @@ enum Continent {
     }
 
     public static Continent toContinent(String strContinent) {
-        return valueOf(strContinent.toUpperCase());
+        return valueOf(strContinent.replaceAll("\\s", "_").toUpperCase());
     }
 }
 
 public class Country {
-    // Country Code CHAR(3)
+    // Country's Code CHAR(3)
     String code;
-    // Country Name
+    // Country's Name
     String name;
-    // Continent that this country belongs to
+    // Continent where the Country is
     Continent continent;
-    // Region that country is in
+    // Region where the Country is
     String region;
-    // Surface Area of the country
+    // Surface Area of the country in km2
     Float surfaceArea;
-    // Year in which they got their independancy
+    // Year in which they got their independence
     int indepYear;
     // Population of the country
     int population;
-    // Life expectancy in country
+    // Country's inhabitants life expectancy in country in years
     double lifeExpectancy;
-    // Gross National Product of Country
+    // Country's Gross National Product in million Euros
     Float gnp;
-    // GNP ID for country
+    // Country's previous Gross National Product in million Euros
     Float gnpOld;
-    // Local name for country
+    // Country's local name
     String localName;
-    // Type of government the country has
+    // Country's type of government
     String governmentForm;
-    // Head of state of country
+    // Country's head of state
     String headOfState;
-    // ID of the capital city
+    // Country's capital city ID
     int capital;
-    // Country Code CHAR(2)
+    // Country's Code CHAR(2)
     String code2;
 
     /**
@@ -97,10 +97,6 @@ public class Country {
         this.headOfState = headOfState;
         this.capital = capital;
         this.code2 = code2;
-    }
-
-    public int getCapital() {
-        return capital;
     }
 
     /**
