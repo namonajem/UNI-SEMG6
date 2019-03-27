@@ -9,6 +9,8 @@ A system to allow easy access to a database which provides world population info
 
 * Develop Branch    [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?branch=develop)](https://travis-ci.org/namonajem/SEMG6)
 
+* CodeCov [![codecov](https://codecov.io/gh/namonajem/SEMG6/branch/master/graph/badge.svg)](https://codecov.io/gh/namonajem/SEMG6)
+
 ## Authors
 
 * **Namo Najem** - *Development Team*.
