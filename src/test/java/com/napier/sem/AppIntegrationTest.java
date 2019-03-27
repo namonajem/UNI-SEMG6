@@ -14,7 +14,7 @@ public class AppIntegrationTest {
     @BeforeAll
     static void init() {
         app = new App();
-        app.connect("db");
+        app.connect("localhost::33060");
     }
 
     /*
@@ -85,7 +85,7 @@ public class AppIntegrationTest {
     //}
 
     @Test
-void TestgetTopCountriesInContinentByPop(){
+void testGetTopCountriesInContinentByPop(){
     ArrayList<Country> countries;
     countries = app.getTopCountriesInContinentByPop("Africa", 5);
 
@@ -100,7 +100,7 @@ void TestgetTopCountriesInContinentByPop(){
 }
 
     @Test
-    void TestgetTopCountriesInRegionByPop(){
+    void testGetTopCountriesInRegionByPop(){
         ArrayList<Country> countries;
         countries = app.getTopCountriesInRegionByPop("Central Africa", 5);
 
