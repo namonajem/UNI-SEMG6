@@ -20,7 +20,7 @@ public class App {
 
         // TEST IMPLEMENTATION
         a.printPopulationReport("Europe",
-                a.getContinentPopulation("Europe"),
+                a.getPopulationByContinent("Europe"),
                 a.getPopulationInCitiesByContinent("Europe"),
                 "Population in Europe");
 
@@ -1410,7 +1410,7 @@ public class App {
      * @param continent A string that contains the name of the continent.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getContinentPopulation(String continent) {
+    public int getPopulationByContinent(String continent) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1435,7 +1435,7 @@ public class App {
      * @param region A string that contains the name of the region.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getRegionPopulation(String region) {
+    public int getPopulationByRegion(String region) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1460,7 +1460,7 @@ public class App {
      * @param country A string that contains the name of the country.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getCountryPopulation(String country) {
+    public int getPopulationByCountry(String country) {
         try {
             return getCountryByName(country).population;
 
@@ -1476,7 +1476,7 @@ public class App {
      * @param district A string that contains the name of the district.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getDistrictPopulation(String district) {
+    public int getPopulationByDistrict(String district) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1501,7 +1501,7 @@ public class App {
      * @param city A string that contains the name of the city.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getCityPopulation(String city) {
+    public int getPopulationByCity(String city) {
         try {
             return getCityByName(city).population;
 
