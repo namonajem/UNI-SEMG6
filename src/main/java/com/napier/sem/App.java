@@ -19,30 +19,12 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        ArrayList<City> myList = a.getCitiesByRegion("southern europe");
-        a.printCitiesReport(myList, "CITIES OF SOUTHERN EUROPE");
-
-        ArrayList<City> myList2 = a.getCitiesByCountry("Spain");
-        a.printCitiesReport(myList2, "CITIES OF SPAIN");
-
-        ArrayList<City> myList3 = a.getCitiesByDistrict("Valencia");
-        a.printCitiesReport(myList3, "CITIES OF VALENCIA");
-
-        ArrayList<City> myList4 = a.getTopNCities(10);
-        a.printCitiesReport(myList4, "TOP 10 CITIES");
-
-        ArrayList<City> myList5 = a.getTopNCitiesByContinent(10, "Europe");
-        a.printCitiesReport(myList5, "TOP 10 CITIES OF EUROPE");
-
-        ArrayList<City> myList6 = a.getTopNCitiesByRegion(10, "southern europe");
-        a.printCitiesReport(myList6, "TOP 10 CITIES OF SOUTHERN EUROPE");
-
-        ArrayList<City> myList7 = a.getTopNCitiesByCountry(10, "Spain");
-        a.printCitiesReport(myList7, "TOP 10 CITIES OF SPAIN");
-
-        ArrayList<City> myList8 = a.getTopNCitiesByDistrict(10, "Valencia");
-        a.printCitiesReport(myList8, "TOP 10 CITIES OF VALENCIA");
-
+        System.out.println("World pop: " + a.getWorldPopulation());
+        System.out.println("Continent pop: " + a.getContinentPopulation("Europe"));
+        System.out.println("Region pop: " + a.getRegionPopulation("Southern Europe"));
+        System.out.println("Country pop: " + a.getCountryPopulation("Spain"));
+        System.out.println("District pop: " + a.getDistrictPopulation("Andalusia"));
+        System.out.println("City pop: " + a.getCityPopulation("Randburg"));
 
         // Disconnect from database
         a.disconnect();
@@ -468,6 +450,51 @@ public class App {
     } // METHOD getCountryByCode()
 
     /**
+     * Gets the Country from the world MySQL database which has a given name.
+     * @param name the name of the Country we want to get.
+     * @return The Country.
+     */
+    public Country getCountryByName(String name) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM country "
+                            + "WHERE Name = '" + name + "'";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a new country with the result values
+            Country myCountry = new Country();
+            if(rset.next()) {
+                myCountry.code = rset.getString("Code");
+                myCountry.name = rset.getString("Name");
+                myCountry.continent = Continent.toContinent(rset.getString("Continent"));
+                myCountry.region = rset.getString("Region");
+                myCountry.surfaceArea = rset.getFloat("SurfaceArea");
+                myCountry.indepYear = rset.getInt("IndepYear");
+                myCountry.population = rset.getInt("Population");
+                myCountry.lifeExpectancy = rset.getDouble("LifeExpectancy");
+                myCountry.gnp = rset.getFloat("GNP");
+                myCountry.gnpOld = rset.getFloat("GNPOld");
+                myCountry.localName = rset.getString("LocalName");
+                myCountry.governmentForm = rset.getString("GovernmentForm");
+                myCountry.headOfState = rset.getString("HeadOfState");
+                myCountry.capital = rset.getInt("Capital");
+                myCountry.code2 = rset.getString("Code2");
+            }
+            return myCountry;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country by name");
+            return null;
+        }
+    } // METHOD getCountryByName()
+
+    /**
      * Gets the Country Code from the world MySQL database which has a given Name.
      * @param name the name of the Country we want to get the code of.
      * @return The code.
@@ -746,6 +773,42 @@ public class App {
             return null;
         }
     } // METHOD getCitiesByDistrict()
+
+    /**
+     * Gets the city from the world MySQL database which has a given name.
+     * @param name the name of the city we want to get.
+     * @return The City.
+     */
+    public City getCityByName(String name) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM city "
+                            + "WHERE Name = '" + name + "'";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create a new city with the result values
+            City myCity = new City();
+            if(rset.next()) {
+                myCity.id = rset.getInt("ID");
+                myCity.name = rset.getString("Name");
+                myCity.countryCode = rset.getString("CountryCode");
+                myCity.district = rset.getString("District");
+                myCity.population = rset.getInt("Population");
+            }
+
+            return myCity;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city by name");
+            return null;
+        }
+    }   // METHOD getCityByName()
 
     /**
      * Gets the city from the world MySQL database which has a given id code.
@@ -1317,4 +1380,161 @@ public class App {
         }
     }
 
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> POPULATION METHODS
+
+    /**
+     * Gets the population of the world.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getWorldPopulation() {
+        try {
+            //Create the result variable to return
+            int population = 0;
+
+            //Create a list with all the countries in the world
+            ArrayList<Country> countries = getAllCountries();
+            //Add the population of all countries to the result
+            for(Country c : countries) {
+                population += c.population;
+            }
+            return population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get world population");
+            return -1;
+        }
+    }
+
+    /**
+     * Gets the population of a given continent.
+     * @param continent A string that contains the name of the continent.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getContinentPopulation(String continent) {
+        try {
+            //Create the result variable to return
+            int population = 0;
+
+            //Create a list with all the countries in the continent
+            ArrayList<Country> countries = getCountriesByContinent(continent);
+            //Add the population of all countries to the result
+            for(Country c : countries) {
+                population += c.population;
+            }
+            return population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get continent population");
+            return -1;
+        }
+    }
+
+    /**
+     * Gets the population of a given region.
+     * @param region A string that contains the name of the region.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getRegionPopulation(String region) {
+        try {
+            //Create the result variable to return
+            int population = 0;
+
+            //Create a list with all the countries in the continent
+            ArrayList<Country> countries = getCountriesByRegion(region);
+            //Add the population of all countries to the result
+            for(Country c : countries) {
+                population += c.population;
+            }
+            return population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get region population");
+            return -1;
+        }
+    }
+
+    /**
+     * Gets the population of a given country.
+     * @param country A string that contains the name of the country.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getCountryPopulation(String country) {
+        try {
+            return getCountryByName(country).population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country population");
+            return -1;
+        }
+    }
+
+    /**
+     * Gets the population of a given district.
+     * @param district A string that contains the name of the district.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getDistrictPopulation(String district) {
+        try {
+            //Create the result variable to return
+            int population = 0;
+
+            //Create a list with all the cities in the district
+            ArrayList<City> cities = getCitiesByDistrict(district);
+            //Add the population of all countries to the result
+            for(City c : cities) {
+                population += c.population;
+            }
+            return population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get district population");
+            return -1;
+        }
+    }
+
+    /**
+     * Gets the population of a given city.
+     * @param city A string that contains the name of the city.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getCityPopulation(String city) {
+        try {
+            return getCityByName(city).population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country population");
+            return -1;
+        }
+    }
+
+    /**
+     * Prints a report of population.
+     * @param territory String that contains the name of the territory.
+     * @param population Int tha contains the population of the territory.
+     * @param inCities Int that contains the portion of the population that lives in cities within the territory.
+     * @param reportTitle String that contains the name of the report.
+     */
+    public void printPopulationReport(String territory, int population, int inCities, String reportTitle) {
+        if(population == -1) {
+            System.out.println("Failed to print " + reportTitle +" report.");
+        } else {
+            // Print report header
+            System.out.println("REPORT OF " + reportTitle);
+            System.out.printf("%-35s %-20s %-20s %-20s\n",
+                    "Name", "Population", "In cities", "Not in cities");
+            System.out.println(
+                    "---------------------------------------------------------------------------------------------------------"
+            );
+            System.out.printf("%-35s %-20s %-20s %-20s\n",
+                    territory, population, inCities + " (" + String.format("%.2d%%", (inCities / population) * 100) + ")",
+                    population - inCities + " (" + String.format("%.2d%%", ((population - inCities) / population) * 100) + ")"
+            );
+        }
+    }
 } // CLASS App
