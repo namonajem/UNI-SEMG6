@@ -19,12 +19,11 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        System.out.println("World pop: " + a.getWorldPopulation());
-        System.out.println("Continent pop: " + a.getContinentPopulation("Europe"));
-        System.out.println("Region pop: " + a.getRegionPopulation("Southern Europe"));
-        System.out.println("Country pop: " + a.getCountryPopulation("Spain"));
-        System.out.println("District pop: " + a.getDistrictPopulation("Andalusia"));
-        System.out.println("City pop: " + a.getCityPopulation("Randburg"));
+        a.printPopulationReport("Europe",
+                a.getContinentPopulation("Europe"),
+                a.getPopulationInCitiesByContinent("Europe"),
+                "Population in Europe");
+
 
         // Disconnect from database
         a.disconnect();
@@ -1514,6 +1513,81 @@ public class App {
     }
 
     /**
+     * Gets the population living in cities of a given continent.
+     * @param continent A string that contains the name of the continent.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getPopulationInCitiesByContinent(String continent) {
+        try {
+            //Create the result variable to return
+            int population = 0;
+
+            //Create a list with all the countries in the continent
+            ArrayList<City> cities = getCitiesByContinent(continent);
+            //Add the population of all countries to the result
+            for(City c : cities) {
+                population += c.population;
+            }
+            return population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population living in cities by continent");
+            return -1;
+        }
+    }
+
+    /**
+     * Gets the population living in cities of a given region.
+     * @param region A string that contains the name of the region.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getPopulationInCitiesByRegion(String region) {
+        try {
+            //Create the result variable to return
+            int population = 0;
+
+            //Create a list with all the countries in the continent
+            ArrayList<City> cities = getCitiesByRegion(region);
+            //Add the population of all countries to the result
+            for(City c : cities) {
+                population += c.population;
+            }
+            return population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population living in cities by region");
+            return -1;
+        }
+    }
+
+    /**
+     * Gets the population living in cities of a given country.
+     * @param country A string that contains the name of the country.
+     * @return An int value for the population, or -1 if there is an error.
+     */
+    public int getPopulationInCitiesByCountry(String country) {
+        try {
+            //Create the result variable to return
+            int population = 0;
+
+            //Create a list with all the countries in the continent
+            ArrayList<City> cities = getCitiesByCountry(country);
+            //Add the population of all countries to the result
+            for(City c : cities) {
+                population += c.population;
+            }
+            return population;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get population living in cities by country");
+            return -1;
+        }
+    }
+
+    /**
      * Prints a report of population.
      * @param territory String that contains the name of the territory.
      * @param population Int tha contains the population of the territory.
@@ -1524,16 +1598,23 @@ public class App {
         if(population == -1) {
             System.out.println("Failed to print " + reportTitle +" report.");
         } else {
+            //Calculate percentage values
+            //double inCitiesPct =  (double) inCities / population * 100;
+            //double nonCitiesPct =  (double) (population - inCities) / population * 100;
+            String inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
+            String nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+
             // Print report header
             System.out.println("REPORT OF " + reportTitle);
-            System.out.printf("%-35s %-20s %-20s %-20s\n",
-                    "Name", "Population", "In cities", "Not in cities");
+            System.out.printf("%-35s %-20s %-25s %-25s \n",
+                    "Territory name", "Population", "In cities", "Not in cities");
             System.out.println(
                     "---------------------------------------------------------------------------------------------------------"
             );
-            System.out.printf("%-35s %-20s %-20s %-20s\n",
-                    territory, population, inCities + " (" + String.format("%.2d%%", (inCities / population) * 100) + ")",
-                    population - inCities + " (" + String.format("%.2d%%", ((population - inCities) / population) * 100) + ")"
+            System.out.printf("%-35s %-20s %-25s %-25s \n",
+                    territory, population,
+                    inCities + " (" + inCitiesPct + "%)",
+                    population - inCities + " (" + nonCitiesPct+ "%)"
             );
         }
     }
