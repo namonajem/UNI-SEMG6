@@ -19,9 +19,19 @@ public class App {
         a.connect();
 
         // TEST IMPLEMENTATION
-        //ArrayList<Country> myList = a.getCountriesByContinent("north america");
-        //a.printCountriesReport(myList, "COUNTRIES OF NORTH AMERICA");
-        System.out.println(a.getCityByID(653));
+        ArrayList<Country> myList = a.getCountriesByRegion("western europe");
+        a.printCountriesReport(myList, "COUNTRIES OF WESTERN EUROPE");
+
+        ArrayList<Country> myList2 = a.getTopNCountriesByRegion(5, "western europe");
+        a.printCountriesReport(myList2, "TOP 5 COUNTRIES OF WESTERN EUROPE");
+
+        ArrayList<Country> myList3 = a.getTopNCountries(10);
+        a.printCountriesReport(myList3, "TOP 10 COUNTRIES");
+
+        ArrayList<Country> myList4 = a.getTopNCountriesByContinent(5,"europe");
+        a.printCountriesReport(myList4, "TOP 10 COUNTRIES OF EUROPE");
+
+
 
         // Disconnect from database
         a.disconnect();
@@ -96,7 +106,7 @@ public class App {
         }
         return str;
     }
-    // CITIES METHODS -----------------------------------------------------------------------------------
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CITIES METHODS
 
     /**
      * Gets all the cities from the world MySQL database.
@@ -208,7 +218,7 @@ public class App {
         }
     }
 
-    // CAPITAL CITIES METHODS ---------------------------------------------------------------------------
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CAPITAL CITIES METHODS
 
     /**
      * Gets all the capital cities from the world MySQL database.
@@ -478,7 +488,7 @@ public class App {
         }
     }
 
-    // COUNTRIES METHODS -----------------------------------------------------------------------------
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> COUNTRIES METHODS
 
     /**
      * Gets all the countries from the world MySQL database.
@@ -579,6 +589,208 @@ public class App {
             return null;
         }
     } // METHOD getCountriesByContinent()
+
+    /**
+     * Gets all the countries in a given region.
+     * @param region A string which contains the name of the region.
+     * @return A list of all countries in a region, or null if there is an error.
+     */
+    public ArrayList<Country> getCountriesByRegion(String region) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM country "
+                            + "WHERE Region = '" + region +  "' "
+                            + "ORDER BY Population DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a List for the countries
+            ArrayList<Country> countries = new ArrayList<>();
+            while(rset.next()) {
+                Country myCountry = new Country(
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getFloat("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getDouble("LifeExpectancy"),
+                        rset.getFloat("GNP"),
+                        rset.getFloat("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                // Add country to the list
+                countries.add(myCountry);
+            }
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get countries by region");
+            return null;
+        }
+    } // METHOD getCountriesByRegion()
+
+    /**
+     * Gets the top N populated countries from the world MySQL database.
+     * @return A list of the top N populated in database, or null if there is an error.
+     */
+    public ArrayList<Country> getTopNCountries(int n) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM country "
+                            + "ORDER BY Population DESC "
+                            + "LIMIT " + n;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create list for countries
+            ArrayList<Country> countries = new ArrayList<>();
+            while(rset.next()) {
+                Country myCountry = new Country(
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getFloat("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getDouble("LifeExpectancy"),
+                        rset.getFloat("GNP"),
+                        rset.getFloat("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                // Add country to the list
+                countries.add(myCountry);
+            }
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top N countries");
+            return null;
+        }
+    } // METHOD getTopNCountries()
+
+    /**
+     * Gets the top N populated countries in a given continent.
+     * @return A list of the top N populated countries in a given continent, or null if there is an error.
+     */
+    public ArrayList<Country> getTopNCountriesByContinent(int n, String continent) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM country "
+                            + "WHERE Continent = '" + continent +  "' "
+                            + "ORDER BY Population DESC "
+                            + "LIMIT " + n;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create list for countries
+            ArrayList<Country> countries = new ArrayList<>();
+            while(rset.next()) {
+                Country myCountry = new Country(
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getFloat("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getDouble("LifeExpectancy"),
+                        rset.getFloat("GNP"),
+                        rset.getFloat("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                // Add country to the list
+                countries.add(myCountry);
+            }
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top N countries by continent");
+            return null;
+        }
+    } // METHOD getTopNCountriesByContinent()
+
+    /**
+     * Gets the top N populated countries in a given continent.
+     * @return A list of the top N populated countries in a given continent, or null if there is an error.
+     */
+    public ArrayList<Country> getTopNCountriesByRegion(int n, String region) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT * "
+                            + "FROM country "
+                            + "WHERE Region = '" + region +  "' "
+                            + "ORDER BY Population DESC "
+                            + "LIMIT " + n;
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            // Create list for countries
+            ArrayList<Country> countries = new ArrayList<>();
+            while(rset.next()) {
+                Country myCountry = new Country(
+                        rset.getString("Code"),
+                        rset.getString("Name"),
+                        rset.getString("Continent"),
+                        rset.getString("Region"),
+                        rset.getFloat("SurfaceArea"),
+                        rset.getInt("IndepYear"),
+                        rset.getInt("Population"),
+                        rset.getDouble("LifeExpectancy"),
+                        rset.getFloat("GNP"),
+                        rset.getFloat("GNPOld"),
+                        rset.getString("LocalName"),
+                        rset.getString("GovernmentForm"),
+                        rset.getString("HeadOfState"),
+                        rset.getInt("Capital"),
+                        rset.getString("Code2")
+                );
+                // Add country to the list
+                countries.add(myCountry);
+            }
+            return countries;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get top N countries by region");
+            return null;
+        }
+    } // METHOD getTopNCountriesByRegion()
 
     /**
      * Gets the Country from the world MySQL database which has a given code.
