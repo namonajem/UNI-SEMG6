@@ -1,7 +1,7 @@
 package com.napier.sem;
 
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class App {
 
@@ -1665,6 +1665,37 @@ public class App {
     }
 
     /**
+     * Makes a list of languages sorted by number of speakers from greatest to smallest from a given array of languages
+     * @param langs String array that contains the names of the languages to sort
+     */
+    public ArrayList<String> sortLanguagesBySpeakers(String[] langs) {
+        try {
+            //Create all aux structures and variables
+            ArrayList<String> sortedLangs = new ArrayList<>();
+            PriorityQueue<Integer> speakers = new PriorityQueue<>();
+            Map<Integer, String> aux = new HashMap<>();
+            int key;
+
+            //Fill aux map with {number of speakers, language}
+            //and priority queue with number of speakers so they get sorted
+            for(int i = 0; i < langs.length; i++) {
+                key = getPopulationByLanguage(langs[i]);
+                speakers.add(key);
+                aux.put(key, langs[i]);
+            }
+            while(!speakers.isEmpty()) {
+                sortedLangs.add(aux.get(speakers.remove()));
+            }
+            return sortedLangs;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get sort languages");
+            return null;
+        }
+    }
+
+    /**
      * Prints a report of population that speaks the following languages, form greatest number to smallest
      *      - Chinese
      *      - English
@@ -1674,24 +1705,31 @@ public class App {
      */
     public void printPopulationSpeakingLanguagesReport() {
         try {
+            //Get the worl population for later operations
+            int worldPopulation = getWorldPopulation();
             //Create an array with the names of the languages
             String[] langs = {"Chinese", "English", "Hindi", "Spanish", "Arabic"};
-            int worldPopulation = getWorldPopulation();
+
+            //Sort langs with an aux method
+            ArrayList<String> sortedLangs = sortLanguagesBySpeakers(langs);
 
             //Print header
             System.out.println("REPORT ON NUMBER OF SPEAKERS FOR ARABIC, CHINESE, ENGLISH, HINDI AND SPANISH");
             System.out.printf("%-5s %-20s %-20s %-6s \n", "No", "Language", "Speakers", "World Pct.");
             System.out.println("-------------------------------------------------------");
             //Get the population speaking each of them and print
-            for(int i = 1; i <= langs.length; i++) {
-                int population = getPopulationByLanguage(langs[i-1]);
-                String worldPct = String.format("%.2f", (double) getPopulationByLanguage(langs[i-1]) / worldPopulation * 100);
+            int i = 1;
+            while(!sortedLangs.isEmpty()) {
+                String language = sortedLangs.remove(sortedLangs.size()-1);
+                int population = getPopulationByLanguage(language);
+                String worldPct = String.format("%.2f", (double) population / worldPopulation * 100);
                 System.out.printf("%-5s %-20s %-20d %-6s \n",
                         i + ".",
-                        langs[i-1],
+                        language,
                         population,
                         "(" + worldPct + "%)"
                 );
+                i++;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1707,24 +1745,30 @@ public class App {
         try {
             int worldPopulation = getWorldPopulation();
             String langs = "";
+            //Sort langs with an aux method
+            ArrayList<String> sortedLangs = sortLanguagesBySpeakers(args);
+
+            //Print header
             for(String s : args) {
                 langs += " " + s.toUpperCase() + ",";
             }
-
-            //Print header
             System.out.println("REPORT ON NUMBER OF SPEAKERS FOR" + langs);
             System.out.printf("%-5s %-20s %-20s %-6s \n", "No", "Language", "Speakers", "World Pct.");
             System.out.println("-------------------------------------------------------");
+
             //Get the population speaking each of them and print
-            for(int i = 1; i <= args.length; i++) {
-                int population = getPopulationByLanguage(args[i-1]);
-                String worldPct = String.format("%.2f", (double) getPopulationByLanguage(args[i-1]) / worldPopulation * 100);
+            int i = 1;
+            while(!sortedLangs.isEmpty()) {
+                String language = sortedLangs.remove(sortedLangs.size()-1);
+                int population = getPopulationByLanguage(language);
+                String worldPct = String.format("%.2f", (double) population / worldPopulation * 100);
                 System.out.printf("%-5s %-20s %-20d %-6s \n",
                         i + ".",
-                        args[i-1],
+                        language,
                         population,
                         "(" + worldPct + "%)"
                 );
+                i++;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
