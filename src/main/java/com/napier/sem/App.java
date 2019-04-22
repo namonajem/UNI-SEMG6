@@ -1716,7 +1716,7 @@ public class App {
             //Print header
             System.out.println("REPORT ON NUMBER OF SPEAKERS FOR ARABIC, CHINESE, ENGLISH, HINDI AND SPANISH");
             System.out.printf("%-5s %-20s %-20s %-6s \n", "No", "Language", "Speakers", "World Pct.");
-            System.out.println("-------------------------------------------------------");
+            System.out.println("----------------------------------------------------------");
             //Get the population speaking each of them and print
             int i = 1;
             while(!sortedLangs.isEmpty()) {
@@ -1754,7 +1754,7 @@ public class App {
             }
             System.out.println("REPORT ON NUMBER OF SPEAKERS FOR" + langs);
             System.out.printf("%-5s %-20s %-20s %-6s \n", "No", "Language", "Speakers", "World Pct.");
-            System.out.println("-------------------------------------------------------");
+            System.out.println("----------------------------------------------------------");
 
             //Get the population speaking each of them and print
             int i = 1;
