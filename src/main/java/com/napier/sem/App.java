@@ -28,6 +28,7 @@ public class App {
         // TEST IMPLEMENTATION
         a.printPopulationSpeakingLanguagesReport();
         a.printPopulationSpeakingLanguagesReport("Chinese", "English", "Spanish", "Arabic", "Hindi");
+        System.out.println("Yeah, it's updated");
 
         // Disconnect from database
         a.disconnect();
@@ -86,31 +87,13 @@ public class App {
         }
     }
 
-    /**
-     * Convert string to title case
-     * @param str string to convert
-     * @return A string converted into title case
-     */
-    public String toTitleCase(String str) {
-        if (str.length() == 0) {
-            return "";
-        } else if(str.length() == 1) {
-            return str.toUpperCase();
-        } else {
-            String part1 = str.substring(0, 1);
-            String part2 = str.substring(1);
-            str = part1.toUpperCase() + part2.toLowerCase();
-        }
-        return str;
-    }
-
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> COUNTRIES METHODS
 
     /**
      * Gets all the countries from the world MySQL database.
      * @return A list of all countries in database, or null if there is an error.
      */
-    public ArrayList<Country> getAllCountries() {
+    public List<Country> getAllCountries() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -123,7 +106,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             // While there are more countries in the result set
             while (rset.next()) {
                 // Create a new country with the values in the result set
@@ -161,7 +144,7 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of all countries in a continent, or null if there is an error.
      */
-    public ArrayList<Country> getCountriesByContinent(String continent) {
+    public List<Country> getCountriesByContinent(String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -175,7 +158,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -211,7 +194,7 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of all countries in a region, or null if there is an error.
      */
-    public ArrayList<Country> getCountriesByRegion(String region) {
+    public List<Country> getCountriesByRegion(String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -225,7 +208,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -260,7 +243,7 @@ public class App {
      * Gets the top N populated countries from the world MySQL database.
      * @return A list of the top N populated in database, or null if there is an error.
      */
-    public ArrayList<Country> getTopNCountries(int n) {
+    public List<Country> getTopNCountries(int n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -275,7 +258,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -310,7 +293,7 @@ public class App {
      * Gets the top N populated countries in a given continent.
      * @return A list of the top N populated countries in a given continent, or null if there is an error.
      */
-    public ArrayList<Country> getTopNCountriesByContinent(int n, String continent) {
+    public List<Country> getTopNCountriesByContinent(int n, String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -326,7 +309,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -361,7 +344,7 @@ public class App {
      * Gets the top N populated countries in a given continent.
      * @return A list of the top N populated countries in a given continent, or null if there is an error.
      */
-    public ArrayList<Country> getTopNCountriesByRegion(int n, String region) {
+    public List<Country> getTopNCountriesByRegion(int n, String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -377,7 +360,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -542,7 +525,7 @@ public class App {
      * Prints a report of countries.
      * @param countries The list of cities to print.
      */
-    public void printCountriesReport(ArrayList<Country> countries, String reportTitle) {
+    public void printCountriesReport(List<Country> countries, String reportTitle) {
         // Check list not empty nor null
         if(countries == null || countries.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report.");
@@ -573,7 +556,7 @@ public class App {
      * Gets all the cities from the world MySQL database.
      * @return A list of all cities in database, or null if there is an error.
      */
-    public ArrayList<City> getAllCities() {
+    public List<City> getAllCities() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -586,7 +569,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -613,7 +596,7 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of all cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCitiesByContinent(String continent) {
+    public List<City> getCitiesByContinent(String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -629,7 +612,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -656,7 +639,7 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of all cities in a region, or null if there is an error.
      */
-    public ArrayList<City> getCitiesByRegion(String region) {
+    public List<City> getCitiesByRegion(String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -672,7 +655,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -699,7 +682,7 @@ public class App {
      * @param country A string which contains the name of the country.
      * @return A list of all cities in a country, or null if there is an error.
      */
-    public ArrayList<City> getCitiesByCountry(String country) {
+    public List<City> getCitiesByCountry(String country) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -715,7 +698,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -742,7 +725,7 @@ public class App {
      * @param district A string which contains the name of the district.
      * @return A list of all cities in a district, or null if there is an error.
      */
-    public ArrayList<City> getCitiesByDistrict(String district) {
+    public List<City> getCitiesByDistrict(String district) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -756,7 +739,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -855,7 +838,7 @@ public class App {
      * @param n Number of cities to get.
      * @return A list of the top N populated cities in database, or null if there is an error.
      */
-    public ArrayList<City> getTopNCities(int n) {
+    public List<City> getTopNCities(int n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -870,7 +853,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -899,7 +882,7 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of the top N populated cities in a given continent, or null if there is an error.
      */
-    public ArrayList<City> getTopNCitiesByContinent(int n, String continent) {
+    public List<City> getTopNCitiesByContinent(int n, String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -917,7 +900,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -946,7 +929,7 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of the top N populated cities in a given region, or null if there is an error.
      */
-    public ArrayList<City> getTopNCitiesByRegion(int n, String region) {
+    public List<City> getTopNCitiesByRegion(int n, String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -964,7 +947,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -993,7 +976,7 @@ public class App {
      * @param country A string which contains the name of the country.
      * @return A list of the top N populated cities in a given country, or null if there is an error.
      */
-    public ArrayList<City> getTopNCitiesByCountry(int n, String country) {
+    public List<City> getTopNCitiesByCountry(int n, String country) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1011,7 +994,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -1040,7 +1023,7 @@ public class App {
      * @param district A string which contains the name of the district.
      * @return A list of the top N populated cities in a given district, or null if there is an error.
      */
-    public ArrayList<City> getTopNCitiesByDistrict(int n, String district) {
+    public List<City> getTopNCitiesByDistrict(int n, String district) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1056,7 +1039,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -1092,7 +1075,7 @@ public class App {
      * Prints a report of cities.
      * @param cities The list of cities to print.
      */
-    public void printCitiesReport(ArrayList<City> cities, String reportTitle) {
+    public void printCitiesReport(List<City> cities, String reportTitle) {
         if(cities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: cities list is empty.");
         } else {
@@ -1120,7 +1103,7 @@ public class App {
      * Gets all the capital cities from the world MySQL database.
      * @return A list of all capital cities in database, or null if there is an error.
      */
-    public ArrayList<City> getAllCapitalCities() {
+    public List<City> getAllCapitalCities() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1135,7 +1118,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1159,7 +1142,7 @@ public class App {
      * Gets all the capital cities from countries in a given continent.
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCitiesByContinent(String continent) {
+    public List<City> getCapitalCitiesByContinent(String continent) {
         try {
 
             // Create an SQL statement
@@ -1176,7 +1159,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1200,7 +1183,7 @@ public class App {
      * Gets all the capital cities from countries in a given region.
      * @return A list of all capital cities in a region, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCitiesByRegion(String region) {
+    public List<City> getCapitalCitiesByRegion(String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1216,7 +1199,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1240,7 +1223,7 @@ public class App {
      * Gets the top N populated capital cities from the world MySQL database.
      * @return A list of the top N populated in database, or null if there is an error.
      */
-    public ArrayList<City> getTopNCapitalCities(int n) {
+    public List<City> getTopNCapitalCities(int n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1256,7 +1239,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1280,7 +1263,7 @@ public class App {
      * Gets the top N populated in a given continent.
      * @return A list of the top N populated in a given continent, or null if there is an error.
      */
-    public ArrayList<City> getTopNCapitalCitiesByContinent(int n, String continent) {
+    public List<City> getTopNCapitalCitiesByContinent(int n, String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1297,7 +1280,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1321,7 +1304,7 @@ public class App {
      * Gets the top N populated in a given region.
      * @return A list of the top N populated in a given region, or null if there is an error.
      */
-    public ArrayList<City> getTopNCapitalCitiesByRegion(int n, String region) {
+    public List<City> getTopNCapitalCitiesByRegion(int n, String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1338,7 +1321,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1362,7 +1345,7 @@ public class App {
      * Prints a report of capital cities.
      * @param capitalCities The list of capital cities to print.
      */
-    public void printCapitalCitiesReport(ArrayList<City> capitalCities, String reportTitle) {
+    public void printCapitalCitiesReport(List<City> capitalCities, String reportTitle) {
         if(capitalCities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: capital cities list is empty.");
         } else {
@@ -1396,7 +1379,7 @@ public class App {
             int population = 0;
 
             //Create a list with all the countries in the world
-            ArrayList<Country> countries = getAllCountries();
+            List<Country> countries = getAllCountries();
             //Add the population of all countries to the result
             for(Country c : countries) {
                 population += c.population;
@@ -1421,7 +1404,7 @@ public class App {
             int population = 0;
 
             //Create a list with all the countries in the continent
-            ArrayList<Country> countries = getCountriesByContinent(continent);
+            List<Country> countries = getCountriesByContinent(continent);
             //Add the population of all countries to the result
             for(Country c : countries) {
                 population += c.population;
@@ -1446,7 +1429,7 @@ public class App {
             int population = 0;
 
             //Create a list with all the countries in the continent
-            ArrayList<Country> countries = getCountriesByRegion(region);
+            List<Country> countries = getCountriesByRegion(region);
             //Add the population of all countries to the result
             for(Country c : countries) {
                 population += c.population;
@@ -1487,7 +1470,7 @@ public class App {
             int population = 0;
 
             //Create a list with all the cities in the district
-            ArrayList<City> cities = getCitiesByDistrict(district);
+            List<City> cities = getCitiesByDistrict(district);
             //Add the population of all countries to the result
             for(City c : cities) {
                 population += c.population;
@@ -1528,7 +1511,7 @@ public class App {
             int population = 0;
 
             //Create a list with all the countries in the continent
-            ArrayList<City> cities = getCitiesByContinent(continent);
+            List<City> cities = getCitiesByContinent(continent);
             //Add the population of all countries to the result
             for(City c : cities) {
                 population += c.population;
@@ -1553,7 +1536,7 @@ public class App {
             int population = 0;
 
             //Create a list with all the countries in the continent
-            ArrayList<City> cities = getCitiesByRegion(region);
+            List<City> cities = getCitiesByRegion(region);
             //Add the population of all countries to the result
             for(City c : cities) {
                 population += c.population;
@@ -1578,7 +1561,7 @@ public class App {
             int population = 0;
 
             //Create a list with all the countries in the continent
-            ArrayList<City> cities = getCitiesByCountry(country);
+            List<City> cities = getCitiesByCountry(country);
             //Add the population of all countries to the result
             for(City c : cities) {
                 population += c.population;
@@ -1676,20 +1659,20 @@ public class App {
      * Makes a list of languages sorted by number of speakers from greatest to smallest from a given array of languages
      * @param langs String array that contains the names of the languages to sort
      */
-    public ArrayList<String> sortLanguagesBySpeakers(String[] langs) {
+    public List<String> sortLanguagesBySpeakers(String... langs) {
         try {
             //Create all aux structures and variables
-            ArrayList<String> sortedLangs = new ArrayList<>();
+            List<String> sortedLangs = new ArrayList<>();
             PriorityQueue<Integer> speakers = new PriorityQueue<>();
             Map<Integer, String> aux = new HashMap<>();
             int key;
 
             //Fill aux map with {number of speakers, language}
             //and priority queue with number of speakers so they get sorted
-            for(int i = 0; i < langs.length; i++) {
-                key = getPopulationByLanguage(langs[i]);
+            for(String s : langs) {
+                key = getPopulationByLanguage(s);
                 speakers.add(key);
-                aux.put(key, langs[i]);
+                aux.put(key, s);
             }
             while(!speakers.isEmpty()) {
                 sortedLangs.add(aux.get(speakers.remove()));
@@ -1713,13 +1696,13 @@ public class App {
      */
     public void printPopulationSpeakingLanguagesReport() {
         try {
-            //Get the worl population for later operations
+            //Get the world population for later operations
             int worldPopulation = getWorldPopulation();
             //Create an array with the names of the languages
             String[] langs = {"Chinese", "English", "Hindi", "Spanish", "Arabic"};
 
             //Sort langs with an aux method
-            ArrayList<String> sortedLangs = sortLanguagesBySpeakers(langs);
+            List<String> sortedLangs = sortLanguagesBySpeakers(langs);
 
             //Print header
             System.out.println("REPORT ON NUMBER OF SPEAKERS FOR ARABIC, CHINESE, ENGLISH, HINDI AND SPANISH");
@@ -1754,7 +1737,7 @@ public class App {
             int worldPopulation = getWorldPopulation();
             String langs = "";
             //Sort langs with an aux method
-            ArrayList<String> sortedLangs = sortLanguagesBySpeakers(args);
+            List<String> sortedLangs = sortLanguagesBySpeakers(args);
 
             //Print header
             for(String s : args) {

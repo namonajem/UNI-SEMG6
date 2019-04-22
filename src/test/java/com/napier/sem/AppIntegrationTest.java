@@ -2,10 +2,6 @@ package com.napier.sem;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIntegrationTest
@@ -16,14 +12,14 @@ public class AppIntegrationTest
     static void init()
     {
         app = new App();
-        app.connect("localhost:33060");
+        app.connect("192.168.99.100:33060");
     }
 
     @Test
     void testGetCountryByCode()
     {
         Country cntry = app.getCountryByCode("ESP");
-        assertEquals(cntry.name, "Spain");
-        assertEquals(cntry.code, "ESP");
+        assertEquals(cntry.name, "Spain", "Name of the Country");
+        assertEquals(cntry.code, "ESP", "Code of the Country");
     }
 }
