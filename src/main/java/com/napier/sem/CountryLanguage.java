@@ -8,7 +8,7 @@ public class CountryLanguage {
     // T or F, if language is official for said country
     Boolean isOfficial;
     // Percentage of speakers in said country
-    Float percentage;
+    double percentage;
 
     /**
      * No-args constructor
@@ -23,7 +23,7 @@ public class CountryLanguage {
             String countryCode,
             String language,
             Boolean isOfficial,
-            Float percentage) {
+            double percentage) {
 
         this.countryCode = countryCode;
         this.language = language;
