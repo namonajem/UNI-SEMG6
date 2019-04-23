@@ -1,7 +1,7 @@
 
 # **Software Engineering Methods Coursework** [![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases)
 
-A system to allow easy access to a database which provides world population information. This coursework is being worked on as a Scrum Team by Group 6 - see the [CODEOFCONDUCT.md](CODEOFCONDUCT.md) file for more details.
+A system to allow easy access to a database which provides world population information. This coursework is being worked on as a Scrum Team by Group 6 - see the [CODEOFCONDUCT.md](CODE_OF_CONDUCT.md) file for more details.
 
 ## Build Statuses
 
@@ -9,7 +9,7 @@ A system to allow easy access to a database which provides world population info
 
 * Develop Branch    [![Build Status](https://travis-ci.org/namonajem/SEMG6.svg?branch=develop)](https://travis-ci.org/namonajem/SEMG6)
 
-* CodeCov [![codecov](https://codecov.io/gh/namonajem/SEMG6/branch/feature_capital_cities/graph/badge.svg)](https://codecov.io/gh/namonajem/SEMG6)
+* CodeCov [![codecov](https://codecov.io/gh/namonajem/SEMG6/branch/develop/graph/badge.svg)](https://codecov.io/gh/namonajem/SEMG6)
 
 ## Authors
 
