@@ -2,38 +2,37 @@ package com.napier.sem;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import java.util.*;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-public class AppTest
-{
+public class AppTest {
     static App app;
 
     @BeforeAll
-    static void init()
-    {
+    static void init() {
         app = new App();
     }
 
     @Test
-    void printCitiesTestNull()
-    {
-        app.printCities(null);
+    void printCountriesReportTestNull() {
+        app.printCountriesReport(null, "Test report");
     }
 
     @Test
-    void printCities()
-    {
-        ArrayList<City> cities = new ArrayList<City>();
-        City city = new City();
-        city.name = "Yaren";
-        city.population = 559;
-        city.countryCode = "test";
-        city.district = "test";
-        city.id = 123;
-        app.printCities(cities);
+    void printCountriesReportTestEmpty() {
+        ArrayList<Country> countries = new ArrayList<Country>();
+        app.printCountriesReport(countries, "Test report");
+    }
+
+    @Test
+    void printCountriesReportTestContainsNull() {
+        ArrayList<Country> countries = new ArrayList<Country>();
+        countries.add(null);
+        app.printCountriesReport(countries, "Test report");
+    }
+
+    @Test
+    void printCountriesReport() {
+        List<Country> countries = app.getAllCountries();
+        app.printCountriesReport(countries, "Test Report");
     }
 }
