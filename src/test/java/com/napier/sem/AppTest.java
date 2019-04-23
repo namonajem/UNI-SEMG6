@@ -12,6 +12,8 @@ public class AppTest {
         app = new App();
     }
 
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> REPORTS TEST
+
     @Test
     void printCountriesReportTestNull() {
         app.printCountriesReport(null, "Test report");
@@ -19,13 +21,13 @@ public class AppTest {
 
     @Test
     void printCountriesReportTestEmpty() {
-        ArrayList<Country> countries = new ArrayList<Country>();
+        List<Country> countries = new ArrayList<>();
         app.printCountriesReport(countries, "Test report");
     }
 
     @Test
     void printCountriesReportTestContainsNull() {
-        ArrayList<Country> countries = new ArrayList<Country>();
+        List<Country> countries = new ArrayList<>();
         countries.add(null);
         app.printCountriesReport(countries, "Test report");
     }
@@ -34,5 +36,83 @@ public class AppTest {
     void printCountriesReport() {
         List<Country> countries = app.getAllCountries();
         app.printCountriesReport(countries, "Test Report");
+    }
+
+    @Test
+    void printCitiesReportTestNull() {
+        app.printCitiesReport(null, "Test report");
+    }
+
+    @Test
+    void printCitiesReportTestEmpty() {
+        List<City> cities = new ArrayList<>();
+        app.printCitiesReport(cities, "Test report");
+    }
+
+    @Test
+    void printCitiesReportTestContainsNull() {
+        List<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printCitiesReport(cities, "Test report");
+    }
+
+    @Test
+    void printCitiesReport() {
+        List<City> cities = app.getAllCities();
+        app.printCitiesReport(cities, "Test Report");
+    }
+
+    @Test
+    void printCapitalCitiesReportTestNull() {
+        app.printCapitalCitiesReport(null, "Test report");
+    }
+
+    @Test
+    void printCapitalCitiesReportTestEmpty() {
+        List<City> cities = new ArrayList<>();
+        app.printCapitalCitiesReport(cities, "Test report");
+    }
+
+    @Test
+    void printCapitalCitiesReportTestContainsNull() {
+        List<City> cities = new ArrayList<>();
+        cities.add(null);
+        app.printCapitalCitiesReport(cities, "Test report");
+    }
+
+    @Test
+    void printCapitalCitiesReport() {
+        List<City> cities = app.getAllCapitalCities();
+        app.printCitiesReport(cities, "Test Report");
+    }
+
+    @Test
+    void printPopulationReportTestEmptyTypeOfTerritory() {
+        app.printPopulationReport("","Edinburgh", "Test report");
+    }
+
+    @Test
+    void printPopulationReportTestInvalidTypeOfTerritory() {
+        app.printPopulationReport("city","Edinburgh", "Test report");
+    }
+
+    @Test
+    void printPopulationReportTestEmptyTerritory() {
+        app.printPopulationReport("continent","", "Test report");
+    }
+
+    @Test
+    void printPopulationReportTestNonExistentTerritory() {
+        app.printPopulationReport("continent","Edinburgh", "Test report");
+    }
+
+    @Test
+    void printPopulationReportTest() {
+        app.printPopulationReport("continent", "Europe", "Test report");
+    }
+
+    @Test
+    void printPopulationSpeakingLanguagesReportTest() {
+        app.printPopulationSpeakingLanguagesReport();
     }
 }
