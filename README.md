@@ -1,7 +1,7 @@
 
 # **Software Engineering Methods Coursework** [![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases)
 
-A system to allow easy access to a database which provides world population information. This coursework is being worked on as a Scrum Team by Group 6 - see the [CODEOFCONDUCT.md](CODEOFCONDUCT.md) file for more details.
+A system to allow easy access to a database which provides world population information. This coursework is being worked on as a Scrum Team by Group 6 - see the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) file for more details.
 
 ## Build Statuses
 
