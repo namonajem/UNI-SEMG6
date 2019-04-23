@@ -539,11 +539,14 @@ public class App {
             int i = 1;
             // Print each city in the list
             for (Country c : countries) {
-                if(c == null) continue;
-                System.out.printf("%-5s %-5s %-52s %-15s %-26s %-11s %-11s\n",
-                        i + ".", c.code, c.name, c.continent.getName(), c.region, c.population, getCityByID(c.capital).name
-                );
-                i++;
+                if(c == null) {
+                    continue;
+                } else {
+                    System.out.printf("%-5s %-5s %-52s %-15s %-26s %-11s %-11s\n",
+                            i + ".", c.code, c.name, c.continent.getName(), c.region, c.population, getCityByID(c.capital).name
+                    );
+                    i++;
+                }
             }
         }
     }
@@ -1087,11 +1090,14 @@ public class App {
             int i = 1;
             // Print each city in the list
             for (City c : cities) {
-                if(c == null) continue;
-                System.out.printf("%-5s %-35s %-52s %-20s %-11d\n",
-                        i + ".", c.name, getCountryByCode(c.countryCode).name, c.district, c.population
-                );
-                i++;
+                if(c == null) {
+                    continue;
+                } else {
+                    System.out.printf("%-5s %-35s %-52s %-20s %-11d\n",
+                            i + ".", c.name, getCountryByCode(c.countryCode).name, c.district, c.population
+                    );
+                    i++;
+                }
             }
         }
     }
@@ -1358,11 +1364,14 @@ public class App {
             int i = 1;
             // Print each city in the list
             for (City c : capitalCities) {
-                if(c == null) continue;
-                System.out.printf("%-5s %-35s %-52s %-11d\n",
-                        i + ".", c.name, getCountryByCode(c.countryCode).name, c.population
-                );
-                i++;
+                if(c == null) {
+                    continue;
+                } else {
+                    System.out.printf("%-5s %-35s %-52s %-11d\n",
+                            i + ".", c.name, getCountryByCode(c.countryCode).name, c.population
+                    );
+                    i++;
+                }
             }
         }
     }
@@ -1583,10 +1592,11 @@ public class App {
      */
     public void printPopulationReport(String typeOfTerritory, String territory, String reportTitle) {
         //Get territory data
-        if(typeOfTerritory.equals("") || territory.equals("")) {
+        if("".equals(typeOfTerritory) || "".equals(territory)) {
             System.out.println("Failed to get territory. Don't enter empty parameters.");
         } else {
-            int population, inCities;
+            int population;
+            int inCities;
             switch (typeOfTerritory.toUpperCase()) {
                 case "CONTINENT":
                     population = getPopulationByContinent(territory);
