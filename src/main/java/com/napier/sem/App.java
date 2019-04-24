@@ -26,6 +26,18 @@ public class App {
         }
 
         // TEST IMPLEMENTATION
+        List<Country> countries = a.getTopNCountries(10);
+        a.printCountriesReport(countries, "TOP N POPULATED countries in the world where N is provided by the user.".toUpperCase());
+        System.out.println("");
+        System.out.println("");
+        countries = a.getTopNCountriesByContinent(10, "South America");
+        a.printCountriesReport(countries, "TOP N POPULATED countries in a continent where N is provided by the user.".toUpperCase());
+        System.out.println("");
+        System.out.println("");
+        countries = a.getTopNCountriesByRegion(10,"South America");
+        a.printCountriesReport(countries, "TOP N POPULATED countries in a region where N is provided by the user.".toUpperCase());
+        System.out.println("");
+        System.out.println("");
         a.printPopulationSpeakingLanguagesReport();
 
         // Disconnect from database
