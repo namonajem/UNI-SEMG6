@@ -27,8 +27,6 @@ public class App {
 
         // TEST IMPLEMENTATION
         a.printPopulationSpeakingLanguagesReport();
-        a.printPopulationSpeakingLanguagesReport("Chinese", "English", "Spanish", "Arabic", "Hindi");
-        System.out.println("Yeah, it's updated");
 
         // Disconnect from database
         a.disconnect();
@@ -541,11 +539,14 @@ public class App {
             int i = 1;
             // Print each city in the list
             for (Country c : countries) {
-                if(c == null) continue;
-                System.out.printf("%-5s %-5s %-52s %-15s %-26s %-11s %-11s\n",
-                        i + ".", c.code, c.name, c.continent.getName(), c.region, c.population, getCityByID(c.capital).name
-                );
-                i++;
+                if(c == null) {
+                    continue;
+                } else {
+                    System.out.printf("%-5s %-5s %-52s %-15s %-26s %-11s %-11s\n",
+                            i + ".", c.code, c.name, c.continent.getName(), c.region, c.population, getCityByID(c.capital).name
+                    );
+                    i++;
+                }
             }
         }
     }
@@ -1076,7 +1077,7 @@ public class App {
      * @param cities The list of cities to print.
      */
     public void printCitiesReport(List<City> cities, String reportTitle) {
-        if(cities.isEmpty()) {
+        if(cities == null || cities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: cities list is empty.");
         } else {
             // Print report header
@@ -1089,10 +1090,14 @@ public class App {
             int i = 1;
             // Print each city in the list
             for (City c : cities) {
-                System.out.printf("%-5s %-35s %-52s %-20s %-11d\n",
-                        i + ".", c.name, getCountryByCode(c.countryCode).name, c.district, c.population
-                );
-                i++;
+                if(c == null) {
+                    continue;
+                } else {
+                    System.out.printf("%-5s %-35s %-52s %-20s %-11d\n",
+                            i + ".", c.name, getCountryByCode(c.countryCode).name, c.district, c.population
+                    );
+                    i++;
+                }
             }
         }
     }
@@ -1346,7 +1351,7 @@ public class App {
      * @param capitalCities The list of capital cities to print.
      */
     public void printCapitalCitiesReport(List<City> capitalCities, String reportTitle) {
-        if(capitalCities.isEmpty()) {
+        if(capitalCities == null || capitalCities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: capital cities list is empty.");
         } else {
             // Print report header
@@ -1359,10 +1364,14 @@ public class App {
             int i = 1;
             // Print each city in the list
             for (City c : capitalCities) {
-                System.out.printf("%-5s %-35s %-52s %-11d\n",
-                        i + ".", c.name, getCountryByCode(c.countryCode).name, c.population
-                );
-                i++;
+                if(c == null) {
+                    continue;
+                } else {
+                    System.out.printf("%-5s %-35s %-52s %-11d\n",
+                            i + ".", c.name, getCountryByCode(c.countryCode).name, c.population
+                    );
+                    i++;
+                }
             }
         }
     }
@@ -1577,33 +1586,57 @@ public class App {
 
     /**
      * Prints a report of population.
+     * @param typeOfTerritory String that contains a type of territory between continent/region/country.
      * @param territory String that contains the name of the territory.
-     * @param population Int tha contains the population of the territory.
-     * @param inCities Int that contains the portion of the population that lives in cities within the territory.
      * @param reportTitle String that contains the name of the report.
      */
-    public void printPopulationReport(String territory, int population, int inCities, String reportTitle) {
-        if(population == -1) {
-            System.out.println("Failed to print " + reportTitle +" report.");
+    public void printPopulationReport(String typeOfTerritory, String territory, String reportTitle) {
+        //Get territory data
+        if("".equals(typeOfTerritory) || "".equals(territory)) {
+            System.out.println("Failed to get territory. Don't enter empty parameters.");
         } else {
-            //Calculate percentage values
-            //double inCitiesPct =  (double) inCities / population * 100;
-            //double nonCitiesPct =  (double) (population - inCities) / population * 100;
-            String inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
-            String nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+            int population;
+            int inCities;
+            switch (typeOfTerritory.toUpperCase()) {
+                case "CONTINENT":
+                    population = getPopulationByContinent(territory);
+                    inCities = getPopulationInCitiesByContinent(territory);
+                    break;
+                case "REGION":
+                    population = getPopulationByRegion(territory);
+                    inCities = getPopulationInCitiesByRegion(territory);
+                    break;
+                case "COUNTRY":
+                    population = getPopulationByCountry(territory);
+                    inCities = getPopulationInCitiesByCountry(territory);
+                    break;
+                default:
+                    System.out.println("Enter a valid type of territory: continent/region/country.");
+                    return;
+            }
 
-            // Print report header
-            System.out.println("REPORT ON " + reportTitle);
-            System.out.printf("%-35s %-20s %-25s %-25s \n",
-                    "Territory name", "Population", "In cities", "Not in cities");
-            System.out.println(
-                    "---------------------------------------------------------------------------------------------------------"
-            );
-            System.out.printf("%-35s %-20s %-25s %-25s \n",
-                    territory, population,
-                    inCities + " (" + inCitiesPct + "%)",
-                    population - inCities + " (" + nonCitiesPct+ "%)"
-            );
+            if (population <= 0) {
+                System.out.println("Failed to print " + reportTitle + " report.\n" +
+                        "Unable to get territory population.\n" +
+                        "Please, make sure you enter an existent territory.");
+            } else {
+                //Calculate percentage values
+                String inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
+                String nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+
+                // Print report header
+                System.out.println("REPORT ON " + reportTitle);
+                System.out.printf("%-35s %-20s %-25s %-25s \n",
+                        "Territory name", "Population", "In cities", "Not in cities");
+                System.out.println(
+                        "---------------------------------------------------------------------------------------------------------"
+                );
+                System.out.printf("%-35s %-20s %-25s %-25s \n",
+                        territory, population,
+                        inCities + " (" + inCitiesPct + "%)",
+                        population - inCities + " (" + nonCitiesPct + "%)"
+                );
+            }
         }
     }
 
@@ -1657,27 +1690,27 @@ public class App {
 
     /**
      * Makes a list of languages sorted by number of speakers from greatest to smallest from a given array of languages
-     * @param langs String array that contains the names of the languages to sort
+     * @param languages String array that contains the names of the languages to sort
      */
-    public List<String> sortLanguagesBySpeakers(String... langs) {
+    public List<String> sortLanguagesBySpeakers(String... languages) {
         try {
             //Create all aux structures and variables
-            List<String> sortedLangs = new ArrayList<>();
+            List<String> sortedLanguages = new ArrayList<>();
             PriorityQueue<Integer> speakers = new PriorityQueue<>();
             Map<Integer, String> aux = new HashMap<>();
             int key;
 
             //Fill aux map with {number of speakers, language}
             //and priority queue with number of speakers so they get sorted
-            for(String s : langs) {
+            for(String s : languages) {
                 key = getPopulationByLanguage(s);
                 speakers.add(key);
                 aux.put(key, s);
             }
             while(!speakers.isEmpty()) {
-                sortedLangs.add(aux.get(speakers.remove()));
+                sortedLanguages.add(aux.get(speakers.remove()));
             }
-            return sortedLangs;
+            return sortedLanguages;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -1687,22 +1720,18 @@ public class App {
     }
 
     /**
-     * Prints a report of population that speaks the following languages, form greatest number to smallest
-     *      - Chinese
-     *      - English
-     *      - Hindi
-     *      - Spanish
-     *      - Arabic
+     * Prints a report of population that speaks the following languages, form greatest number to smallest:
+     *      - Chinese, English, Hindi, Spanish and Arabic
      */
     public void printPopulationSpeakingLanguagesReport() {
         try {
             //Get the world population for later operations
             int worldPopulation = getWorldPopulation();
             //Create an array with the names of the languages
-            String[] langs = {"Chinese", "English", "Hindi", "Spanish", "Arabic"};
+            String[] languages = {"Chinese", "English", "Hindi", "Spanish", "Arabic"};
 
-            //Sort langs with an aux method
-            List<String> sortedLangs = sortLanguagesBySpeakers(langs);
+            //Sort languages with an aux method
+            List<String> sortedLanguages = sortLanguagesBySpeakers(languages);
 
             //Print header
             System.out.println("REPORT ON NUMBER OF SPEAKERS FOR ARABIC, CHINESE, ENGLISH, HINDI AND SPANISH");
@@ -1710,8 +1739,8 @@ public class App {
             System.out.println("----------------------------------------------------------");
             //Get the population speaking each of them and print
             int i = 1;
-            while(!sortedLangs.isEmpty()) {
-                String language = sortedLangs.remove(sortedLangs.size()-1);
+            while(!sortedLanguages.isEmpty()) {
+                String language = sortedLanguages.remove(sortedLanguages.size()-1);
                 int population = getPopulationByLanguage(language);
                 String worldPct = String.format("%.2f", (double) population / worldPopulation * 100);
                 System.out.printf("%-5s %-20s %-20d %-6s \n",
@@ -1732,39 +1761,39 @@ public class App {
      * Prints a report of population that speaks a list of languages.
      * @param args String that contains the name of the territory.
      */
-    public void printPopulationSpeakingLanguagesReport(String... args) {
-        try {
-            int worldPopulation = getWorldPopulation();
-            String langs = "";
-            //Sort langs with an aux method
-            List<String> sortedLangs = sortLanguagesBySpeakers(args);
-
-            //Print header
-            for(String s : args) {
-                langs += " " + s.toUpperCase() + ",";
-            }
-            System.out.println("REPORT ON NUMBER OF SPEAKERS FOR" + langs);
-            System.out.printf("%-5s %-20s %-20s %-6s \n", "No", "Language", "Speakers", "World Pct.");
-            System.out.println("----------------------------------------------------------");
-
-            //Get the population speaking each of them and print
-            int i = 1;
-            while(!sortedLangs.isEmpty()) {
-                String language = sortedLangs.remove(sortedLangs.size()-1);
-                int population = getPopulationByLanguage(language);
-                String worldPct = String.format("%.2f", (double) population / worldPopulation * 100);
-                System.out.printf("%-5s %-20s %-20d %-6s \n",
-                        i + ".",
-                        language,
-                        population,
-                        "(" + worldPct + "%)"
-                );
-                i++;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to print population speaking languages report");
-        }
-    }
+//    public void printPopulationSpeakingLanguagesReport(String... args) {
+//        try {
+//            int worldPopulation = getWorldPopulation();
+//            String languages = "";
+//            //Sort languages with an aux method
+//            List<String> sortedLanguages = sortLanguagesBySpeakers(args);
+//
+//            //Print header
+//            for(String s : args) {
+//                languages += " " + s.toUpperCase() + ",";
+//            }
+//            System.out.println("REPORT ON NUMBER OF SPEAKERS FOR" + languages);
+//            System.out.printf("%-5s %-20s %-20s %-6s \n", "No", "Language", "Speakers", "World Pct.");
+//            System.out.println("----------------------------------------------------------");
+//
+//            //Get the population speaking each of them and print
+//            int i = 1;
+//            while(!sortedLanguages.isEmpty()) {
+//                String language = sortedLanguages.remove(sortedLanguages.size()-1);
+//                int population = getPopulationByLanguage(language);
+//                String worldPct = String.format("%.2f", (double) population / worldPopulation * 100);
+//                System.out.printf("%-5s %-20s %-20d %-6s \n",
+//                        i + ".",
+//                        language,
+//                        population,
+//                        "(" + worldPct + "%)"
+//                );
+//                i++;
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            System.out.println("Failed to print population speaking languages report");
+//        }
+//    }
 
 } // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CLASS App

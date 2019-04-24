@@ -26,35 +26,35 @@ enum Continent {
 
 public class Country {
     // Country's Code CHAR(3)
-    String code;
+    protected String code;
     // Country's Name
-    String name;
+    protected String name;
     // Continent where the Country is
-    Continent continent;
+    protected Continent continent;
     // Region where the Country is
-    String region;
+    protected String region;
     // Surface Area of the country in km2
-    Float surfaceArea;
+    protected Float surfaceArea;
     // Year in which they got their independence
-    int indepYear;
+    protected int indepYear;
     // Population of the country
-    int population;
+    protected int population;
     // Country's inhabitants life expectancy in country in years
-    double lifeExpectancy;
+    protected double lifeExpectancy;
     // Country's Gross National Product in million Euros
-    Float gnp;
+    protected Float gnp;
     // Country's previous Gross National Product in million Euros
-    Float gnpOld;
+    protected Float gnpOld;
     // Country's local name
-    String localName;
+    protected String localName;
     // Country's type of government
-    String governmentForm;
+    protected String governmentForm;
     // Country's head of state
-    String headOfState;
+    protected String headOfState;
     // Country's capital city ID
-    int capital;
+    protected int capital;
     // Country's Code CHAR(2)
-    String code2;
+    protected String code2;
 
     /**
      * No-args constructor

@@ -5,15 +5,15 @@ package com.napier.sem;
  */
 public class City {
     // City ID number
-    int id;
+    protected int id;
     // City name
-    String name;
+    protected String name;
     // Code of the country which the city belongs to
-    String countryCode;
+    protected String countryCode;
     // Name of the district which the city belongs to
-    String district;
+    protected String district;
     // Population of the city
-    int population;
+    protected int population;
 
 
     /**
