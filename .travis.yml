@@ -102,7 +102,7 @@ stages:
   - name: GitHub Release
     if: branch = master
   - name: Google Cloud Deploy
-  if: branch = master
+    if: branch = master
 
 after_success:
   # Push code coverage data to codecov.
