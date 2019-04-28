@@ -1,57 +1,48 @@
 language: java
-
 sudo: false
-
 addons:
   hosts:
-    - db
-
+  - db
 services:
-  - docker
-
+- docker
 install:
-  - docker build -t database db/.
-  - docker run --rm -d -e MYSQL_ROOT_PASSWORD=example -p 33060:3306 database
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-
+- docker build -t database db/.
+- docker run --rm -d -e MYSQL_ROOT_PASSWORD=example -p 33060:3306 database
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 before_script:
-  - mvn clean
-
+- mvn clean
 jobs:
   include:
-    - stage: unit tests
-      install: skip
-      jdk: oraclejdk11
-      script: mvn test -Dtest=com.napier.sem.AppTest
-    - stage: integration tests
-      jdk: oraclejdk11
-      script: mvn test -Dtest=com.napier.sem.AppIntegrationTest
-    - stage: GitHub Release
-      install: skip
-      jdk: oraclejdk11
-      script:
-        - echo "Deploying to GitHub Releases"
-        - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
-      before_deploy:
-        # Set up git user name and tag this commit
-        - git config --local user.name "Kevin Chalmers"
-        - git config --local user.email "k.chalmers@napier.ac.uk"
-        # Create temporary tag from date and Git log.
-        - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y-%m-%d')-$(git log --format=%h -1)}
-        # Set tag
-        - git tag $TRAVIS_TAG
-      deploy:
-        provider: releases
-        api_key: $GITHUB_OAUTH_TOKEN
-        # Copy built JAR file.  JAR built in $TRAVIS_BUILD_DIR/
-        file: $TRAVIS_BUILD_DIR/target/seMethods.jar
-        skip_cleanup: true
-
+  - stage: unit tests
+    install: skip
+    jdk: oraclejdk11
+    script: mvn test -Dtest=com.napier.sem.AppTest
+  - stage: integration tests
+    jdk: oraclejdk11
+    script: mvn test -Dtest=com.napier.sem.AppIntegrationTest
+  - stage: GitHub Release
+    install: skip
+    jdk: oraclejdk11
+    script:
+    - echo "Deploying to GitHub Releases"
+    - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
+    before_deploy:
+    - git config --local user.name "Kevin Chalmers"
+    - git config --local user.email "k.chalmers@napier.ac.uk"
+    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y-%m-%d')-$(git log --format=%h -1)}
+    - git tag $TRAVIS_TAG
+    deploy:
+      provider: releases
+      api_key: "$GITHUB_OAUTH_TOKEN"
+      file: "$TRAVIS_BUILD_DIR/target/seMethods.jar"
+      skip_cleanup: true
 stages:
-  - unit tests
-  - integration tests
-  - name: GitHub Release
-    if: branch = master
-
+- unit tests
+- integration tests
+- name: GitHub Release
+  if: branch = master
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+- bash <(curl -s https://codecov.io/bash)
+before_install:
+- openssl aes-256-cbc -K $encrypted_f4f4cb52bddd_key -iv $encrypted_f4f4cb52bddd_iv
+  -in client-secret.json.enc -out client-secret.json -d
