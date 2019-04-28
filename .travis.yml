@@ -78,7 +78,7 @@ jobs:
         - gcloud auth activate-service-account --key-file client-secret.json
       script:
         # Set the project we will work in.
-        - gcloud config set project semethods-239014
+        - gcloud config set project semethods-234809
         # Set the zone to work in.
         - gcloud config set compute/zone europe-west2-b
         # Assign project ID to a variable to make life easier
