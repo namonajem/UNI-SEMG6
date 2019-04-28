@@ -56,6 +56,6 @@ We have implemented 32 requirements of 32, which is 100%.
 | 31    | The population of a city. | Yes | ![](screenshots/26-31.png) |
 | 32    | The number of people who speak Chinese, English, Hindi, Spanish and Arabic from greatest number to smallest, including the percentage of the world population | Yes | ![](screenshots/32.png) |
 
-## License [![LICENSE](https://img.shields.io/github/license/namonajem/SEMG6.svg?style=flat)](https://github.com/namonajem/SEMG6/LICENSE)
+## License [![LICENSE](https://img.shields.io/github/license/namonajem/SEMG6.svg?style=flat)](https://github.com/namonajem/SEMG6/blob/master/LICENSE)
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
