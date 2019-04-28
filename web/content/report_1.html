@@ -32,6 +32,8 @@
 
     var URL = "http://" + window.location.hostname + "/app/get_all_countries?";
 
+    $(".showData").html(URL);
+
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.
         var col = [];

@@ -91,7 +91,7 @@ public class App {
      * @return A list of all countries in database, or null if there is an error.
      */
     @RequestMapping("get_all_countries")
-    public List<Country> getAllCountries() {
+    public ArrayList<Country> getAllCountries() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -104,7 +104,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             // While there are more countries in the result set
             while (rset.next()) {
                 // Create a new country with the values in the result set
@@ -143,7 +143,7 @@ public class App {
      * @return A list of all countries in a continent, or null if there is an error.
      */
     @RequestMapping("get_countries_by_continent")
-    public List<Country> getCountriesByContinent(@RequestParam(value = "continent") String continent) {
+    public ArrayList<Country> getCountriesByContinent(@RequestParam(value = "continent") String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -157,7 +157,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -194,7 +194,7 @@ public class App {
      * @return A list of all countries in a region, or null if there is an error.
      */
     @RequestMapping("get_countries_by_region")
-    public List<Country> getCountriesByRegion(@RequestParam(value = "region") String region) {
+    public ArrayList<Country> getCountriesByRegion(@RequestParam(value = "region") String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -208,7 +208,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
