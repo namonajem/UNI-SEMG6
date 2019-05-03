@@ -19,4 +19,4 @@ A system to allow easy access to a database which provides world population info
 
 ## License [![LICENSE](https://img.shields.io/github/license/namonajem/SEMG6.svg?style=flat)](https://github.com/namonajem/SEMG6/LICENSE)
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details.
