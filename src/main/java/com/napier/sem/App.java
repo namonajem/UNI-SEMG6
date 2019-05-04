@@ -1,5 +1,6 @@
 package com.napier.sem;
 
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.*;
 
@@ -26,7 +27,7 @@ public class App {
         }
 
         // TEST IMPLEMENTATION
-        a.printPopulationSpeakingLanguagesReport();
+        a.printPopulationInCountriesReport("Population in each continent report");
 
         // Disconnect from database
         a.disconnect();
@@ -88,10 +89,82 @@ public class App {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> COUNTRIES METHODS
 
     /**
-     * Gets all the countries from the world MySQL database.
+     * Gets all the continents from the world MySQL database sorted by population.
+     * @return A list of all continents in database, or null if there is an error.
+     */
+    public ArrayList<Continent> getAllContinents() {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Continent, SUM(Population) AS sumPopulations "
+                            + "FROM country "
+                            + "GROUP BY country.Continent "
+                            + "ORDER BY sumPopulations DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a List for the countries
+            ArrayList<Continent> continents = new ArrayList<>();
+            // While there are more countries in the result set
+            while (rset.next()) {
+                // Create a new country with the values in the result set
+                Continent myContinent = Continent.toContinent(
+                        rset.getString("Continent")
+                );
+                // Add country to the list
+                continents.add(myContinent);
+            }
+            return continents;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get continents");
+            return null;
+        }
+    }
+
+    /**
+     * Gets all the regions from the world MySQL database sorted by population.
+     * @return A list of all regions in database, or null if there is an error.
+     */
+    public ArrayList<String> getAllRegions() {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Region, SUM(Population) AS sumPopulations "
+                            + "FROM country "
+                            + "GROUP BY country.Region "
+                            + "ORDER BY sumPopulations DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a List for the countries
+            ArrayList<String> regions = new ArrayList<>();
+            // While there are more countries in the result set
+            while (rset.next()) {
+                // Create a new country with the values in the result set
+                String myString = rset.getString("Region");
+                // Add country to the list
+                regions.add(myString);
+            }
+            return regions;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get regions");
+            return null;
+        }
+    }
+
+    /**
+     * Gets all the countries from the world MySQL database sorted by population.
      * @return A list of all countries in database, or null if there is an error.
      */
-    public List<Country> getAllCountries() {
+    public ArrayList<Country> getAllCountries() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -104,7 +177,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             // While there are more countries in the result set
             while (rset.next()) {
                 // Create a new country with the values in the result set
@@ -142,7 +215,7 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of all countries in a continent, or null if there is an error.
      */
-    public List<Country> getCountriesByContinent(String continent) {
+    public ArrayList<Country> getCountriesByContinent(String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -156,7 +229,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -192,7 +265,7 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of all countries in a region, or null if there is an error.
      */
-    public List<Country> getCountriesByRegion(String region) {
+    public ArrayList<Country> getCountriesByRegion(String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -206,7 +279,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -241,7 +314,7 @@ public class App {
      * Gets the top N populated countries from the world MySQL database.
      * @return A list of the top N populated in database, or null if there is an error.
      */
-    public List<Country> getTopNCountries(int n) {
+    public ArrayList<Country> getTopNCountries(int n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -256,7 +329,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -291,7 +364,7 @@ public class App {
      * Gets the top N populated countries in a given continent.
      * @return A list of the top N populated countries in a given continent, or null if there is an error.
      */
-    public List<Country> getTopNCountriesByContinent(int n, String continent) {
+    public ArrayList<Country> getTopNCountriesByContinent(int n, String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -307,7 +380,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -342,7 +415,7 @@ public class App {
      * Gets the top N populated countries in a given continent.
      * @return A list of the top N populated countries in a given continent, or null if there is an error.
      */
-    public List<Country> getTopNCountriesByRegion(int n, String region) {
+    public ArrayList<Country> getTopNCountriesByRegion(int n, String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -358,7 +431,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            List<Country> countries = new ArrayList<>();
+            ArrayList<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -545,10 +618,10 @@ public class App {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CITIES METHODS
 
     /**
-     * Gets all the cities from the world MySQL database.
+     * Gets all the cities from the world MySQL database sorted by population.
      * @return A list of all cities in database, or null if there is an error.
      */
-    public List<City> getAllCities() {
+    public ArrayList<City> getAllCities() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -561,7 +634,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -588,7 +661,7 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of all cities in a continent, or null if there is an error.
      */
-    public List<City> getCitiesByContinent(String continent) {
+    public ArrayList<City> getCitiesByContinent(String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -604,7 +677,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -631,7 +704,7 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of all cities in a region, or null if there is an error.
      */
-    public List<City> getCitiesByRegion(String region) {
+    public ArrayList<City> getCitiesByRegion(String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -647,7 +720,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -674,7 +747,7 @@ public class App {
      * @param country A string which contains the name of the country.
      * @return A list of all cities in a country, or null if there is an error.
      */
-    public List<City> getCitiesByCountry(String country) {
+    public ArrayList<City> getCitiesByCountry(String country) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -690,7 +763,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -717,7 +790,7 @@ public class App {
      * @param district A string which contains the name of the district.
      * @return A list of all cities in a district, or null if there is an error.
      */
-    public List<City> getCitiesByDistrict(String district) {
+    public ArrayList<City> getCitiesByDistrict(String district) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -731,7 +804,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -830,7 +903,7 @@ public class App {
      * @param n Number of cities to get.
      * @return A list of the top N populated cities in database, or null if there is an error.
      */
-    public List<City> getTopNCities(int n) {
+    public ArrayList<City> getTopNCities(int n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -845,7 +918,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -874,7 +947,7 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of the top N populated cities in a given continent, or null if there is an error.
      */
-    public List<City> getTopNCitiesByContinent(int n, String continent) {
+    public ArrayList<City> getTopNCitiesByContinent(int n, String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -892,7 +965,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -921,7 +994,7 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of the top N populated cities in a given region, or null if there is an error.
      */
-    public List<City> getTopNCitiesByRegion(int n, String region) {
+    public ArrayList<City> getTopNCitiesByRegion(int n, String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -939,7 +1012,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -968,7 +1041,7 @@ public class App {
      * @param country A string which contains the name of the country.
      * @return A list of the top N populated cities in a given country, or null if there is an error.
      */
-    public List<City> getTopNCitiesByCountry(int n, String country) {
+    public ArrayList<City> getTopNCitiesByCountry(int n, String country) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -986,7 +1059,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -1015,7 +1088,7 @@ public class App {
      * @param district A string which contains the name of the district.
      * @return A list of the top N populated cities in a given district, or null if there is an error.
      */
-    public List<City> getTopNCitiesByDistrict(int n, String district) {
+    public ArrayList<City> getTopNCitiesByDistrict(int n, String district) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1031,7 +1104,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            List<City> cities = new ArrayList<>();
+            ArrayList<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -1096,10 +1169,10 @@ public class App {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CAPITAL CITIES METHODS
 
     /**
-     * Gets all the capital cities from the world MySQL database.
+     * Gets all the capital cities from the world MySQL database sorted by population.
      * @return A list of all capital cities in database, or null if there is an error.
      */
-    public List<City> getAllCapitalCities() {
+    public ArrayList<City> getAllCapitalCities() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1114,7 +1187,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            List<City> capitalCities = new ArrayList<>();
+            ArrayList<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1138,7 +1211,7 @@ public class App {
      * Gets all the capital cities from countries in a given continent.
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
-    public List<City> getCapitalCitiesByContinent(String continent) {
+    public ArrayList<City> getCapitalCitiesByContinent(String continent) {
         try {
 
             // Create an SQL statement
@@ -1155,7 +1228,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            List<City> capitalCities = new ArrayList<>();
+            ArrayList<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1179,7 +1252,7 @@ public class App {
      * Gets all the capital cities from countries in a given region.
      * @return A list of all capital cities in a region, or null if there is an error.
      */
-    public List<City> getCapitalCitiesByRegion(String region) {
+    public ArrayList<City> getCapitalCitiesByRegion(String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1195,7 +1268,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            List<City> capitalCities = new ArrayList<>();
+            ArrayList<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1219,7 +1292,7 @@ public class App {
      * Gets the top N populated capital cities from the world MySQL database.
      * @return A list of the top N populated in database, or null if there is an error.
      */
-    public List<City> getTopNCapitalCities(int n) {
+    public ArrayList<City> getTopNCapitalCities(int n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1235,7 +1308,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            List<City> capitalCities = new ArrayList<>();
+            ArrayList<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1259,7 +1332,7 @@ public class App {
      * Gets the top N populated in a given continent.
      * @return A list of the top N populated in a given continent, or null if there is an error.
      */
-    public List<City> getTopNCapitalCitiesByContinent(int n, String continent) {
+    public ArrayList<City> getTopNCapitalCitiesByContinent(int n, String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1276,7 +1349,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            List<City> capitalCities = new ArrayList<>();
+            ArrayList<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1300,7 +1373,7 @@ public class App {
      * Gets the top N populated in a given region.
      * @return A list of the top N populated in a given region, or null if there is an error.
      */
-    public List<City> getTopNCapitalCitiesByRegion(int n, String region) {
+    public ArrayList<City> getTopNCapitalCitiesByRegion(int n, String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1317,7 +1390,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            List<City> capitalCities = new ArrayList<>();
+            ArrayList<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1398,10 +1471,10 @@ public class App {
      * @param continent A string that contains the name of the continent.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationByContinent(String continent) {
+    public long getPopulationByContinent(String continent) {
         try {
             //Create the result variable to return
-            int population = 0;
+            long population = 0;
 
             //Create a list with all the countries in the continent
             List<Country> countries = getCountriesByContinent(continent);
@@ -1576,57 +1649,148 @@ public class App {
     }
 
     /**
-     * Prints a report of population.
-     * @param typeOfTerritory String that contains a type of territory between continent/region/country.
-     * @param territory String that contains the name of the territory.
+     * Prints a report of population living in each continent.
      * @param reportTitle String that contains the name of the report.
      */
-    public void printPopulationReport(String typeOfTerritory, String territory, String reportTitle) {
-        //Get territory data
-        if("".equals(typeOfTerritory) || "".equals(territory)) {
-            System.out.println("Failed to get territory. Don't enter empty parameters.");
+    public void printPopulationInContinentsReport(String reportTitle) {
+        ArrayList<Continent> continents = getAllContinents();
+        if(continents == null || continents.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle + " report: continents list is empty.");
         } else {
-            int population;
-            int inCities;
-            switch (typeOfTerritory.toUpperCase()) {
-                case "CONTINENT":
-                    population = getPopulationByContinent(territory);
-                    inCities = getPopulationInCitiesByContinent(territory);
-                    break;
-                case "REGION":
-                    population = getPopulationByRegion(territory);
-                    inCities = getPopulationInCitiesByRegion(territory);
-                    break;
-                case "COUNTRY":
-                    population = getPopulationByCountry(territory);
-                    inCities = getPopulationInCitiesByCountry(territory);
-                    break;
-                default:
-                    System.out.println("Enter a valid type of territory: continent/region/country.");
-                    return;
+            // Print report header
+            System.out.println("REPORT ON " + reportTitle);
+            System.out.printf("%-35s %-20s %-25s %-25s \n",
+                    "Continent", "Population", "In cities", "Not in cities");
+            System.out.println(
+                    "---------------------------------------------------------------------------------------------------------"
+            );
+            for(Continent c : continents) {
+                if(c == null) {
+                    continue;
+                } else {
+                    long population = getPopulationByContinent(c.getName());
+                    if(population == -1) {
+                        System.out.println("Unable to get population by continent\n");
+                        break;
+                    } else {
+                        int inCities;
+                        String inCitiesPct;
+                        String nonCitiesPct;
+                        if(population == 0) {
+                            inCities = 0;
+                            inCitiesPct = String.format("%.2f", (double) 0);
+                            nonCitiesPct = String.format("%.2f", (double) 0);
+                        } else {
+                            inCities = getPopulationInCitiesByContinent(c.getName());
+                            inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
+                            nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+                        }
+
+                        System.out.printf("%-35s %-20s %-25s %-25s \n",
+                                c.getName(), population,
+                                inCities + " (" + inCitiesPct + "%)",
+                                population - inCities + " (" + nonCitiesPct + "%)"
+                        );
+                    }
+                }
             }
+        }
+    }
 
-            if (population <= 0) {
-                System.out.println("Failed to print " + reportTitle + " report.\n" +
-                        "Unable to get territory population.\n" +
-                        "Please, make sure you enter an existent territory.");
-            } else {
-                //Calculate percentage values
-                String inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
-                String nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+    /**
+     * Prints a report of population living in each region.
+     * @param reportTitle String that contains the name of the report.
+     */
+    public void printPopulationInRegionsReport(String reportTitle) {
+        ArrayList<String> regions = getAllRegions();
+        if(regions == null || regions.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle + " report: regions list is empty.");
+        } else {
+            // Print report header
+            System.out.println("REPORT ON " + reportTitle);
+            System.out.printf("%-35s %-20s %-25s %-25s \n",
+                    "Region", "Population", "In cities", "Not in cities");
+            System.out.println(
+                    "---------------------------------------------------------------------------------------------------------"
+            );
+            for(String s : regions) {
+                if(s == null) {
+                    continue;
+                } else {
+                    long population = getPopulationByRegion(s);
+                    if(population == -1) {
+                        System.out.println("Unable to get population by region\n");
+                        break;
+                    } else {
+                        int inCities;
+                        String inCitiesPct;
+                        String nonCitiesPct;
+                        if(population == 0) {
+                            inCities = 0;
+                            inCitiesPct = String.format("%.2f", (double) 0);
+                            nonCitiesPct = String.format("%.2f", (double) 0);
+                        } else {
+                            inCities = getPopulationInCitiesByRegion(s);
+                            inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
+                            nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+                        }
 
-                // Print report header
-                System.out.println("REPORT ON " + reportTitle);
-                System.out.printf("%-35s %-20s %-25s %-25s \n",
-                        "Territory name", "Population", "In cities", "Not in cities");
-                System.out.println(
-                        "---------------------------------------------------------------------------------------------------------"
-                );
-                System.out.printf("%-35s %-20s %-25s %-25s \n",
-                        territory, population,
-                        inCities + " (" + inCitiesPct + "%)",
-                        population - inCities + " (" + nonCitiesPct + "%)"
-                );
+                        System.out.printf("%-35s %-20s %-25s %-25s \n",
+                                s, population,
+                                inCities + " (" + inCitiesPct + "%)",
+                                population - inCities + " (" + nonCitiesPct + "%)"
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Prints a report of population living in each country.
+     * @param reportTitle String that contains the name of the report.
+     */
+    public void printPopulationInCountriesReport(String reportTitle) {
+        ArrayList<Country> countries = getAllCountries();
+        if(countries == null || countries.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle + " report: countries list is empty.");
+        } else {
+            // Print report header
+            System.out.println("REPORT ON " + reportTitle);
+            System.out.printf("%-35s %-20s %-25s %-25s \n",
+                    "Country", "Population", "In cities", "Not in cities");
+            System.out.println(
+                    "---------------------------------------------------------------------------------------------------------"
+            );
+            for(Country c : countries) {
+                if(c == null) {
+                    continue;
+                } else {
+                    long population = c.population;
+                    if(population == -1) {
+                        System.out.println("Unable to get population by country\n");
+                        break;
+                    } else {
+                        int inCities;
+                        String inCitiesPct;
+                        String nonCitiesPct;
+                        if(population == 0) {
+                            inCities = 0;
+                            inCitiesPct = String.format("%.2f", (double) 0);
+                            nonCitiesPct = String.format("%.2f", (double) 0);
+                        } else {
+                            inCities = getPopulationInCitiesByCountry(c.name);
+                            inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
+                            nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+                        }
+
+                        System.out.printf("%-35s %-20s %-25s %-25s \n",
+                                c.name, population,
+                                inCities + " (" + inCitiesPct + "%)",
+                                population - inCities + " (" + nonCitiesPct + "%)"
+                        );
+                    }
+                }
             }
         }
     }
@@ -1683,10 +1847,10 @@ public class App {
      * Makes a list of languages sorted by number of speakers from greatest to smallest from a given array of languages
      * @param languages String array that contains the names of the languages to sort
      */
-    public List<String> sortLanguagesBySpeakers(String... languages) {
+    public ArrayList<String> sortLanguagesBySpeakers(String... languages) {
         try {
             //Create all aux structures and variables
-            List<String> sortedLanguages = new ArrayList<>();
+            ArrayList<String> sortedLanguages = new ArrayList<>();
             PriorityQueue<Integer> speakers = new PriorityQueue<>();
             Map<Integer, String> aux = new HashMap<>();
             int key;

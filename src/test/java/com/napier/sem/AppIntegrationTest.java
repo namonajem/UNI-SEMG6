@@ -18,6 +18,18 @@ public class AppIntegrationTest
     }
 
     @Test
+    void testGetAllContinents() {
+        List<Continent> continents = app.getAllContinents();
+        assertEquals(7, continents.size());
+    }
+
+    @Test
+    void testGetAllRegions() {
+        List<String> regions = app.getAllRegions();
+        assertTrue(7 < regions.size() && regions.size() < 239);
+    }
+
+    @Test
     void testGetCountryByCode() {
         Country country = app.getCountryByCode("GBR");
         assertEquals("United Kingdom", country.name);
@@ -254,8 +266,18 @@ public class AppIntegrationTest
     }
 
     @Test
-    void printPopulationReportTest() {
-        app.printPopulationReport("continent", "Europe", "Test report");
+    void printPopulationInContinentsReport() {
+        app.printPopulationInContinentsReport("Test Report");
+    }
+
+    @Test
+    void printPopulationInRegionsReport() {
+        app.printPopulationInRegionsReport("Test Report");
+    }
+
+    @Test
+    void printPopulationInCountriesReport() {
+        app.printPopulationInCountriesReport("Test Report");
     }
 
     @Test
