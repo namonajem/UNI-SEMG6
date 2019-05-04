@@ -1505,10 +1505,10 @@ public class App {
      * @return An int value for the population, or -1 if there is an error.
      */
     @RequestMapping("get_population_by_continent")
-    public int getPopulationByContinent(@RequestParam(value = "continent") String continent) {
+    public long getPopulationByContinent(@RequestParam(value = "continent") String continent) {
         try {
             //Create the result variable to return
-            int population = 0;
+            long population = 0;
 
             //Create a list with all the countries in the continent
             List<Country> countries = getCountriesByContinent(continent);
