@@ -33,12 +33,6 @@ public class AppTest {
     }
 
     @Test
-    void printCountriesReport() {
-        List<Country> countries = app.getAllCountries();
-        app.printCountriesReport(countries, "Test Report");
-    }
-
-    @Test
     void printCitiesReportTestNull() {
         app.printCitiesReport(null, "Test report");
     }
@@ -57,12 +51,6 @@ public class AppTest {
     }
 
     @Test
-    void printCitiesReport() {
-        List<City> cities = app.getAllCities();
-        app.printCitiesReport(cities, "Test Report");
-    }
-
-    @Test
     void printCapitalCitiesReportTestNull() {
         app.printCapitalCitiesReport(null, "Test report");
     }
@@ -78,41 +66,5 @@ public class AppTest {
         List<City> cities = new ArrayList<>();
         cities.add(null);
         app.printCapitalCitiesReport(cities, "Test report");
-    }
-
-    @Test
-    void printCapitalCitiesReport() {
-        List<City> cities = app.getAllCapitalCities();
-        app.printCitiesReport(cities, "Test Report");
-    }
-
-    @Test
-    void printPopulationReportTestEmptyTypeOfTerritory() {
-        app.printPopulationReport("","Edinburgh", "Test report");
-    }
-
-    @Test
-    void printPopulationReportTestInvalidTypeOfTerritory() {
-        app.printPopulationReport("city","Edinburgh", "Test report");
-    }
-
-    @Test
-    void printPopulationReportTestEmptyTerritory() {
-        app.printPopulationReport("continent","", "Test report");
-    }
-
-    @Test
-    void printPopulationReportTestNonExistentTerritory() {
-        app.printPopulationReport("continent","Edinburgh", "Test report");
-    }
-
-    @Test
-    void printPopulationReportTest() {
-        app.printPopulationReport("continent", "Europe", "Test report");
-    }
-
-    @Test
-    void printPopulationSpeakingLanguagesReportTest() {
-        app.printPopulationSpeakingLanguagesReport();
     }
 }

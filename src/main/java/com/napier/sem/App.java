@@ -21,11 +21,11 @@ public class App {
         // Connect to database
         if (args.length < 1)
         {
-            connect("192.168.99.100:3306");
+            App.connect("localhost:33060");
         }
         else
         {
-            connect(args[0]);
+            App.connect(args[0]);
         }
 
         SpringApplication.run(App.class, args);
@@ -85,6 +85,80 @@ public class App {
     }
 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> COUNTRIES METHODS
+
+    /**
+     * Gets all the continents from the world MySQL database sorted by population.
+     * @return A list of all continents in database, or null if there is an error.
+     */
+    @RequestMapping("get_all_continents")
+    public ArrayList<Continent> getAllContinents() {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Continent, SUM(Population) AS sumPopulations "
+                            + "FROM country "
+                            + "GROUP BY country.Continent "
+                            + "ORDER BY sumPopulations DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a List for the countries
+            ArrayList<Continent> continents = new ArrayList<>();
+            // While there are more countries in the result set
+            while (rset.next()) {
+                // Create a new country with the values in the result set
+                Continent myContinent = Continent.toContinent(
+                        rset.getString("Continent")
+                );
+                // Add country to the list
+                continents.add(myContinent);
+            }
+            return continents;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get continents");
+            return null;
+        }
+    }
+
+    /**
+     * Gets all the regions from the world MySQL database sorted by population.
+     * @return A list of all regions in database, or null if there is an error.
+     */
+    @RequestMapping("get_all_regions")
+    public ArrayList<String> getAllRegions() {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Region, SUM(Population) AS sumPopulations "
+                            + "FROM country "
+                            + "GROUP BY country.Region "
+                            + "ORDER BY sumPopulations DESC";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Create a List for the countries
+            ArrayList<String> regions = new ArrayList<>();
+            // While there are more countries in the result set
+            while (rset.next()) {
+                // Create a new country with the values in the result set
+                String myString = rset.getString("Region");
+                // Add country to the list
+                regions.add(myString);
+            }
+            return regions;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get regions");
+            return null;
+        }
+    }
 
     /**
      * Gets all the countries from the world MySQL database.
@@ -1616,60 +1690,151 @@ public class App {
     }
 
     /**
-     * Prints a report of population.
-     * @param typeOfTerritory String that contains a type of territory between continent/region/country.
-     * @param territory String that contains the name of the territory.
+     * Prints a report of population living in each continent.
      * @param reportTitle String that contains the name of the report.
      */
-    @RequestMapping("population_report")
-    public void printPopulationReport(@RequestParam(value = "type_of_territory") String typeOfTerritory,
-                                      @RequestParam(value = "territory") String territory,
-                                      @RequestParam(value = "title") String reportTitle) {
-        //Get territory data
-        if("".equals(typeOfTerritory) || "".equals(territory)) {
-            System.out.println("Failed to get territory. Don't enter empty parameters.");
+    @RequestMapping("population_in_continents_report")
+    public void printPopulationInContinentsReport(String reportTitle) {
+        ArrayList<Continent> continents = getAllContinents();
+        if(continents == null || continents.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle + " report: continents list is empty.");
         } else {
-            int population;
-            int inCities;
-            switch (typeOfTerritory.toUpperCase()) {
-                case "CONTINENT":
-                    population = getPopulationByContinent(territory);
-                    inCities = getPopulationInCitiesByContinent(territory);
-                    break;
-                case "REGION":
-                    population = getPopulationByRegion(territory);
-                    inCities = getPopulationInCitiesByRegion(territory);
-                    break;
-                case "COUNTRY":
-                    population = getPopulationByCountry(territory);
-                    inCities = getPopulationInCitiesByCountry(territory);
-                    break;
-                default:
-                    System.out.println("Enter a valid type of territory: continent/region/country.");
-                    return;
+            // Print report header
+            System.out.println("REPORT ON " + reportTitle);
+            System.out.printf("%-35s %-20s %-25s %-25s \n",
+                    "Continent", "Population", "In cities", "Not in cities");
+            System.out.println(
+                    "---------------------------------------------------------------------------------------------------------"
+            );
+            for(Continent c : continents) {
+                if(c == null) {
+                    continue;
+                } else {
+                    long population = getPopulationByContinent(c.getName());
+                    if(population == -1) {
+                        System.out.println("Unable to get population by continent\n");
+                        break;
+                    } else {
+                        int inCities;
+                        String inCitiesPct;
+                        String nonCitiesPct;
+                        if(population == 0) {
+                            inCities = 0;
+                            inCitiesPct = String.format("%.2f", (double) 0);
+                            nonCitiesPct = String.format("%.2f", (double) 0);
+                        } else {
+                            inCities = getPopulationInCitiesByContinent(c.getName());
+                            inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
+                            nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+                        }
+
+                        System.out.printf("%-35s %-20s %-25s %-25s \n",
+                                c.getName(), population,
+                                inCities + " (" + inCitiesPct + "%)",
+                                population - inCities + " (" + nonCitiesPct + "%)"
+                        );
+                    }
+                }
             }
+        }
+    }
 
-            if (population <= 0) {
-                System.out.println("Failed to print " + reportTitle + " report.\n" +
-                        "Unable to get territory population.\n" +
-                        "Please, make sure you enter an existent territory.");
-            } else {
-                //Calculate percentage values
-                String inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
-                String nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+    /**
+     * Prints a report of population living in each region.
+     * @param reportTitle String that contains the name of the report.
+     */
+    @RequestMapping("population_in_regions_report")
+    public void printPopulationInRegionsReport(String reportTitle) {
+        ArrayList<String> regions = getAllRegions();
+        if(regions == null || regions.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle + " report: regions list is empty.");
+        } else {
+            // Print report header
+            System.out.println("REPORT ON " + reportTitle);
+            System.out.printf("%-35s %-20s %-25s %-25s \n",
+                    "Region", "Population", "In cities", "Not in cities");
+            System.out.println(
+                    "---------------------------------------------------------------------------------------------------------"
+            );
+            for(String s : regions) {
+                if(s == null) {
+                    continue;
+                } else {
+                    long population = getPopulationByRegion(s);
+                    if(population == -1) {
+                        System.out.println("Unable to get population by region\n");
+                        break;
+                    } else {
+                        int inCities;
+                        String inCitiesPct;
+                        String nonCitiesPct;
+                        if(population == 0) {
+                            inCities = 0;
+                            inCitiesPct = String.format("%.2f", (double) 0);
+                            nonCitiesPct = String.format("%.2f", (double) 0);
+                        } else {
+                            inCities = getPopulationInCitiesByRegion(s);
+                            inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
+                            nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+                        }
 
-                // Print report header
-                System.out.println("REPORT ON " + reportTitle);
-                System.out.printf("%-35s %-20s %-25s %-25s \n",
-                        "Territory name", "Population", "In cities", "Not in cities");
-                System.out.println(
-                        "---------------------------------------------------------------------------------------------------------"
-                );
-                System.out.printf("%-35s %-20s %-25s %-25s \n",
-                        territory, population,
-                        inCities + " (" + inCitiesPct + "%)",
-                        population - inCities + " (" + nonCitiesPct + "%)"
-                );
+                        System.out.printf("%-35s %-20s %-25s %-25s \n",
+                                s, population,
+                                inCities + " (" + inCitiesPct + "%)",
+                                population - inCities + " (" + nonCitiesPct + "%)"
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Prints a report of population living in each country.
+     * @param reportTitle String that contains the name of the report.
+     */
+    @RequestMapping("population_in_countries_report")
+    public void printPopulationInCountriesReport(String reportTitle) {
+        ArrayList<Country> countries = getAllCountries();
+        if(countries == null || countries.isEmpty()) {
+            System.out.println("Failed to print " + reportTitle + " report: countries list is empty.");
+        } else {
+            // Print report header
+            System.out.println("REPORT ON " + reportTitle);
+            System.out.printf("%-35s %-20s %-25s %-25s \n",
+                    "Country", "Population", "In cities", "Not in cities");
+            System.out.println(
+                    "---------------------------------------------------------------------------------------------------------"
+            );
+            for(Country c : countries) {
+                if(c == null) {
+                    continue;
+                } else {
+                    long population = c.population;
+                    if(population == -1) {
+                        System.out.println("Unable to get population by country\n");
+                        break;
+                    } else {
+                        int inCities;
+                        String inCitiesPct;
+                        String nonCitiesPct;
+                        if(population == 0) {
+                            inCities = 0;
+                            inCitiesPct = String.format("%.2f", (double) 0);
+                            nonCitiesPct = String.format("%.2f", (double) 0);
+                        } else {
+                            inCities = getPopulationInCitiesByCountry(c.name);
+                            inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
+                            nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
+                        }
+
+                        System.out.printf("%-35s %-20s %-25s %-25s \n",
+                                c.name, population,
+                                inCities + " (" + inCitiesPct + "%)",
+                                population - inCities + " (" + nonCitiesPct + "%)"
+                        );
+                    }
+                }
             }
         }
     }
