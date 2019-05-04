@@ -21,7 +21,7 @@ public class App {
         // Connect to database
         if (args.length < 1)
         {
-            connect("192.168.99.100:33060");
+            connect("localhost:33060");
         }
         else
         {
@@ -1959,44 +1959,5 @@ public class App {
             System.out.println("Failed to print population speaking languages report");
         }
     }
-
-//    /**
-//     * Prints a report of population that speaks a list of languages.
-//     * @param args String that contains the name of the territory.
-//     */
-//    public void printPopulationSpeakingLanguagesReport(String... args) {
-//        try {
-//            int worldPopulation = getWorldPopulation();
-//            String languages = "";
-//            //Sort languages with an aux method
-//            List<String> sortedLanguages = sortLanguagesBySpeakers(args);
-//
-//            //Print header
-//            for(String s : args) {
-//                languages += " " + s.toUpperCase() + ",";
-//            }
-//            System.out.println("REPORT ON NUMBER OF SPEAKERS FOR" + languages);
-//            System.out.printf("%-5s %-20s %-20s %-6s \n", "No", "Language", "Speakers", "World Pct.");
-//            System.out.println("----------------------------------------------------------");
-//
-//            //Get the population speaking each of them and print
-//            int i = 1;
-//            while(!sortedLanguages.isEmpty()) {
-//                String language = sortedLanguages.remove(sortedLanguages.size()-1);
-//                int population = getPopulationByLanguage(language);
-//                String worldPct = String.format("%.2f", (double) population / worldPopulation * 100);
-//                System.out.printf("%-5s %-20s %-20d %-6s \n",
-//                        i + ".",
-//                        language,
-//                        population,
-//                        "(" + worldPct + "%)"
-//                );
-//                i++;
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            System.out.println("Failed to print population speaking languages report");
-//        }
-//    }
 
 } // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CLASS App
