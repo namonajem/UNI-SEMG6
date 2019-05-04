@@ -2,9 +2,7 @@ package com.napier.sem;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +14,7 @@ public class AppIntegrationTest
     static void init()
     {
         app = new App();
-        app.connect("192.168.99.100:33060");
+        app.connect("localhost:33060");
     }
 
     @Test
