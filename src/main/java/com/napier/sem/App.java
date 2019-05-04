@@ -21,14 +21,15 @@ public class App {
         // Connect to database
         if (args.length < 1)
         {
-            App.connect("localhost:33060");
+            connect("192.168.99.100:33060");
         }
         else
         {
-            App.connect(args[0]);
+            connect(args[0]);
         }
 
         SpringApplication.run(App.class, args);
+
     } // METHOD main()
 
     /**
