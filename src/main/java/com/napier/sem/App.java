@@ -511,15 +511,6 @@ public class App {
     } // METHOD getCountryCodeByName()
 
     /**
-     * Prints a all values of a single Country.
-     * @param country The country to print.
-     */
-    public void displayCountry(Country country) {
-        // For each city in the list
-        System.out.println(country.toString());
-    }
-
-    /**
      * Prints a report of countries.
      * @param countries The list of cities to print.
      */

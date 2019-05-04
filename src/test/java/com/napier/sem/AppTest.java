@@ -3,6 +3,7 @@ package com.napier.sem;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.util.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest {
     static App app;
@@ -11,8 +12,6 @@ public class AppTest {
     static void init() {
         app = new App();
     }
-
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> REPORTS TEST
 
     @Test
     void printCountriesReportTestNull() {
@@ -30,12 +29,6 @@ public class AppTest {
         List<Country> countries = new ArrayList<>();
         countries.add(null);
         app.printCountriesReport(countries, "Test report");
-    }
-
-    @Test
-    void printCountriesReport() {
-        List<Country> countries = app.getAllCountries();
-        app.printCountriesReport(countries, "Test Report");
     }
 
     @Test
@@ -57,12 +50,6 @@ public class AppTest {
     }
 
     @Test
-    void printCitiesReport() {
-        List<City> cities = app.getAllCities();
-        app.printCitiesReport(cities, "Test Report");
-    }
-
-    @Test
     void printCapitalCitiesReportTestNull() {
         app.printCapitalCitiesReport(null, "Test report");
     }
@@ -78,41 +65,5 @@ public class AppTest {
         List<City> cities = new ArrayList<>();
         cities.add(null);
         app.printCapitalCitiesReport(cities, "Test report");
-    }
-
-    @Test
-    void printCapitalCitiesReport() {
-        List<City> cities = app.getAllCapitalCities();
-        app.printCitiesReport(cities, "Test Report");
-    }
-
-    @Test
-    void printPopulationReportTestEmptyTypeOfTerritory() {
-        app.printPopulationReport("","Edinburgh", "Test report");
-    }
-
-    @Test
-    void printPopulationReportTestInvalidTypeOfTerritory() {
-        app.printPopulationReport("city","Edinburgh", "Test report");
-    }
-
-    @Test
-    void printPopulationReportTestEmptyTerritory() {
-        app.printPopulationReport("continent","", "Test report");
-    }
-
-    @Test
-    void printPopulationReportTestNonExistentTerritory() {
-        app.printPopulationReport("continent","Edinburgh", "Test report");
-    }
-
-    @Test
-    void printPopulationReportTest() {
-        app.printPopulationReport("continent", "Europe", "Test report");
-    }
-
-    @Test
-    void printPopulationSpeakingLanguagesReportTest() {
-        app.printPopulationSpeakingLanguagesReport();
     }
 }
