@@ -2,13 +2,13 @@ package com.napier.sem;
 
 public class CountryLanguage {
     // Code of the country which the city belongs to
-    protected String countryCode;
+    public String countryCode;
     // Language spoken in this country
-    protected String language;
+    public String language;
     // T or F, if language is official for said country
-    protected Boolean isOfficial;
+    public Boolean isOfficial;
     // Percentage of speakers in said country
-    protected double percentage;
+    public double percentage;
 
     /**
      * No-args constructor

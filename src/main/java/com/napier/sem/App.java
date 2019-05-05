@@ -1,36 +1,35 @@
 package com.napier.sem;
 
-import java.math.BigInteger;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import java.sql.*;
 import java.util.*;
 
+@SpringBootApplication
+@RestController
 public class App {
 
     /**
      * Connection to MySQL database.
      */
-    private Connection con = null;
+    private static Connection con = null;
 
     public static void main(String[] args) {
-
-        // Create new Application
-        App a = new App();
-
         // Connect to database
         if (args.length < 1)
         {
-            a.connect("192.168.99.100:33060");
+            connect("localhost:33060");
         }
         else
         {
-            a.connect(args[0]);
+            connect(args[0]);
         }
 
-        // TEST IMPLEMENTATION
-        a.printPopulationInCountriesReport("Population in each continent report");
+        SpringApplication.run(App.class, args);
 
-        // Disconnect from database
-        a.disconnect();
     } // METHOD main()
 
     /**
@@ -39,7 +38,7 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public void connect(String location) {
+    public static void connect(String location) {
         try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -74,7 +73,7 @@ public class App {
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect() {
+    public static void disconnect() {
         if (con != null) {
             try {
                 // Close connection
@@ -92,6 +91,7 @@ public class App {
      * Gets all the continents from the world MySQL database sorted by population.
      * @return A list of all continents in database, or null if there is an error.
      */
+    @RequestMapping("get_all_continents")
     public ArrayList<Continent> getAllContinents() {
         try {
             // Create an SQL statement
@@ -129,6 +129,7 @@ public class App {
      * Gets all the regions from the world MySQL database sorted by population.
      * @return A list of all regions in database, or null if there is an error.
      */
+    @RequestMapping("get_all_regions")
     public ArrayList<String> getAllRegions() {
         try {
             // Create an SQL statement
@@ -161,9 +162,10 @@ public class App {
     }
 
     /**
-     * Gets all the countries from the world MySQL database sorted by population.
+     * Gets all the countries from the world MySQL database.
      * @return A list of all countries in database, or null if there is an error.
      */
+    @RequestMapping("get_all_countries")
     public ArrayList<Country> getAllCountries() {
         try {
             // Create an SQL statement
@@ -215,7 +217,8 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of all countries in a continent, or null if there is an error.
      */
-    public ArrayList<Country> getCountriesByContinent(String continent) {
+    @RequestMapping("get_countries_by_continent")
+    public ArrayList<Country> getCountriesByContinent(@RequestParam(value = "continent") String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -265,7 +268,8 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of all countries in a region, or null if there is an error.
      */
-    public ArrayList<Country> getCountriesByRegion(String region) {
+    @RequestMapping("get_countries_by_region")
+    public ArrayList<Country> getCountriesByRegion(@RequestParam(value = "region") String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -314,7 +318,8 @@ public class App {
      * Gets the top N populated countries from the world MySQL database.
      * @return A list of the top N populated in database, or null if there is an error.
      */
-    public ArrayList<Country> getTopNCountries(int n) {
+    @RequestMapping("get_top_n_countries")
+    public List<Country> getTopNCountries(@RequestParam(value = "n") String n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -329,7 +334,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -364,7 +369,9 @@ public class App {
      * Gets the top N populated countries in a given continent.
      * @return A list of the top N populated countries in a given continent, or null if there is an error.
      */
-    public ArrayList<Country> getTopNCountriesByContinent(int n, String continent) {
+    @RequestMapping("get_top_n_countries_by_continent")
+    public List<Country> getTopNCountriesByContinent(@RequestParam(value = "n") String n,
+                                                     @RequestParam(value = "continent") String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -380,7 +387,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -415,7 +422,9 @@ public class App {
      * Gets the top N populated countries in a given continent.
      * @return A list of the top N populated countries in a given continent, or null if there is an error.
      */
-    public ArrayList<Country> getTopNCountriesByRegion(int n, String region) {
+    @RequestMapping("get_top_n_countries_by_region")
+    public List<Country> getTopNCountriesByRegion(@RequestParam(value = "n") String n,
+                                                  @RequestParam(value = "region") String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -431,7 +440,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for countries
-            ArrayList<Country> countries = new ArrayList<>();
+            List<Country> countries = new ArrayList<>();
             while(rset.next()) {
                 Country myCountry = new Country(
                         rset.getString("Code"),
@@ -467,7 +476,8 @@ public class App {
      * @param code the code of the Country we want to get.
      * @return The Country.
      */
-    public Country getCountryByCode(String code) {
+    @RequestMapping("get_country_by_code")
+    public Country getCountryByCode(@RequestParam(value = "code") String code) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -512,7 +522,8 @@ public class App {
      * @param name the name of the Country we want to get.
      * @return The Country.
      */
-    public Country getCountryByName(String name) {
+    @RequestMapping("get_country_by_name")
+    public Country getCountryByName(@RequestParam(value = "name") String name) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -557,7 +568,8 @@ public class App {
      * @param name the name of the Country we want to get the code of.
      * @return The code.
      */
-    public String getCountryCodeByName(String name) {
+    @RequestMapping("get_country_code_by_name")
+    public String getCountryCodeByName(@RequestParam(value = "name") String name) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -587,7 +599,9 @@ public class App {
      * Prints a report of countries.
      * @param countries The list of cities to print.
      */
-    public void printCountriesReport(List<Country> countries, String reportTitle) {
+    @RequestMapping("countries_report")
+    public void printCountriesReport(@RequestParam(value = "list") List<Country> countries,
+                                     @RequestParam(value = "title") String reportTitle) {
         // Check list not empty nor null
         if(countries == null || countries.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report.");
@@ -607,7 +621,7 @@ public class App {
                     continue;
                 } else {
                     System.out.printf("%-5s %-5s %-52s %-15s %-26s %-11s %-11s\n",
-                            i + ".", c.code, c.name, c.continent.getName(), c.region, c.population, getCityByID(c.capital).name
+                            i + ".", c.code, c.name, c.continent.getName(), c.region, c.population, getCityByID(String.valueOf(c.capital)).name
                     );
                     i++;
                 }
@@ -618,10 +632,11 @@ public class App {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CITIES METHODS
 
     /**
-     * Gets all the cities from the world MySQL database sorted by population.
+     * Gets all the cities from the world MySQL database.
      * @return A list of all cities in database, or null if there is an error.
      */
-    public ArrayList<City> getAllCities() {
+    @RequestMapping("get_all_cities")
+    public List<City> getAllCities() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -634,7 +649,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -661,7 +676,8 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of all cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCitiesByContinent(String continent) {
+    @RequestMapping("get_cities_by_continent")
+    public List<City> getCitiesByContinent(@RequestParam(value = "continent") String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -677,7 +693,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -704,7 +720,8 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of all cities in a region, or null if there is an error.
      */
-    public ArrayList<City> getCitiesByRegion(String region) {
+    @RequestMapping("get_cities_by_region")
+    public List<City> getCitiesByRegion(@RequestParam(value = "region") String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -720,7 +737,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -747,7 +764,8 @@ public class App {
      * @param country A string which contains the name of the country.
      * @return A list of all cities in a country, or null if there is an error.
      */
-    public ArrayList<City> getCitiesByCountry(String country) {
+    @RequestMapping("get_cities_by_country")
+    public List<City> getCitiesByCountry(@RequestParam(value = "country") String country) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -763,7 +781,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -790,7 +808,8 @@ public class App {
      * @param district A string which contains the name of the district.
      * @return A list of all cities in a district, or null if there is an error.
      */
-    public ArrayList<City> getCitiesByDistrict(String district) {
+    @RequestMapping("get_cities_by_district")
+    public List<City> getCitiesByDistrict(@RequestParam(value = "district") String district) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -804,7 +823,7 @@ public class App {
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -831,7 +850,8 @@ public class App {
      * @param name the name of the city we want to get.
      * @return The City.
      */
-    public City getCityByName(String name) {
+    @RequestMapping("get_city_by_name")
+    public City getCityByName(@RequestParam(value = "name") String name) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -867,7 +887,8 @@ public class App {
      * @param id the code of the city we want to get.
      * @return The City.
      */
-    public City getCityByID(int id) {
+    @RequestMapping("get_city_by_id")
+    public City getCityByID(@RequestParam(value = "id") String id) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -903,7 +924,8 @@ public class App {
      * @param n Number of cities to get.
      * @return A list of the top N populated cities in database, or null if there is an error.
      */
-    public ArrayList<City> getTopNCities(int n) {
+    @RequestMapping("get_top_n_cities")
+    public List<City> getTopNCities(@RequestParam(value = "n") String n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -918,7 +940,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -947,7 +969,9 @@ public class App {
      * @param continent A string which contains the name of the continent.
      * @return A list of the top N populated cities in a given continent, or null if there is an error.
      */
-    public ArrayList<City> getTopNCitiesByContinent(int n, String continent) {
+    @RequestMapping("get_top_n_cities_by_continent")
+    public List<City> getTopNCitiesByContinent(@RequestParam(value = "n") String n,
+                                               @RequestParam(value = "continent") String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -965,7 +989,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -994,7 +1018,9 @@ public class App {
      * @param region A string which contains the name of the region.
      * @return A list of the top N populated cities in a given region, or null if there is an error.
      */
-    public ArrayList<City> getTopNCitiesByRegion(int n, String region) {
+    @RequestMapping("get_top_n_cities_by_region")
+    public List<City> getTopNCitiesByRegion(@RequestParam(value = "n") String n,
+                                            @RequestParam(value = "region") String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1012,7 +1038,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -1041,7 +1067,9 @@ public class App {
      * @param country A string which contains the name of the country.
      * @return A list of the top N populated cities in a given country, or null if there is an error.
      */
-    public ArrayList<City> getTopNCitiesByCountry(int n, String country) {
+    @RequestMapping("get_top_n_cities_by_country")
+    public List<City> getTopNCitiesByCountry(@RequestParam(value = "n") String n,
+                                             @RequestParam(value = "country") String country) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1059,7 +1087,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -1088,7 +1116,9 @@ public class App {
      * @param district A string which contains the name of the district.
      * @return A list of the top N populated cities in a given district, or null if there is an error.
      */
-    public ArrayList<City> getTopNCitiesByDistrict(int n, String district) {
+    @RequestMapping("get_top_n_cities_by_district")
+    public List<City> getTopNCitiesByDistrict(@RequestParam(value = "n") String n,
+                                              @RequestParam(value = "district") String district) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1104,7 +1134,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create a List for the cities
-            ArrayList<City> cities = new ArrayList<>();
+            List<City> cities = new ArrayList<>();
             // While there are more cities in the result set
             while (rset.next()) {
                 // Create a new city with the values in the result set
@@ -1128,19 +1158,12 @@ public class App {
     } // METHOD getTopNCitiesByDistrict()
 
     /**
-     * Prints a all values of a single City.
-     * @param city The city to print.
-     */
-    public void displayCity(City city) {
-        // For each city in the list
-        System.out.println(city.toString());
-    }
-
-    /**
      * Prints a report of cities.
      * @param cities The list of cities to print.
      */
-    public void printCitiesReport(List<City> cities, String reportTitle) {
+    @RequestMapping("cities_report")
+    public void printCitiesReport(@RequestParam(value = "list") List<City> cities,
+                                  @RequestParam(value = "title") String reportTitle) {
         if(cities == null || cities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: cities list is empty.");
         } else {
@@ -1169,10 +1192,11 @@ public class App {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CAPITAL CITIES METHODS
 
     /**
-     * Gets all the capital cities from the world MySQL database sorted by population.
+     * Gets all the capital cities from the world MySQL database.
      * @return A list of all capital cities in database, or null if there is an error.
      */
-    public ArrayList<City> getAllCapitalCities() {
+    @RequestMapping("get_all_capital_cities")
+    public List<City> getAllCapitalCities() {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1187,7 +1211,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1211,7 +1235,8 @@ public class App {
      * Gets all the capital cities from countries in a given continent.
      * @return A list of all capital cities in a continent, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCitiesByContinent(String continent) {
+    @RequestMapping("get_capital_cities_by_continent")
+    public List<City> getCapitalCitiesByContinent(@RequestParam(value = "continent") String continent) {
         try {
 
             // Create an SQL statement
@@ -1228,7 +1253,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1252,7 +1277,8 @@ public class App {
      * Gets all the capital cities from countries in a given region.
      * @return A list of all capital cities in a region, or null if there is an error.
      */
-    public ArrayList<City> getCapitalCitiesByRegion(String region) {
+    @RequestMapping("get_capital_cities_by_region")
+    public List<City> getCapitalCitiesByRegion(@RequestParam(value = "region") String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1268,7 +1294,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1292,7 +1318,8 @@ public class App {
      * Gets the top N populated capital cities from the world MySQL database.
      * @return A list of the top N populated in database, or null if there is an error.
      */
-    public ArrayList<City> getTopNCapitalCities(int n) {
+    @RequestMapping("get_top_n_capital_cities")
+    public List<City> getTopNCapitalCities(@RequestParam(value = "n") String n) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1308,7 +1335,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1332,7 +1359,9 @@ public class App {
      * Gets the top N populated in a given continent.
      * @return A list of the top N populated in a given continent, or null if there is an error.
      */
-    public ArrayList<City> getTopNCapitalCitiesByContinent(int n, String continent) {
+    @RequestMapping("get_top_n_capital_cities_by_continent")
+    public List<City> getTopNCapitalCitiesByContinent(@RequestParam(value = "n") String n,
+                                                      @RequestParam(value = "continent") String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1349,7 +1378,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1373,7 +1402,9 @@ public class App {
      * Gets the top N populated in a given region.
      * @return A list of the top N populated in a given region, or null if there is an error.
      */
-    public ArrayList<City> getTopNCapitalCitiesByRegion(int n, String region) {
+    @RequestMapping("get_top_n_capital_cities_by_region")
+    public List<City> getTopNCapitalCitiesByRegion(@RequestParam(value = "n") String n,
+                                                   @RequestParam(value = "region") String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -1390,7 +1421,7 @@ public class App {
             ResultSet rset = stmt.executeQuery(strSelect);
 
             // Create list for capital cities
-            ArrayList<City> capitalCities = new ArrayList<>();
+            List<City> capitalCities = new ArrayList<>();
             while(rset.next()) {
                 City myCity = new City(
                         rset.getInt("ID"),
@@ -1414,7 +1445,9 @@ public class App {
      * Prints a report of capital cities.
      * @param capitalCities The list of capital cities to print.
      */
-    public void printCapitalCitiesReport(List<City> capitalCities, String reportTitle) {
+    @RequestMapping("capital_cities_report")
+    public void printCapitalCitiesReport(@RequestParam(value = "list") List<City> capitalCities,
+                                         @RequestParam(value = "title") String reportTitle) {
         if(capitalCities == null || capitalCities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: capital cities list is empty.");
         } else {
@@ -1446,6 +1479,7 @@ public class App {
      * Gets the population of the world.
      * @return An int value for the population, or -1 if there is an error.
      */
+    @RequestMapping("get_world_population")
     public int getWorldPopulation() {
         try {
             //Create the result variable to return
@@ -1471,7 +1505,8 @@ public class App {
      * @param continent A string that contains the name of the continent.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public long getPopulationByContinent(String continent) {
+    @RequestMapping("get_population_by_continent")
+    public long getPopulationByContinent(@RequestParam(value = "continent") String continent) {
         try {
             //Create the result variable to return
             long population = 0;
@@ -1496,7 +1531,8 @@ public class App {
      * @param region A string that contains the name of the region.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationByRegion(String region) {
+    @RequestMapping("get_population_by_region")
+    public int getPopulationByRegion(@RequestParam(value = "region") String region) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1521,7 +1557,8 @@ public class App {
      * @param country A string that contains the name of the country.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationByCountry(String country) {
+    @RequestMapping("get_population_by_country")
+    public int getPopulationByCountry(@RequestParam(value = "country") String country) {
         try {
             return getCountryByName(country).population;
 
@@ -1537,7 +1574,8 @@ public class App {
      * @param district A string that contains the name of the district.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationByDistrict(String district) {
+    @RequestMapping("get_population_by_district")
+    public int getPopulationByDistrict(@RequestParam(value = "district") String district) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1562,7 +1600,8 @@ public class App {
      * @param city A string that contains the name of the city.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationByCity(String city) {
+    @RequestMapping("get_population_by_city")
+    public int getPopulationByCity(@RequestParam(value = "city") String city) {
         try {
             return getCityByName(city).population;
 
@@ -1578,7 +1617,8 @@ public class App {
      * @param continent A string that contains the name of the continent.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationInCitiesByContinent(String continent) {
+    @RequestMapping("get_population_in_cities_by_continent")
+    public int getPopulationInCitiesByContinent(@RequestParam(value = "continent") String continent) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1603,7 +1643,8 @@ public class App {
      * @param region A string that contains the name of the region.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationInCitiesByRegion(String region) {
+    @RequestMapping("get_population_in_cities_by_region")
+    public int getPopulationInCitiesByRegion(@RequestParam(value = "region") String region) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1628,7 +1669,8 @@ public class App {
      * @param country A string that contains the name of the country.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationInCitiesByCountry(String country) {
+    @RequestMapping("get_population_in_cities_by_country")
+    public int getPopulationInCitiesByCountry(@RequestParam(value = "country") String country) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1652,6 +1694,7 @@ public class App {
      * Prints a report of population living in each continent.
      * @param reportTitle String that contains the name of the report.
      */
+    @RequestMapping("population_in_continents_report")
     public void printPopulationInContinentsReport(String reportTitle) {
         ArrayList<Continent> continents = getAllContinents();
         if(continents == null || continents.isEmpty()) {
@@ -1701,6 +1744,7 @@ public class App {
      * Prints a report of population living in each region.
      * @param reportTitle String that contains the name of the report.
      */
+    @RequestMapping("population_in_regions_report")
     public void printPopulationInRegionsReport(String reportTitle) {
         ArrayList<String> regions = getAllRegions();
         if(regions == null || regions.isEmpty()) {
@@ -1750,6 +1794,7 @@ public class App {
      * Prints a report of population living in each country.
      * @param reportTitle String that contains the name of the report.
      */
+    @RequestMapping("population_in_countries_report")
     public void printPopulationInCountriesReport(String reportTitle) {
         ArrayList<Country> countries = getAllCountries();
         if(countries == null || countries.isEmpty()) {
@@ -1802,7 +1847,8 @@ public class App {
      * @param language A string that contains the name of the language.
      * @return An int value for the population, or -1 if there is an error.
      */
-    public int getPopulationByLanguage(String language) {
+    @RequestMapping("get_population_by_language")
+    public int getPopulationByLanguage(@RequestParam(value = "language") String language) {
         try {
             //Create the result variable to return
             int population = 0;
@@ -1847,10 +1893,11 @@ public class App {
      * Makes a list of languages sorted by number of speakers from greatest to smallest from a given array of languages
      * @param languages String array that contains the names of the languages to sort
      */
-    public ArrayList<String> sortLanguagesBySpeakers(String... languages) {
+    @RequestMapping("sort_languages_by_speakers")
+    public List<String> sortLanguagesBySpeakers(@RequestParam(value = "languages") String[] languages) {
         try {
             //Create all aux structures and variables
-            ArrayList<String> sortedLanguages = new ArrayList<>();
+            List<String> sortedLanguages = new ArrayList<>();
             PriorityQueue<Integer> speakers = new PriorityQueue<>();
             Map<Integer, String> aux = new HashMap<>();
             int key;
@@ -1878,6 +1925,7 @@ public class App {
      * Prints a report of population that speaks the following languages, form greatest number to smallest:
      *      - Chinese, English, Hindi, Spanish and Arabic
      */
+    @RequestMapping("population_speaking_languages_report")
     public void printPopulationSpeakingLanguagesReport() {
         try {
             //Get the world population for later operations
@@ -1911,44 +1959,5 @@ public class App {
             System.out.println("Failed to print population speaking languages report");
         }
     }
-
-    /**
-     * Prints a report of population that speaks a list of languages.
-     * @param args String that contains the name of the territory.
-     */
-//    public void printPopulationSpeakingLanguagesReport(String... args) {
-//        try {
-//            int worldPopulation = getWorldPopulation();
-//            String languages = "";
-//            //Sort languages with an aux method
-//            List<String> sortedLanguages = sortLanguagesBySpeakers(args);
-//
-//            //Print header
-//            for(String s : args) {
-//                languages += " " + s.toUpperCase() + ",";
-//            }
-//            System.out.println("REPORT ON NUMBER OF SPEAKERS FOR" + languages);
-//            System.out.printf("%-5s %-20s %-20s %-6s \n", "No", "Language", "Speakers", "World Pct.");
-//            System.out.println("----------------------------------------------------------");
-//
-//            //Get the population speaking each of them and print
-//            int i = 1;
-//            while(!sortedLanguages.isEmpty()) {
-//                String language = sortedLanguages.remove(sortedLanguages.size()-1);
-//                int population = getPopulationByLanguage(language);
-//                String worldPct = String.format("%.2f", (double) population / worldPopulation * 100);
-//                System.out.printf("%-5s %-20s %-20d %-6s \n",
-//                        i + ".",
-//                        language,
-//                        population,
-//                        "(" + worldPct + "%)"
-//                );
-//                i++;
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//            System.out.println("Failed to print population speaking languages report");
-//        }
-//    }
 
 } // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CLASS App
