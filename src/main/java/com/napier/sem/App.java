@@ -22,7 +22,7 @@ public class App {
         // Connect to database
         if (args.length < 1)
         {
-            connect("192.168.99.100:33060");
+            connect("localhost:33060");
         }
         else
         {
