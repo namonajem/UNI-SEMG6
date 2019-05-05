@@ -29,9 +29,9 @@
 </body>
 <script>
     var urlParams = new URLSearchParams(window.location.search);
-    var title = urlParams.get('continent');
+    var continent = urlParams.get('continent');
 
-    var URL = "http://" + window.location.hostname + "/app/get_countries_by_continent?continent=" + continent;
+    var URL = "http://" + window.location.hostname + "/app/report_two?continent=" + continent;
 
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.

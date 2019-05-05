@@ -1,33 +1,29 @@
 package com.napier.sem;
 
-public class CitiesReportItem {
+public class CapitalCitiesReportItem {
     // City name
     public String name;
     // Name of the country which the city belongs to
     public String country;
-    // Name of the district which the city belongs to
-    public String district;
     // Population of the city
     public int population;
 
     /**
      * No-args constructor
      */
-    public CitiesReportItem() {
+    public CapitalCitiesReportItem() {
     }
 
     /**
      * All-args constructor
      */
-    public CitiesReportItem(
+    public CapitalCitiesReportItem(
             String name,
             String country,
-            String district,
             int population) {
 
         this.name = name;
         this.country = country;
-        this.district = district;
         this.population = population;
     }
 }

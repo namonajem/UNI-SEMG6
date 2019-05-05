@@ -29,9 +29,9 @@
 </body>
 <script>
     var urlParams = new URLSearchParams(window.location.search);
-    var title = urlParams.get('region');
+    var region = urlParams.get('region');
 
-    var URL = "http://" + window.location.hostname + "/app/get_countries_by_region?region=" + region;
+    var URL = "http://" + window.location.hostname + "/app/report_three?region=" + region;
 
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.

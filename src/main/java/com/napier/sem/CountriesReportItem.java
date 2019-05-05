@@ -6,7 +6,7 @@ public class CountriesReportItem {
     // Country's Name
     public String name;
     // Continent where the Country is
-    public Continent continent;
+    public String continent;
     // Region where the Country is
     public String region;
     // Population of the country
@@ -26,7 +26,7 @@ public class CountriesReportItem {
     public CountriesReportItem(
             String code,
             String name,
-            Continent continent,
+            String continent,
             String region,
             int population,
             String capital) {
