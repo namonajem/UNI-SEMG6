@@ -1,7 +1,7 @@
 
 # **Software Engineering Methods Coursework** 
 
-[![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/dac866070cc74e5cab3f5518cf0e014a)](https://www.codacy.com/app/pabferir/SEMG6?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=namonajem/SEMG6&amp;utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/namonajem/SEMG6/branch/develop/graph/badge.svg)](https://codecov.io/gh/namonajem/SEMG6)
+[![Releases](https://img.shields.io/github/release/namonajem/SEMG6/all.svg?style=flat)](https://github.com/namonajem/SEMG6/releases) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/dac866070cc74e5cab3f5518cf0e014a)](https://www.codacy.com/app/pabferir/SEMG6?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=namonajem/SEMG6&amp;utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/namonajem/SEMG6/branch/master/graph/badge.svg)](https://codecov.io/gh/namonajem/SEMG6)
 
 A system to allow easy access to a database which provides world population information. This coursework is being worked on as a Scrum Team by Group 6 - see the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) file for more details.
 
