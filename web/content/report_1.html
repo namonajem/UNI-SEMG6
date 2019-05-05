@@ -30,7 +30,9 @@
 <script>
     var urlParams = new URLSearchParams(window.location.search);
 
-    var URL = "http://" + window.location.hostname + "/app/get_all_countries";
+    var list = "http://" + window.location.hostname + "/app/get_all_countries";
+
+    var URL = "http://" + window.location.hostname + "/app/countries_report?list=" + list;
 
     $.getJSON(URL, function(data) {
         // EXTRACT VALUE FOR HTML HEADER.

@@ -3,6 +3,7 @@ package com.napier.sem;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.util.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest {
     static App app;
@@ -11,8 +12,6 @@ public class AppTest {
     static void init() {
         app = new App();
     }
-
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> REPORTS TEST
 
     @Test
     void printCountriesReportTestNull() {

@@ -597,11 +597,9 @@ public class App {
 
     /**
      * Prints a report of countries.
-     * @param countries The list of cities to print.
+     * @param countries The list of countries to print.
      */
-    @RequestMapping("countries_report")
-    public void printCountriesReport(@RequestParam(value = "list") List<Country> countries,
-                                     @RequestParam(value = "title") String reportTitle) {
+    public void printCountriesReport(List<Country> countries, String reportTitle) {
         // Check list not empty nor null
         if(countries == null || countries.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report.");
@@ -626,6 +624,39 @@ public class App {
                     i++;
                 }
             }
+        }
+    }
+
+    /**
+     * Genreates a list which is a report of countries.
+     * @param countries The list of countries to print.
+     */
+    @RequestMapping("countries_report")
+    public List<CountriesReportItem> generateCountriesReport(@RequestParam(value = "list") List<Country> countries) {
+        // Check list not empty nor null
+        if(countries == null || countries.isEmpty()) {
+            System.out.println("Failed to print report.");
+            return null;
+        } else {
+            // Create a list where store report items
+            List<CountriesReportItem> report = new ArrayList<>();
+            // Generate a report item for each country and add to report
+            for(Country c : countries) {
+                if(c == null) {
+                    continue;
+                } else {
+                    CountriesReportItem item = new CountriesReportItem(
+                            c.code,
+                            c.name,
+                            c.continent,
+                            c.region,
+                            c.population,
+                            getCityByID(Integer.toString(c.capital)).name
+                    );
+                    report.add(item);
+                }
+            }
+            return report;
         }
     }
 
