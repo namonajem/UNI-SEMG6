@@ -115,7 +115,6 @@ jobs:
         - kubectl expose deployment web --port=80 --target-port=80 --type=LoadBalancer
 
 stages:
-  - unit tests
   - integration tests
   - name: GitHub Release
     if: branch = master
