@@ -2427,48 +2427,60 @@ public class App {
      * Generate report twenty six for web view.
      */
     @RequestMapping("report_twenty_six")
-    public long report26() {
-        return getWorldPopulation();
+    public List<Long> report26() {
+        List<Long> list = new ArrayList<>();
+        list.add(getWorldPopulation());
+        return list;
     }
 
     /**
      * Generate report twenty seven for web view.
      */
     @RequestMapping("report_twenty_seven")
-    public long report27(@RequestParam(value = "continent") String continent) {
-        return getPopulationByContinent(continent);
+    public List<Long> report27(@RequestParam(value = "continent") String continent) {
+        List<Long> list = new ArrayList<>();
+        list.add(getPopulationByContinent(continent));
+        return list;
     }
 
     /**
      * Generate report twenty eight for web view.
      */
     @RequestMapping("report_twenty_eight")
-    public int report28(@RequestParam(value = "region") String region) {
-        return getPopulationByRegion(region);
+    public List<Integer> report28(@RequestParam(value = "region") String region) {
+        List<Integer> list = new ArrayList<>();
+        list.add(getPopulationByRegion(region));
+        return list;
     }
 
     /**
      * Generate report twenty nine for web view.
      */
     @RequestMapping("report_twenty_nine")
-    public int report29(@RequestParam(value = "country") String country) {
-        return getPopulationByCountry(country);
+    public List<Integer> report29(@RequestParam(value = "country") String country) {
+        List<Integer> list = new ArrayList<>();
+        list.add(getPopulationByCountry(country));
+        return list;
     }
 
     /**
      * Generate report thirty for web view.
      */
     @RequestMapping("report_thirty")
-    public int report30(@RequestParam(value = "district") String district) {
-        return getPopulationByDistrict(district);
+    public List<Integer> report30(@RequestParam(value = "district") String district) {
+        List<Integer> list = new ArrayList<>();
+        list.add(getPopulationByDistrict(district));
+        return list;
     }
 
     /**
      * Generate report thirty one for web view.
      */
     @RequestMapping("report_thirty_one")
-    public int report31(@RequestParam(value = "city") String city) {
-        return getPopulationByCity(city);
+    public List<Integer> report31(@RequestParam(value = "city") String city) {
+        List<Integer> list = new ArrayList<>();
+        list.add(getPopulationByCity(city));
+        return list;
     }
 
     /**
