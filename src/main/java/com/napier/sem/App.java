@@ -1991,4 +1991,16 @@ public class App {
         }
     }
 
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Web report generator
+
+    /**
+    * Generate report one for web view.
+     */
+    @RequestMapping("report_one")
+    public List<CountriesReportItem> report1() {
+        ArrayList<Country> list = getAllCountries();
+        return generateCountriesReport(list);
+    }
+
+
 } // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CLASS App
