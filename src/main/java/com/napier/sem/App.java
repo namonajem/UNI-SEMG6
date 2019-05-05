@@ -1,6 +1,5 @@
 package com.napier.sem;
 
-import javafx.util.Pair;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -629,14 +628,14 @@ public class App {
     }
 
     /**
-     * Generates a list which is a report of countries.
+     * Genreates a list which is a report of countries.
      * @param countries The list of countries to print.
      */
     @RequestMapping("countries_report")
     public List<CountriesReportItem> generateCountriesReport(@RequestParam(value = "list") List<Country> countries) {
         // Check list not empty nor null
         if(countries == null || countries.isEmpty()) {
-            System.out.println("Failed to generate report.");
+            System.out.println("Failed to print report.");
             return null;
         } else {
             // Create a list where store report items
@@ -649,7 +648,7 @@ public class App {
                     CountriesReportItem item = new CountriesReportItem(
                             c.code,
                             c.name,
-                            c.continent.getName(),
+                            c.continent,
                             c.region,
                             c.population,
                             getCityByID(Integer.toString(c.capital)).name
@@ -1193,7 +1192,9 @@ public class App {
      * Prints a report of cities.
      * @param cities The list of cities to print.
      */
-    public void printCitiesReport(List<City> cities, String reportTitle) {
+    @RequestMapping("cities_report")
+    public void printCitiesReport(@RequestParam(value = "list") List<City> cities,
+                                  @RequestParam(value = "title") String reportTitle) {
         if(cities == null || cities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: cities list is empty.");
         } else {
@@ -1216,37 +1217,6 @@ public class App {
                     i++;
                 }
             }
-        }
-    }
-
-    /**
-     * Generates a list which is a report of cities.
-     * @param cities The list of countries to print.
-     */
-    @RequestMapping("cities_report")
-    public List<CitiesReportItem> generateCitiesReport(@RequestParam(value = "list") List<City> cities) {
-        // Check list not empty nor null
-        if(cities == null || cities.isEmpty()) {
-            System.out.println("Failed to generate report.");
-            return null;
-        } else {
-            // Create a list where store report items
-            List<CitiesReportItem> report = new ArrayList<>();
-            // Generate a report item for each country and add to report
-            for(City c : cities) {
-                if(c == null) {
-                    continue;
-                } else {
-                    CitiesReportItem item = new CitiesReportItem(
-                            c.name,
-                            getCountryByCode(c.countryCode).name,
-                            c.district,
-                            c.population
-                    );
-                    report.add(item);
-                }
-            }
-            return report;
         }
     }
 
@@ -1506,7 +1476,9 @@ public class App {
      * Prints a report of capital cities.
      * @param capitalCities The list of capital cities to print.
      */
-    public void printCapitalCitiesReport(List<City> capitalCities, String reportTitle) {
+    @RequestMapping("capital_cities_report")
+    public void printCapitalCitiesReport(@RequestParam(value = "list") List<City> capitalCities,
+                                         @RequestParam(value = "title") String reportTitle) {
         if(capitalCities == null || capitalCities.isEmpty()) {
             System.out.println("Failed to print " + reportTitle +" report: capital cities list is empty.");
         } else {
@@ -1532,36 +1504,6 @@ public class App {
         }
     }
 
-    /**
-     * Generates a list which is a report of capital cities.
-     * @param capitals The list of countries to print.
-     */
-    @RequestMapping("capital_cities_report")
-    public List<CapitalCitiesReportItem> generateCapitalCitiesReport(@RequestParam(value = "list") List<City> capitals) {
-        // Check list not empty nor null
-        if(capitals == null || capitals.isEmpty()) {
-            System.out.println("Failed to generate report.");
-            return null;
-        } else {
-            // Create a list where store report items
-            List<CapitalCitiesReportItem> report = new ArrayList<>();
-            // Generate a report item for each country and add to report
-            for(City c : capitals) {
-                if(c == null) {
-                    continue;
-                } else {
-                    CapitalCitiesReportItem item = new CapitalCitiesReportItem(
-                            c.name,
-                            getCountryByCode(c.countryCode).name,
-                            c.population
-                    );
-                    report.add(item);
-                }
-            }
-            return report;
-        }
-    }
-
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> POPULATION METHODS
 
     /**
@@ -1569,10 +1511,10 @@ public class App {
      * @return An int value for the population, or -1 if there is an error.
      */
     @RequestMapping("get_world_population")
-    public long getWorldPopulation() {
+    public int getWorldPopulation() {
         try {
             //Create the result variable to return
-            long population = 0;
+            int population = 0;
 
             //Create a list with all the countries in the world
             List<Country> countries = getAllCountries();
@@ -1707,10 +1649,10 @@ public class App {
      * @return An int value for the population, or -1 if there is an error.
      */
     @RequestMapping("get_population_in_cities_by_continent")
-    public long getPopulationInCitiesByContinent(@RequestParam(value = "continent") String continent) {
+    public int getPopulationInCitiesByContinent(@RequestParam(value = "continent") String continent) {
         try {
             //Create the result variable to return
-            long population = 0;
+            int population = 0;
 
             //Create a list with all the countries in the continent
             List<City> cities = getCitiesByContinent(continent);
@@ -1783,6 +1725,7 @@ public class App {
      * Prints a report of population living in each continent.
      * @param reportTitle String that contains the name of the report.
      */
+    @RequestMapping("population_in_continents_report")
     public void printPopulationInContinentsReport(String reportTitle) {
         ArrayList<Continent> continents = getAllContinents();
         if(continents == null || continents.isEmpty()) {
@@ -1812,7 +1755,7 @@ public class App {
                             inCitiesPct = String.format("%.2f", (double) 0);
                             nonCitiesPct = String.format("%.2f", (double) 0);
                         } else {
-                            inCities = (int) (long) getPopulationInCitiesByContinent(c.getName());
+                            inCities = getPopulationInCitiesByContinent(c.getName());
                             inCitiesPct = String.format("%.2f", (double) inCities / population * 100);
                             nonCitiesPct = String.format("%.2f", (double) (population - inCities) / population * 100);
                         }
@@ -1829,39 +1772,10 @@ public class App {
     }
 
     /**
-     * Generates a list which is a report of population in continents.
-     */
-    @RequestMapping("population_in_continents_report")
-    public List<PopulationReportItem> generatePopulationInContinentsReport() {
-        ArrayList<Continent> continents = getAllContinents();
-        // Check list not empty nor null
-        if(continents == null || continents.isEmpty()) {
-            System.out.println("Failed to generate report.");
-            return null;
-        } else {
-            // Create a list where store report items
-            List<PopulationReportItem> report = new ArrayList<>();
-            // Generate a report item for each continent and add to report
-            for(Continent c : continents) {
-                if(c == null) {
-                    continue;
-                } else {
-                    PopulationReportItem item = new PopulationReportItem(
-                            c.getName(),
-                            getPopulationByContinent(c.getName()),
-                            getPopulationInCitiesByContinent(c.getName())
-                    );
-                    report.add(item);
-                }
-            }
-            return report;
-        }
-    }
-
-    /**
      * Prints a report of population living in each region.
      * @param reportTitle String that contains the name of the report.
      */
+    @RequestMapping("population_in_regions_report")
     public void printPopulationInRegionsReport(String reportTitle) {
         ArrayList<String> regions = getAllRegions();
         if(regions == null || regions.isEmpty()) {
@@ -1908,39 +1822,10 @@ public class App {
     }
 
     /**
-     * Generates a list which is a report of population in regions.
-     */
-    @RequestMapping("population_in_regions_report")
-    public List<PopulationReportItem> generatePopulationInRegionsReport() {
-        ArrayList<String> regions = getAllRegions();
-        // Check list not empty nor null
-        if(regions == null || regions.isEmpty()) {
-            System.out.println("Failed to generate report.");
-            return null;
-        } else {
-            // Create a list where store report items
-            List<PopulationReportItem> report = new ArrayList<>();
-            // Generate a report item for each region and add to report
-            for(String s : regions) {
-                if(s == null) {
-                    continue;
-                } else {
-                    PopulationReportItem item = new PopulationReportItem(
-                            s,
-                            getPopulationByRegion(s),
-                            getPopulationInCitiesByRegion(s)
-                    );
-                    report.add(item);
-                }
-            }
-            return report;
-        }
-    }
-
-    /**
      * Prints a report of population living in each country.
      * @param reportTitle String that contains the name of the report.
      */
+    @RequestMapping("population_in_countries_report")
     public void printPopulationInCountriesReport(String reportTitle) {
         ArrayList<Country> countries = getAllCountries();
         if(countries == null || countries.isEmpty()) {
@@ -1983,36 +1868,6 @@ public class App {
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Generates a list which is a report of population in regions.
-     */
-    @RequestMapping("population_in_countries_report")
-    public List<PopulationReportItem> generatePopulationInCountriesReport() {
-        ArrayList<Country> countries = getAllCountries();
-        // Check list not empty nor null
-        if(countries == null || countries.isEmpty()) {
-            System.out.println("Failed to generate report.");
-            return null;
-        } else {
-            // Create a list where store report items
-            List<PopulationReportItem> report = new ArrayList<>();
-            // Generate a report item for each country and add to report
-            for(Country c : countries) {
-                if(c == null) {
-                    continue;
-                } else {
-                    PopulationReportItem item = new PopulationReportItem(
-                            c.name,
-                            getPopulationByCountry(c.name),
-                            getPopulationInCitiesByCountry(c.name)
-                    );
-                    report.add(item);
-                }
-            }
-            return report;
         }
     }
 
@@ -2105,7 +1960,7 @@ public class App {
     public void printPopulationSpeakingLanguagesReport() {
         try {
             //Get the world population for later operations
-            long worldPopulation = getWorldPopulation();
+            int worldPopulation = getWorldPopulation();
             //Create an array with the names of the languages
             String[] languages = {"Chinese", "English", "Hindi", "Spanish", "Arabic"};
 
@@ -2134,350 +1989,6 @@ public class App {
             System.out.println(e.getMessage());
             System.out.println("Failed to print population speaking languages report");
         }
-    }
-
-    /**
-     * Generates a list which is a report of population in regions.
-     */
-    @RequestMapping("population_speaking_report")
-    public List<LanguageReportItem> generatePopulationSpeakingLanguagesReport() {
-        //Get the world population for later operations
-        long worldPopulation = getWorldPopulation();
-        //Create an array with the names of the languages
-        String[] languages = {"Chinese", "English", "Hindi", "Spanish", "Arabic"};
-
-        //Sort languages with an aux method
-        List<String> sortedLanguages = sortLanguagesBySpeakers(languages);
-        if(sortedLanguages == null || sortedLanguages.isEmpty()) {
-            System.out.println("Failed to generate report.");
-            return null;
-        } else {
-            // Create a list where store report items
-            List<LanguageReportItem> report = new ArrayList<>();
-            // Generate a report item for each country and add to report
-            while(!sortedLanguages.isEmpty()) {
-                String s = sortedLanguages.remove(sortedLanguages.size()-1);
-                if("".equals(s)) {
-                    continue;
-                } else {
-                    LanguageReportItem item = new LanguageReportItem(
-                            toTitleCase(s),
-                            getPopulationByLanguage(s),
-                            worldPopulation
-                    );
-                    report.add(item);
-                }
-            }
-            return report;
-        }
-    }
-
-    /**
-     * Convert string to title case
-     * @param str string to convert
-     * @return A string converted into title case
-     */
-    public String toTitleCase(String str) {
-        if (str.length() == 0) {
-            return "";
-        } else if(str.length() == 1) {
-            return str.toUpperCase();
-        } else {
-            String part1 = str.substring(0, 1);
-            String part2 = str.substring(1);
-            str = part1.toUpperCase() + part2.toLowerCase();
-        }
-        return str;
-    }
-
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Web report triggers
-
-    /**
-    * Generate report one for web view.
-     */
-    @RequestMapping("report_one")
-    public List<CountriesReportItem> report1() {
-        List<Country> list = getAllCountries();
-        return generateCountriesReport(list);
-    }
-
-
-    /**
-     * Generate report two for web view.
-     */
-    @RequestMapping("report_two")
-    public List<CountriesReportItem> report2(@RequestParam(value = "continent") String continent) {
-        List<Country> list = getCountriesByContinent(continent);
-        return generateCountriesReport(list);
-    }
-
-    /**
-     * Generate report three for web view.
-     */
-    @RequestMapping("report_three")
-    public List<CountriesReportItem> report3(@RequestParam(value = "region") String region) {
-        List<Country> list = getCountriesByRegion(region);
-        return generateCountriesReport(list);
-    }
-
-    /**
-     * Generate report four for web view.
-     */
-    @RequestMapping("report_four")
-    public List<CountriesReportItem> report4(@RequestParam(value = "number") String n) {
-        List<Country> list = getTopNCountries(n);
-        return generateCountriesReport(list);
-    }
-
-    /**
-     * Generate report five for web view.
-     */
-    @RequestMapping("report_five")
-    public List<CountriesReportItem> report5(@RequestParam(value = "number") String n,
-                                             @RequestParam(value = "continent") String continent) {
-        List<Country> list = getTopNCountriesByContinent(n, continent);
-        return generateCountriesReport(list);
-    }
-
-    /**
-     * Generate report six for web view.
-     */
-    @RequestMapping("report_six")
-    public List<CountriesReportItem> report6(@RequestParam(value = "number") String n,
-                                             @RequestParam(value = "region") String region) {
-        List<Country> list = getTopNCountriesByRegion(n, region);
-        return generateCountriesReport(list);
-    }
-
-    /**
-     * Generate report seven for web view.
-     */
-    @RequestMapping("report_seven")
-    public List<CitiesReportItem> report7() {
-        List<City> list = getAllCities();
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report eight for web view.
-     */
-    @RequestMapping("report_eight")
-    public List<CitiesReportItem> report8(@RequestParam(value = "continent") String continent) {
-        List<City> list = getCitiesByContinent(continent);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report nine for web view.
-     */
-    @RequestMapping("report_nine")
-    public List<CitiesReportItem> report9(@RequestParam(value = "region") String region) {
-        List<City> list = getCitiesByRegion(region);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report ten for web view.
-     */
-    @RequestMapping("report_ten")
-    public List<CitiesReportItem> report10(@RequestParam(value = "country") String country) {
-        List<City> list = getCitiesByCountry(country);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report eleven for web view.
-     */
-    @RequestMapping("report_eleven")
-    public List<CitiesReportItem> report11(@RequestParam(value = "district") String district) {
-        List<City> list = getCitiesByDistrict(district);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report twelve for web view.
-     */
-    @RequestMapping("report_twelve")
-    public List<CitiesReportItem> report12(@RequestParam(value = "number") String n) {
-        List<City> list = getTopNCities(n);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report thirteen for web view.
-     */
-    @RequestMapping("report_thirteen")
-    public List<CitiesReportItem> report13(@RequestParam(value = "number") String n,
-                                           @RequestParam(value = "continent") String continent) {
-        List<City> list = getTopNCitiesByContinent(n, continent);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report fourteen for web view.
-     */
-    @RequestMapping("report_fourteen")
-    public List<CitiesReportItem> report14(@RequestParam(value = "number") String n,
-                                           @RequestParam(value = "region") String region) {
-        List<City> list = getTopNCitiesByRegion(n, region);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report fifteen for web view.
-     */
-    @RequestMapping("report_fifteen")
-    public List<CitiesReportItem> report15(@RequestParam(value = "number") String n,
-                                           @RequestParam(value = "country") String country) {
-        List<City> list = getTopNCitiesByCountry(n, country);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report sixteen for web view.
-     */
-    @RequestMapping("report_sixteen")
-    public List<CitiesReportItem> report16(@RequestParam(value = "number") String n,
-                                           @RequestParam(value = "district") String district) {
-        List<City> list = getTopNCitiesByDistrict(n, district);
-        return generateCitiesReport(list);
-    }
-
-    /**
-     * Generate report seventeen for web view.
-     */
-    @RequestMapping("report_seventeen")
-    public List<CapitalCitiesReportItem> report17() {
-        List<City> list = getAllCapitalCities();
-        return generateCapitalCitiesReport(list);
-    }
-
-
-    /**
-     * Generate report eighteen for web view.
-     */
-    @RequestMapping("report_eighteen")
-    public List<CapitalCitiesReportItem> report18(@RequestParam(value = "continent") String continent) {
-        List<City> list = getCapitalCitiesByContinent(continent);
-        return generateCapitalCitiesReport(list);
-    }
-
-    /**
-     * Generate report nineteen for web view.
-     */
-    @RequestMapping("report_nineteen")
-    public List<CapitalCitiesReportItem> report19(@RequestParam(value = "region") String region) {
-        List<City> list = getCapitalCitiesByRegion(region);
-        return generateCapitalCitiesReport(list);
-    }
-
-    /**
-     * Generate report twenty for web view.
-     */
-    @RequestMapping("report_twenty")
-    public List<CapitalCitiesReportItem> report20(@RequestParam(value = "number") String n) {
-        List<City> list = getTopNCapitalCities(n);
-        return generateCapitalCitiesReport(list);
-    }
-
-    /**
-     * Generate report twenty one for web view.
-     */
-    @RequestMapping("report_twenty_one")
-    public List<CapitalCitiesReportItem> report21(@RequestParam(value = "number") String n,
-                                           @RequestParam(value = "continent") String continent) {
-        List<City> list = getTopNCapitalCitiesByContinent(n, continent);
-        return generateCapitalCitiesReport(list);
-    }
-
-    /**
-     * Generate report twenty two for web view.
-     */
-    @RequestMapping("report_twenty_two")
-    public List<CapitalCitiesReportItem> report22(@RequestParam(value = "number") String n,
-                                           @RequestParam(value = "region") String region) {
-        List<City> list = getTopNCapitalCitiesByRegion(n, region);
-        return generateCapitalCitiesReport(list);
-    }
-
-    /**
-     * Generate report twenty three for web view.
-     */
-    @RequestMapping("report_twenty_three")
-    public List<PopulationReportItem> report23() {
-        return generatePopulationInContinentsReport();
-    }
-
-    /**
-     * Generate report twenty four for web view.
-     */
-    @RequestMapping("report_twenty_four")
-    public List<PopulationReportItem> report24() {
-        return generatePopulationInRegionsReport();
-    }
-
-    /**
-     * Generate report twenty five for web view.
-     */
-    @RequestMapping("report_twenty_five")
-    public List<PopulationReportItem> report25() {
-        return generatePopulationInCountriesReport();
-    }
-
-    /**
-     * Generate report twenty six for web view.
-     */
-    @RequestMapping("report_twenty_six")
-    public long report26() {
-        return getWorldPopulation();
-    }
-
-    /**
-     * Generate report twenty seven for web view.
-     */
-    @RequestMapping("report_twenty_seven")
-    public long report27(@RequestParam(value = "continent") String continent) {
-        return getPopulationByContinent(continent);
-    }
-
-    /**
-     * Generate report twenty eight for web view.
-     */
-    @RequestMapping("report_twenty_eight")
-    public int report28(@RequestParam(value = "region") String region) {
-        return getPopulationByRegion(region);
-    }
-
-    /**
-     * Generate report twenty nine for web view.
-     */
-    @RequestMapping("report_twenty_nine")
-    public int report29(@RequestParam(value = "country") String country) {
-        return getPopulationByCountry(country);
-    }
-
-    /**
-     * Generate report thirty for web view.
-     */
-    @RequestMapping("report_thirty")
-    public int report30(@RequestParam(value = "district") String district) {
-        return getPopulationByDistrict(district);
-    }
-
-    /**
-     * Generate report thirty one for web view.
-     */
-    @RequestMapping("report_thirty_one")
-    public int report31(@RequestParam(value = "city") String city) {
-        return getPopulationByCity(city);
-    }
-
-    /**
-     * Generate report thirty two for web view.
-     */
-    @RequestMapping("report_thirty_two")
-    public List<LanguageReportItem> report32() {
-        return generatePopulationSpeakingLanguagesReport();
     }
 
 } // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// CLASS App
