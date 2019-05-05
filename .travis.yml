@@ -39,7 +39,7 @@ jobs:
     - stage: integration tests
       jdk: oraclejdk11
       # Tell Maven to run the integration tests.
-       script: mvn test -Dtest=com.napier.sem.AppIntegrationTest
+      script: mvn test -Dtest=com.napier.sem.AppIntegrationTest
     # GitHub release stage.
     - stage: GitHub Release
       install: skip
@@ -50,8 +50,8 @@ jobs:
         - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
       before_deploy:
         # Set our Git user name and email.
-        - git config --local user.name "Kevin Chalmers"
-        - git config --local user.email "k.chalmers@napier.ac.uk"
+        - git config --local user.name "Pablo Ferrando"
+        - git config --local user.email "pablo_f.i@hotmail.com"
         # Create unique tag for the commit.
         - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y-%m-%d')-$(git log --format=%h -1)}
         # Tag the commit.
