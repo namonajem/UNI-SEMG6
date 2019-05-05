@@ -34,12 +34,12 @@ jobs:
       install: skip
       jdk: oraclejdk11
       # Tell Maven to run the unit tests.
-      script: mvn test -Dtest=com.napier.sem.AppTest
+      # script: mvn test -Dtest=com.napier.sem.AppTest
     # Integration test stage.
     - stage: integration tests
       jdk: oraclejdk11
       # Tell Maven to run the integration tests.
-      # script: mvn test -Dtest=com.napier.sem.AppIntegrationTest
+       script: mvn test -Dtest=com.napier.sem.AppIntegrationTest
     # GitHub release stage.
     - stage: GitHub Release
       install: skip
