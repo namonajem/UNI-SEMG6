@@ -53,7 +53,7 @@ We have implemented 32 requirements of 32, which is 100%.
 | 28    | The population of a region. | Yes | ![](screenshots/28.png) |
 | 29    | The population of a country. | Yes | ![](screenshots/29.png) |
 | 30    | The population of a district. | Yes | ![](screenshots/30.png) |
-| 31    | The population of a city. | Yes | ![](screenshots/26-31.png) |
+| 31    | The population of a city. | Yes | ![](screenshots/31.png) |
 | 32    | The number of people who speak Chinese, English, Hindi, Spanish and Arabic from greatest number to smallest, including the percentage of the world population | Yes | ![](screenshots/32.png) |
 
 ## License [![LICENSE](https://img.shields.io/github/license/namonajem/SEMG6.svg?style=flat)](https://github.com/namonajem/SEMG6/blob/master/LICENSE)
