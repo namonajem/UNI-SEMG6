@@ -48,11 +48,11 @@ We have implemented 32 requirements of 32, which is 100%.
 | 23    | The population of people, people living in cities, and people not living in cities in each continent. | Yes | ![](screenshots/23.png) |
 | 24    | The population of people, people living in cities, and people not living in cities in each region. | Yes | ![](screenshots/24.png) |
 | 25    | The population of people, people living in cities, and people not living in cities in each country. | Yes | ![](screenshots/25.png) |
-| 26    | The population of the world. | Yes | ![](screenshots/26-31.png) |
-| 27    | The population of a continent. | Yes | ![](screenshots/26-31.png) |
-| 28    | The population of a region. | Yes | ![](screenshots/26-31.png) |
-| 29    | The population of a country. | Yes | ![](screenshots/26-31.png) |
-| 30    | The population of a district. | Yes | ![](screenshots/26-31.png) |
+| 26    | The population of the world. | Yes | ![](screenshots/26.png) |
+| 27    | The population of a continent. | Yes | ![](screenshots/27.png) |
+| 28    | The population of a region. | Yes | ![](screenshots/28.png) |
+| 29    | The population of a country. | Yes | ![](screenshots/29.png) |
+| 30    | The population of a district. | Yes | ![](screenshots/30.png) |
 | 31    | The population of a city. | Yes | ![](screenshots/26-31.png) |
 | 32    | The number of people who speak Chinese, English, Hindi, Spanish and Arabic from greatest number to smallest, including the percentage of the world population | Yes | ![](screenshots/32.png) |
 
